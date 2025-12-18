@@ -1,0 +1,233 @@
+{
+  "company": {
+    "name": "Müller Bau GmbH",
+    "tagline": "Reliable construction & renovation",
+    "phone": "+49 30 123456",
+    "email": "info@muellerbau.de",
+    "address": "Berlin, Germany",
+    "description": "QUALITÄT IST UNSERE VERPFLICHTUNG! – Mit unseren 50 Mitarbeitern führen wir sämtliche Maler- und Renovierungsarbeiten vom Gewerbeobjekt bis hin zu exklusivsten Malerarbeiten aus. Der Kreativität sind keine Grenzen gesetzt vom Boden bis zur Decke.",
+    "logoText": "Müller Bau"
+  },
+  "footer": {
+    "locations": [
+      {
+        "title": "Kontakt Berlin",
+        "companyName": "MÜLLER BAU GMBH",
+        "address": {
+          "street": "Hauptstraße 123",
+          "city": "10709 Berlin",
+          "country": "Germany"
+        },
+        "phone": "+49 30 123456",
+        "email": "info@muellerbau.de"
+      }
+    ],
+    "openingHours": {
+      "fachmarkt": {
+        "title": "FACHMARKT / ONLINESHOPS",
+        "weekdays": "Montag – Freitag: 08.30 – 12.30 Uhr, 14.30 – 18.00 Uhr",
+        "saturday": "Samstag: 08.30 – 13.00 Uhr"
+      },
+      "office": {
+        "title": "BÜRO / VERWALTUNG",
+        "weekdays": "Montag – Donnerstag: 07.00 – 17.00 Uhr",
+        "friday": "Freitag: 07.00 – 16.00 Uhr"
+      }
+    },
+    "copyright": "© Müller Bau 2025 | Alle Rechte vorbehalten.",
+    "links": [
+      {
+        "text": "Impressum",
+        "href": "/impressum"
+      },
+      {
+        "text": "Datenschutzerklärung",
+        "href": "/datenschutz"
+      }
+    ]
+  },
+  "theme": {
+    "primaryColor": "#1E3A8A",
+    "accentColor": "#F59E0B",
+    "enableAnimations": true
+  },
+  "slider": {
+    "slides": [
+      {
+        "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&h=1080&fit=crop&auto=format",
+        "title": "Müller Bau GmbH",
+        "description": "Reliable construction & renovation",
+        "linkText": "Unsere Leistungen",
+        "linkHref": "/services"
+      },
+      {
+        "image": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1920&h=1080&fit=crop&auto=format",
+        "title": "Qualität ist unsere Verpflichtung",
+        "description": "Von der Idee bis zur Umsetzung an Ihrer Seite!",
+        "linkText": "Referenzen ansehen",
+        "linkHref": "/projects"
+      },
+      {
+        "image": "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=1920&h=1080&fit=crop&auto=format",
+        "title": "Fachmarkt für Innenraumgestaltung",
+        "description": "Große Auswahl an Tapeten, Wandbelägen, Farben und mehr",
+        "linkText": "Zum Fachmarkt",
+        "linkHref": "/fachmarkt"
+      },
+      {
+        "image": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1920&h=1080&fit=crop&auto=format",
+        "title": "Professionelle Malerarbeiten",
+        "description": "Von exklusiven Gestaltungen bis zu Industrieanstrichen",
+        "linkText": "Mehr erfahren",
+        "linkHref": "/services"
+      }
+    ]
+  },
+  "heroSections": [
+    {
+      "title": "Müller Bau Exklusiv",
+      "subtitle": "Für ein besonderes Wanderlebnis!",
+      "description": "Exklusive Malerarbeiten und Raumgestaltung für anspruchsvolle Projekte.",
+      "linkText": "Hier geht es zu Müller Bau Exklusiv",
+      "linkHref": "/exklusiv",
+      "image": "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop&auto=format"
+    },
+    {
+      "title": "Müller Bau Raumdesign",
+      "subtitle": "UNSER FACHMARKT FÜR INNENRAUMGESTALTUNG!",
+      "description": "In unserem Fachgeschäft erwartet Sie eine große Auswahl an Tapeten, Wandbelägen, Teppichböden, Farben und Schutzanstriche sowie Heimwerkerartikel für alle Einsatzbereiche.",
+      "linkText": "UNSER FACHMARKT",
+      "linkHref": "/fachmarkt",
+      "image": "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=800&h=600&fit=crop&auto=format"
+    },
+    {
+      "title": "Müller Bau Berlin GmbH",
+      "subtitle": "HANDWERKSBETRIEB IN BERLIN",
+      "description": "LEISTUNGSSTARK RUND UM SANIERUNG! – Wir bieten Ihnen ein umfangreiches Leistungsspektrum im Bereich Wohnungs- und Leerwohnungssanierung an.",
+      "linkText": "Mehr erfahren",
+      "linkHref": "/berlin",
+      "image": "https://images.unsplash.com/photo-1568605117037-72d268f1bfed?w=800&h=600&fit=crop&auto=format"
+    }
+  ],
+  "companySections": [
+    {
+      "title": "MÜLLER BAU GMBH",
+      "subtitle": "HANDWERKSBETRIEB AUS BERLIN",
+      "description": "QUALITÄT IST UNSERE VERPFLICHTUNG! – Mit unseren 50 Mitarbeitern führen wir sämtliche Maler- und Renovierungsarbeiten vom Gewerbeobjekt bis hin zu exklusivsten Malerarbeiten aus. Der Kreativität sind keine Grenzen gesetzt vom Boden bis zur Decke."
+    },
+    {
+      "title": "MÜLLER BAU RAUMDESIGN",
+      "subtitle": "FACHGESCHÄFT FÜR INNENRAUMGESTALTUNG!",
+      "description": "In unserem Fachgeschäft erwartet Sie eine große Auswahl an Tapeten, Wandbelägen, Teppichböden, Farben und Schutzanstriche sowie Heimwerkerartikel für alle Einsatzbereiche. Lassen Sie sich inspirieren."
+    },
+    {
+      "title": "MÜLLER BAU BERLIN GMBH",
+      "subtitle": "HANDWERKSBETRIEB IN BERLIN",
+      "description": "LEISTUNGSSTARK RUND UM SANIERUNG! – Wir bieten Ihnen ein umfangreiches Leistungsspektrum im Bereich Wohnungs- und Leerwohnungssanierung an. Wir überzeugen durch Erfahrung und Qualität."
+    }
+  ],
+  "services": [
+    {
+      "title": "Malerarbeiten",
+      "description": "Tapezierarbeiten, Stuck- und Zierprofile, exklusive Malerarbeiten, Marmorputz, Industrieanstrich / Objektbau"
+    },
+    {
+      "title": "Bodenbelagsarbeiten",
+      "description": "Bodensanierung, Parkett schleifen, ableitfähige Böden für Krankenhäuser und Industrie"
+    },
+    {
+      "title": "Fassadenarbeiten",
+      "description": "Fassadenanstrich und Renovierung für Wohn- und Gewerbeobjekte"
+    },
+    {
+      "title": "Renovierung",
+      "description": "Modernisation of existing buildings. Komplette Renovierung von Wohnungen und Gewerberäumen"
+    },
+    {
+      "title": "New Construction",
+      "description": "Residential and commercial construction projects. Von der Planung bis zur Fertigstellung"
+    },
+    {
+      "title": "Raumausstattung",
+      "description": "JAB Anstoetz Händler, Akustiklösungen, perfekte Raumakustik"
+    },
+    {
+      "title": "Trocknungsservice",
+      "description": "Professionelle Trocknung nach Wasserschäden"
+    },
+    {
+      "title": "Schimmelsanierung",
+      "description": "Professionelle Schimmelbekämpfung und Sanierung"
+    }
+  ],
+  "specialServices": [
+    {
+      "title": "Boden sanieren statt erneuern mit Floor Remake",
+      "description": "Anstatt abgenutzte Böden komplett zu entsorgen und durch neue zu ersetzen, kann eine Sanierung mit floor remake eine attraktive und zeitsparende Option sein.",
+      "features": [
+        "Die Sanierung ist meist deutlich günstiger",
+        "In wenigen Stunden bis Tagen kann der Boden wieder in neuem Glanz erstrahlen",
+        "Geringe Ausfallzeiten und große Kostenersparnis"
+      ],
+      "linkText": "Mehr erfahren",
+      "linkHref": "/services/floor-remake"
+    },
+    {
+      "title": "Ableitfähige Bodenbeschichtung",
+      "description": "ESD Beschichtungen für Medizin und Industrie! Ableitfähige Bodenbeschichtung für Krankenhaus und Industrie.",
+      "description2": "Besonders wichtig für Bereiche, die auf einen reibungslosen Betrieb angewiesen sind, wie Zahnarztpraxen, Krankenhäuser und Büros.",
+      "linkText": "Mehr erfahren",
+      "linkHref": "/services/ableitfaehig"
+    }
+  ],
+  "projects": [
+    {
+      "title": "Apartment Complex Berlin",
+      "year": 2023,
+      "location": "Berlin",
+      "images": [
+        "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop&auto=format",
+        "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop&auto=format",
+        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop&auto=format"
+      ]
+    },
+    {
+      "title": "Modernes Wohnhaus Berlin",
+      "year": 2024,
+      "location": "Berlin",
+      "images": [
+        "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop&auto=format",
+        "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&h=600&fit=crop&auto=format",
+        "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=800&h=600&fit=crop&auto=format"
+      ]
+    },
+    {
+      "title": "Gewerbeobjekt Renovierung",
+      "year": 2023,
+      "location": "Berlin",
+      "images": [
+        "https://images.unsplash.com/photo-1568605117037-72d268f1bfed?w=800&h=600&fit=crop&auto=format",
+        "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=800&h=600&fit=crop&auto=format",
+        "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&h=600&fit=crop&auto=format"
+      ]
+    },
+    {
+      "title": "Exklusive Malerarbeiten Villa",
+      "year": 2024,
+      "location": "Berlin",
+      "images": [
+        "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=800&h=600&fit=crop&auto=format",
+        "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&h=600&fit=crop&auto=format",
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=600&fit=crop&auto=format"
+      ]
+    }
+  ],
+  "contact": {
+    "ctaTitle": "ERHALTEN SIE IHR ANGEBOT",
+    "ctaDescription": "Haben Sie eine Idee, einen Wunsch? Wir können Ihnen helfen diesen umzusetzen! Nehmen Sie Kontakt zu uns auf und wir helfen und beraten Sie gerne!",
+    "ctaButtonText": "Kontakt aufnehmen",
+    "ctaButtonHref": "/contact",
+    "secondaryButtonText": "Leistungen ansehen",
+    "secondaryButtonHref": "/services"
+  }
+}
