@@ -12,7 +12,7 @@ async function ProjectsContent() {
 
   const data = await getSiteData(clientMeta)
   return (
-    <section className="py-16">
+    <section className="container py-16">
       <h2 className="text-3xl mb-8 text-center">Projects</h2>
       <ProjectGallery images={data.projects.map((p: any) => p.images).flat()} />
     </section>

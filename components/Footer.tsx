@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { Separator } from '@/components/ui/separator'
 
 interface FooterProps {
   footer?: {
@@ -34,7 +33,7 @@ interface FooterProps {
   }
 }
 
-export function Footer({ footer }: FooterProps) {
+export default function Footer({ footer }: FooterProps) {
   const defaultFooter = {
     locations: [
       {
@@ -69,63 +68,34 @@ export function Footer({ footer }: FooterProps) {
   }
 
   const footerData = footer || defaultFooter
+  const year = new Date().getFullYear()
 
   return (
-    <footer className="border-t bg-muted/50">
-      <div className="container py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {footerData.locations?.map((location, index) => (
-            <div key={index}>
-              <h3 className="font-bold text-lg mb-4">{location.title}</h3>
-              <p className="font-semibold">{location.companyName}</p>
-              <p>{location.address.street}</p>
-              <p>{location.address.city}</p>
-              {location.address.country && <p>{location.address.country}</p>}
-              <p className="mt-2">{location.phone}</p>
-              <p>{location.email}</p>
-            </div>
-          ))}
-          
-          {footerData.openingHours && (
-            <div>
-              <h3 className="font-bold text-lg mb-4">Öffnungszeiten</h3>
-              <div className="space-y-2">
-                {footerData.openingHours.fachmarkt && (
-                  <div>
-                    <p className="font-semibold">{footerData.openingHours.fachmarkt.title}</p>
-                    <p>{footerData.openingHours.fachmarkt.weekdays}</p>
-                    <p>{footerData.openingHours.fachmarkt.saturday}</p>
-                  </div>
-                )}
-                {footerData.openingHours.office && (
-                  <>
-                    <Separator className="my-4" />
-                    <div>
-                      <p className="font-semibold">{footerData.openingHours.office.title}</p>
-                      <p>{footerData.openingHours.office.weekdays}</p>
-                      <p>{footerData.openingHours.office.friday}</p>
-                    </div>
-                  </>
-                )}
-              </div>
-            </div>
-          )}
+    <footer role="contentinfo" className="border-t bg-muted/50 flex-shrink-0">
+      {/*
+        Use a fixed height so the browser reserves exact space on first paint.
+        h-20 = 5rem (80px). Adjust to h-16/h-24 if you need a different visual height.
+      */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between overflow-hidden">
+        {/* Left: brand / short text — ensure it doesn't wrap */}
+        <div className="flex items-center gap-3 min-w-0">
+          <span className="font-medium truncate">MÜLLER BAU GMBH</span>
+          <span className="text-xs text-muted/70 hidden sm:inline truncate">— Building since 2025</span>
         </div>
-        
-        <Separator className="my-8" />
-        
-        <div className="flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground">
-          <p>{footerData.copyright}</p>
-          <div className="flex gap-4 mt-4 md:mt-0">
-            {footerData.links?.map((link, index) => (
-              <Link key={index} href={link.href} className="hover:underline">
+
+        {/* Right: links and copyright, keep on one line or truncate */}
+        <div className="flex items-center gap-6 min-w-0">
+          <nav aria-label="Footer links" className="flex items-center gap-4 text-sm whitespace-nowrap">
+            {footerData.links?.map((link, idx) => (
+              <Link key={idx} href={link.href} className="hover:underline">
                 {link.text}
               </Link>
             ))}
-          </div>
+          </nav>
+
+          <div className="text-sm text-muted whitespace-nowrap">© {year} Müller Bau</div>
         </div>
       </div>
     </footer>
   )
 }
-

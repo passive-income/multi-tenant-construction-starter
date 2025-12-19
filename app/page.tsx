@@ -1,8 +1,6 @@
 import { Suspense } from 'react'
 import { cookies } from 'next/headers'
 import { getSiteData } from '@/lib/data'
-import { Header } from '@/components/Header'
-import { Footer } from '@/components/Footer'
 import { DataContent } from '@/components/DataContent'
 import { CompanySectionLoading } from '@/components/loading/CompanySectionLoading'
 import { PreloadLCPImage } from '@/components/PreloadLCPImage'
@@ -25,11 +23,9 @@ export default async function HomePage() {
   if (!clientMeta) {
     return (
       <>
-        <Header />
         <main>
           <p>No client found</p>
         </main>
-        <Footer />
       </>
     )
   }
@@ -40,15 +36,13 @@ export default async function HomePage() {
   return (
     <>
       {firstSlideImage && <PreloadLCPImage src={firstSlideImage} />}
-      <Header logoText={data.company?.logoText || data.company?.name} />
       <Suspense fallback={
-        <main>
+        <main className="flex-1 container py-8">
           <CompanySectionLoading />
         </main>
       }>
         <HomePageContent />
       </Suspense>
-      <Footer footer={data.footer} />
     </>
   )
 }
