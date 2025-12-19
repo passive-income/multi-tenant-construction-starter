@@ -34,7 +34,8 @@ interface FooterProps {
   }
 }
 
-export function Footer({ footer }: FooterProps) {
+export default function Footer({ footer }: FooterProps) {
+  // Keep a deterministic default so server-rendered markup matches first paint
   const defaultFooter = {
     locations: [
       {
@@ -69,10 +70,15 @@ export function Footer({ footer }: FooterProps) {
   }
 
   const footerData = footer || defaultFooter
+  const year = new Date().getFullYear()
 
   return (
-    <footer className="border-t bg-muted/50">
-      <div className="container py-12">
+    <footer role="contentinfo" className="border-t bg-muted/50 flex-shrink-0">
+      {/*
+        Reserve an explicit minimum height so the footer's space is known on first paint.
+        Use flex-shrink-0 so footer doesn't collapse during layout changes.
+      */}
+      <div className="container py-12 min-h-[128px] flex flex-col justify-between">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {footerData.locations?.map((location, index) => (
             <div key={index}>
@@ -85,7 +91,7 @@ export function Footer({ footer }: FooterProps) {
               <p>{location.email}</p>
             </div>
           ))}
-          
+
           {footerData.openingHours && (
             <div>
               <h3 className="font-bold text-lg mb-4">Öffnungszeiten</h3>
@@ -99,7 +105,7 @@ export function Footer({ footer }: FooterProps) {
                 )}
                 {footerData.openingHours.office && (
                   <>
-                    <Separator className="my-4" />
+                    <div className="my-4 border-t border-border" aria-hidden />
                     <div>
                       <p className="font-semibold">{footerData.openingHours.office.title}</p>
                       <p>{footerData.openingHours.office.weekdays}</p>
@@ -111,11 +117,13 @@ export function Footer({ footer }: FooterProps) {
             </div>
           )}
         </div>
-        
-        <Separator className="my-8" />
-        
+
+        {/* Divider with fixed height to avoid layout jitter */}
+        <div className="h-px my-8 bg-border" aria-hidden />
+
         <div className="flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground">
-          <p>{footerData.copyright}</p>
+          <p className="leading-6">{footerData.copyright || `© Müller Bau ${year} | Alle Rechte vorbehalten.`}</p>
+
           <div className="flex gap-4 mt-4 md:mt-0">
             {footerData.links?.map((link, index) => (
               <Link key={index} href={link.href} className="hover:underline">
@@ -128,4 +136,3 @@ export function Footer({ footer }: FooterProps) {
     </footer>
   )
 }
-
