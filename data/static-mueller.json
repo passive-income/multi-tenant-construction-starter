@@ -19,7 +19,9 @@
           "country": "Germany"
         },
         "phone": "+49 30 123456",
-        "email": "info@muellerbau.de"
+        "email": "info@muellerbau.de",
+        "lat": 52.494216,
+        "lon": 13.3028827
       }
     ],
     "openingHours": {
@@ -124,6 +126,26 @@
       "title": "MÜLLER BAU BERLIN GMBH",
       "subtitle": "HANDWERKSBETRIEB IN BERLIN",
       "description": "LEISTUNGSSTARK RUND UM SANIERUNG! – Wir bieten Ihnen ein umfangreiches Leistungsspektrum im Bereich Wohnungs- und Leerwohnungssanierung an. Wir überzeugen durch Erfahrung und Qualität."
+    }
+  ],
+  "companyDetails": [
+    {
+      "title": "Über Müller Bau",
+      "subtitle": "Tradition trifft Innovation",
+      "description": "Seit über 30 Jahren realisieren wir Bau- und Renovierungsprojekte in Berlin und Umgebung. Qualität, Termintreue und ein persönlicher Service zeichnen uns aus.",
+      "image": "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200&h=800&fit=crop&auto=format"
+    },
+    {
+      "title": "Unser Team",
+      "subtitle": "Kompetent & erfahren",
+      "description": "Ein eingespieltes Team von Fachleuten: Meister, Handwerker und Projektleiter arbeiten Hand in Hand, um höchste Ansprüche zu erfüllen.",
+      "image": "https://images.unsplash.com/photo-1520126537942-1b3be2c6b5f9?w=1200&h=800&fit=crop&auto=format"
+    },
+    {
+      "title": "Nachhaltigkeit & Qualität",
+      "subtitle": "Verantwortung in jedem Schritt",
+      "description": "Wir setzen auf langlebige Materialien, energieeffiziente Lösungen und transparente Prozesse — zum Schutz der Umwelt und für die Zufriedenheit unserer Kunden.",
+      "image": "https://images.unsplash.com/photo-1506912527923-1d9a0b7d78f9?w=1200&h=800&fit=crop&auto=format"
     }
   ],
   "services": [

@@ -70,30 +70,128 @@ export default function Footer({ footer }: FooterProps) {
   const footerData = footer || defaultFooter
   const year = new Date().getFullYear()
 
+  // derive map link / static image if location available
+  const primaryLocation = footerData.locations?.[0]
+  let mapHref = undefined
+  let staticMapSrc = undefined
+  if (primaryLocation) {
+    const addressParts = []
+    if (primaryLocation.address?.street) addressParts.push(primaryLocation.address.street)
+    if (primaryLocation.address?.city) addressParts.push(primaryLocation.address.city)
+    const addressStr = addressParts.join(', ')
+
+    if ((primaryLocation as any).lat && (primaryLocation as any).lon) {
+      const lat = (primaryLocation as any).lat
+      const lon = (primaryLocation as any).lon
+      mapHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(lat + ',' + lon)}`
+      staticMapSrc = `https://staticmap.openstreetmap.de/staticmap.php?center=${lat},${lon}&zoom=15&size=400x200&markers=${lat},${lon},red-pushpin`
+    } else if (addressStr) {
+      mapHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addressStr)}`
+      // fallback: use a static map centered on the city (not exact without geocoding)
+      staticMapSrc = `https://staticmap.openstreetmap.de/staticmap.php?center=${encodeURIComponent(addressStr)}&zoom=13&size=400x200`
+    }
+  }
+
   return (
     <footer role="contentinfo" className="border-t bg-muted/50 flex-shrink-0">
-      {/*
-        Use a fixed height so the browser reserves exact space on first paint.
-        h-20 = 5rem (80px). Adjust to h-16/h-24 if you need a different visual height.
-      */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between overflow-hidden">
-        {/* Left: brand / short text — ensure it doesn't wrap */}
-        <div className="flex items-center gap-3 min-w-0">
-          <span className="font-medium truncate">MÜLLER BAU GMBH</span>
-          <span className="text-xs text-muted/70 hidden sm:inline truncate">— Building since 2025</span>
-        </div>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-gray-700">
+          {/* Column 1: Map / Anfahrt */}
+          <div>
+            <h3 className="text-sm font-semibold tracking-wider mb-4">ANFAHRT</h3>
+            {staticMapSrc ? (
+              <div>
+                <a href={mapHref} target="_blank" rel="noreferrer noopener" className="block mb-2">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={staticMapSrc} alt="Standort" className="w-full max-w-xs h-40 object-cover rounded shadow-md" />
+                </a>
+                <div className="text-xs text-muted">
+                  <span className="block">Zu Google Maps einfach klicken</span>
+                  <span className="block mt-1">© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer" className="underline">OpenStreetMap</a> contributors</span>
+                </div>
+              </div>
+            ) : (
+              <p className="text-sm text-muted">Adresse nicht verfügbar</p>
+            )}
+          </div>
 
-        {/* Right: links and copyright, keep on one line or truncate */}
-        <div className="flex items-center gap-6 min-w-0">
-          <nav aria-label="Footer links" className="flex items-center gap-4 text-sm whitespace-nowrap">
+          {/* Column 2: Kontakt NRW (use first location) */}
+          <div>
+            <h3 className="text-sm font-semibold tracking-wider mb-4">KONTAKT NRW</h3>
+            {footerData.locations?.[0] ? (
+              <div className="text-sm">
+                <div className="font-bold">{footerData.locations[0].companyName || footerData.locations[0].title}</div>
+                <div className="mt-2">{footerData.locations[0].address?.street}</div>
+                <div>{footerData.locations[0].address?.city}</div>
+                <div className="mt-2">{footerData.locations[0].phone}</div>
+                <div>{footerData.locations[0].email}</div>
+              </div>
+            ) : (
+              <p className="text-sm text-muted">Kontaktdaten nicht vorhanden</p>
+            )}
+          </div>
+
+          {/* Column 3: Kontakt Berlin (try second location, fallback to first) */}
+          <div>
+            <h3 className="text-sm font-semibold tracking-wider mb-4">KONTAKT BERLIN</h3>
+            {footerData.locations?.[1] ? (
+              <div className="text-sm">
+                <div className="font-bold">{footerData.locations[1].companyName || footerData.locations[1].title}</div>
+                <div className="mt-2">{footerData.locations[1].address?.street}</div>
+                <div>{footerData.locations[1].address?.city}</div>
+                <div className="mt-2">{footerData.locations[1].phone}</div>
+                <div>{footerData.locations[1].email}</div>
+              </div>
+            ) : footerData.locations?.[0] ? (
+              <div className="text-sm">
+                <div className="font-bold">{footerData.locations[0].companyName || footerData.locations[0].title}</div>
+                <div className="mt-2">{footerData.locations[0].address?.street}</div>
+                <div>{footerData.locations[0].address?.city}</div>
+                <div className="mt-2">{footerData.locations[0].phone}</div>
+                <div>{footerData.locations[0].email}</div>
+              </div>
+            ) : (
+              <p className="text-sm text-muted">Kontaktdaten nicht vorhanden</p>
+            )}
+          </div>
+
+          {/* Column 4: Öffnungszeiten */}
+          <div>
+            <h3 className="text-sm font-semibold tracking-wider mb-4">ÖFFNUNGSZEITEN</h3>
+            {footerData.openingHours ? (
+              <div className="text-sm space-y-3">
+                {footerData.openingHours.fachmarkt && (
+                  <div>
+                    <div className="font-bold">{footerData.openingHours.fachmarkt.title}</div>
+                    <div className="mt-1">{footerData.openingHours.fachmarkt.weekdays}</div>
+                    <div>{footerData.openingHours.fachmarkt.saturday}</div>
+                  </div>
+                )}
+                {footerData.openingHours.office && (
+                  <div>
+                    <div className="font-bold mt-2">{footerData.openingHours.office.title}</div>
+                    <div className="mt-1">{footerData.openingHours.office.weekdays}</div>
+                    <div>{footerData.openingHours.office.friday}</div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <p className="text-sm text-muted">Öffnungszeiten nicht vorhanden</p>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-muted/50 border-t border-gray-300">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between text-sm text-center text-gray-700">
+          <div className="hidden sm:block">© {year} Müller Bau</div>
+          <div className="flex items-center gap-4 mx-auto sm:mx-0">
             {footerData.links?.map((link, idx) => (
               <Link key={idx} href={link.href} className="hover:underline">
                 {link.text}
               </Link>
             ))}
-          </nav>
-
-          <div className="text-sm text-muted whitespace-nowrap">© {year} Müller Bau</div>
+          </div>
         </div>
       </div>
     </footer>

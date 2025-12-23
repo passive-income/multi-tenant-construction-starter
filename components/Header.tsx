@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { headers, cookies } from 'next/headers'
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -7,7 +8,6 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu'
-import { cookies } from 'next/headers'
 import clients from '@/data/clients.json'
 import { getSiteData } from '@/lib/data'
 import MobileNavigation from './MobileNavigation'
@@ -23,8 +23,6 @@ function MinimalHeader() {
         <Link href="/" className="flex items-center space-x-2">
           <span className="font-bold text-xl hidden lg:block">{logoText}</span>
         </Link>
-
-        {/* Keep mobile nav with static logo text */}
         <MobileNavigation logoText={logoText} />
       </div>
     </header>
@@ -32,44 +30,49 @@ function MinimalHeader() {
 }
 
 export async function Header() {
-  // Read tenant/client from cookie
-  const clientName = (await cookies()).get('clientId')?.value
+  const pathname = (await headers()).get('x-invoke-pathname') ?? '/'
+  const cookieStore = await cookies()
+  const clientName = cookieStore.get('clientId')?.value
+  const clientMeta = clientName
+    ? clients.find((c: any) => c.name === clientName)
+    : null
 
-  // If no cookie, render minimal header without trying to load site data
-  if (!clientName) {
-    return <MinimalHeader />
-  }
-
-  // Find static client by name from your registry
-  const clientMeta = clients.find((c: any) => c.name === clientName)
-
-  // If not found in static list, render minimal header
   if (!clientMeta) {
     return <MinimalHeader />
   }
 
-  // Normalize the shape expected by getSiteData
+  // Normalize shape for getSiteData
   const clientForSiteData = {
     ...clientMeta,
     type: clientMeta.type ?? 'json',
     source: clientMeta.source ?? clientMeta.name,
   }
 
-  // If still malformed, render minimal header
+  // Defensive: if malformed, fallback to minimal header
   if (!clientForSiteData.type || !clientForSiteData.source) {
     return <MinimalHeader />
   }
 
-  // Load site data defensively
   let data: any = null
   try {
     data = await getSiteData(clientForSiteData)
-  } catch (e) {
-    // If anything goes wrong, fall back to minimal header
+  } catch {
     return <MinimalHeader />
   }
 
-  const logoText = data?.company?.logoText || data?.company?.name || 'Construction Multi-Tenant Starter'
+  const logoText =
+    data?.company?.logoText || data?.company?.name || 'Construction Multi-Tenant Starter'
+
+  const navBase =
+    'group inline-flex h-10 items-center justify-center rounded-md px-3 py-2 text-sm font-medium transition-colors'
+  const activeClass = 'bg-accent text-accent-foreground'
+  const hoverClass = 'hover:bg-accent hover:text-accent-foreground'
+
+  const isActive = (href: string) => {
+    if (href === '/') return pathname === '/'
+    if (href === '/services') return pathname.startsWith('/services')
+    return pathname === href
+  }
 
   return (
     <header className="w-full bg-white border-b border-border">
@@ -81,20 +84,50 @@ export async function Header() {
         {/* Desktop Navigation - hidden on tablet and smaller */}
         <NavigationMenu className="hidden lg:flex">
           <NavigationMenuList>
+            {/* Startseite: direct link, no chevron */}
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Startseite</NavigationMenuTrigger>
+              <NavigationMenuLink asChild>
+                <Link
+                  href="/"
+                  className={`${navBase} ${isActive('/') ? activeClass : hoverClass}`}
+                >
+                  Startseite
+                </Link>
+              </NavigationMenuLink>
             </NavigationMenuItem>
+
+            {/* Unternehmen: simple link */}
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Unternehmen</NavigationMenuTrigger>
+              <NavigationMenuLink asChild>
+                <Link
+                  href="/company"
+                  className={`${navBase} ${
+                    isActive('/company') ? activeClass : hoverClass
+                  }`}
+                >
+                  Unternehmen
+                </Link>
+              </NavigationMenuLink>
             </NavigationMenuItem>
+
+            {/* Leistungen: dropdown */}
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Leistungen</NavigationMenuTrigger>
+              <NavigationMenuTrigger
+                className={`${isActive('/services') ? activeClass : ''}`}
+              >
+                Leistungen
+              </NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                   <li>
                     <NavigationMenuLink asChild>
-                      <Link href="/services" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
-                        <div className="text-sm font-medium leading-none">Malerarbeiten</div>
+                      <Link
+                        href="/services"
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground"
+                      >
+                        <div className="text-sm font-medium leading-none">
+                          Malerarbeiten
+                        </div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Tapezierarbeiten, Stuck- und Zierprofile, exklusive Malerarbeiten
                         </p>
@@ -103,8 +136,13 @@ export async function Header() {
                   </li>
                   <li>
                     <NavigationMenuLink asChild>
-                      <Link href="/services" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
-                        <div className="text-sm font-medium leading-none">Bodenbelagsarbeiten</div>
+                      <Link
+                        href="/services"
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground"
+                      >
+                        <div className="text-sm font-medium leading-none">
+                          Bodenbelagsarbeiten
+                        </div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Bodensanierung, Parkett schleifen, ableitfähige Böden
                         </p>
@@ -113,8 +151,13 @@ export async function Header() {
                   </li>
                   <li>
                     <NavigationMenuLink asChild>
-                      <Link href="/services" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
-                        <div className="text-sm font-medium leading-none">Fassadenarbeiten</div>
+                      <Link
+                        href="/services"
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground"
+                      >
+                        <div className="text-sm font-medium leading-none">
+                          Fassadenarbeiten
+                        </div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Fassadenanstrich und Renovierung
                         </p>
@@ -123,8 +166,13 @@ export async function Header() {
                   </li>
                   <li>
                     <NavigationMenuLink asChild>
-                      <Link href="/services" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
-                        <div className="text-sm font-medium leading-none">Raumausstattung</div>
+                      <Link
+                        href="/services"
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground"
+                      >
+                        <div className="text-sm font-medium leading-none">
+                          Raumausstattung
+                        </div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           JAB Anstoetz Händler, Akustiklösungen
                         </p>
@@ -134,19 +182,44 @@ export async function Header() {
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Fachmarkt</NavigationMenuTrigger>
-            </NavigationMenuItem>
+
+            {/* Fachmarkt */}
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
-                <Link href="/projects" className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground">
+                <Link
+                  href="/fachmarkt"
+                  className={`${navBase} ${
+                    isActive('/fachmarkt') ? activeClass : hoverClass
+                  }`}
+                >
+                  Fachmarkt
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+
+            {/* Referenzen */}
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link
+                  href="/projects"
+                  className={`${navBase} ${
+                    isActive('/projects') ? activeClass : hoverClass
+                  }`}
+                >
                   Referenzen
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
+
+            {/* Kontakt */}
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
-                <Link href="/contact" className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground">
+                <Link
+                  href="/contact"
+                  className={`${navBase} ${
+                    isActive('/contact') ? activeClass : hoverClass
+                  }`}
+                >
                   Kontakt
                 </Link>
               </NavigationMenuLink>
