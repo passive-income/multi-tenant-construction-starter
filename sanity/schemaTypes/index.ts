@@ -1,5 +1,9 @@
-import { type SchemaTypeDefinition } from 'sanity'
+import client from './client'
+import company from './company'
+import service from './service'
+import project from './project'
+import footer from './footer'
 
-export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [],
+export const schema = {
+  types: [client, company, service, project, footer],
 }

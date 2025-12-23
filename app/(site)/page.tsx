@@ -9,17 +9,24 @@ import clients from '@/data/clients.json'
 async function HomePageContent() {
   const clientName = (await cookies()).get('clientId')?.value
   const clientMeta = clients.find((c: any) => c.name === clientName)
-  if (!clientMeta) return <p>No client found</p>
+  if (!clientMeta)
+    return <p>No client found</p>
 
-  const data = await getSiteData(clientMeta)
+  // Transform to the expected shape for getSiteData
+  const clientForSiteData = {
+    ...clientMeta,
+    type: clientMeta.type || 'json',    // default to 'json' if not set
+    source: clientMeta.source || clientMeta.name,
+  }
 
+  const data = await getSiteData(clientForSiteData)
   return <DataContent data={data} />
 }
 
 export default async function HomePage() {
   const clientName = (await cookies()).get('clientId')?.value
   const clientMeta = clients.find((c: any) => c.name === clientName)
-  
+
   if (!clientMeta) {
     return (
       <>
@@ -30,7 +37,14 @@ export default async function HomePage() {
     )
   }
 
-  const data = await getSiteData(clientMeta)
+  // Transform as above
+  const clientForSiteData = {
+    ...clientMeta,
+    type: clientMeta.type || 'json',
+    source: clientMeta.source || clientMeta.name,
+  }
+
+  const data = await getSiteData(clientForSiteData)
   const firstSlideImage = data.slider?.slides?.[0]?.image
 
   return (
