@@ -1,0 +1,77 @@
+[
+  {
+    "_id": "company-mueller",
+    "_type": "company",
+    "name": "Müller Bau GmbH",
+    "logoText": "Müller Bau",
+    "phone": "+49 30 123456",
+    "email": "info@muellerbau.de",
+    "street": "Kurfürstendamm 90",
+    "city": "Berlin",
+    "country": "Germany",
+    "theme": "{\"primaryColor\": \"#1E3A8A\", \"accentColor\": \"#F59E0B\"}"
+  },
+  {
+    "_id": "footer-mueller",
+    "_type": "footer",
+    "locations": [
+      {
+        "title": "Kontakt Berlin",
+        "companyName": "MÜLLER BAU GMBH",
+        "address": {
+          "street": "Kurfürstendamm 90",
+          "city": "10709 Berlin",
+          "country": "Germany"
+        },
+        "phone": "+49 30 123456",
+        "email": "info@muellerbau.de"
+      }
+    ],
+    "openingHours": {
+      "fachmarkt": {
+        "title": "FACHMARKT / ONLINESHOPS",
+        "weekdays": "Montag – Freitag: 08.30 – 12.30 Uhr, 14.30 – 18.00 Uhr",
+        "saturday": "Samstag: 08.30 – 13.00 Uhr"
+      },
+      "office": {
+        "title": "BÜRO / VERWALTUNG",
+        "weekdays": "Montag – Donnerstag: 07.00 – 17.00 Uhr",
+        "friday": "Freitag: 07.00 – 16.00 Uhr"
+      }
+    },
+    "links": [
+      { "text": "Impressum", "href": "/impressum" },
+      { "text": "Datenschutzerklärung", "href": "/datenschutz" }
+    ],
+    "copyright": "© Müller Bau 2025 | Alle Rechte vorbehalten."
+  },
+  {
+    "_id": "client-mueller",
+    "_type": "client",
+    "clientId": "mueller",
+    "domains": ["localhost:3000", "muellerbau.de"],
+    "dataSource": "static",
+    "companyRef": {
+      "_ref": "company-mueller",
+      "_type": "reference"
+    },
+    "footerRef": {
+      "_ref": "footer-mueller",
+      "_type": "reference"
+    }
+  },
+  {
+    "_id": "service-mueller-malerarbeiten",
+    "_type": "service",
+    "title": "Malerarbeiten",
+    "description": "Tapezierarbeiten, Stuck- und Zierprofile, exklusive Malerarbeiten, Marmorputz, Industrieanstrich / Objektbau",
+    "clientId": "mueller"
+  },
+  {
+    "_id": "service-mueller-boden",
+    "_type": "service",
+    "title": "Bodenbelagsarbeiten",
+    "description": "Bodensanierung, Parkett schleifen, ableitfähige Böden für Krankenhäuser und Industrie",
+    "clientId": "mueller"
+  }
+]
