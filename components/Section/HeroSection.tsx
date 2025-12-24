@@ -1,8 +1,7 @@
-'use client'
-
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import Link from 'next/link'
+import Image from 'next/image'
 
 interface HeroSectionProps {
   title: string
@@ -39,18 +38,12 @@ export function HeroSection({
           </div>
           {imageUrl && (
             <div className="relative h-64 md:h-96 bg-muted rounded-lg overflow-hidden">
-              <img
+              <Image
                 src={imageUrl}
                 alt={title}
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement
-                  target.style.display = 'none'
-                  const parent = target.parentElement
-                  if (parent) {
-                    parent.innerHTML = '<div class="flex items-center justify-center h-full text-muted-foreground text-sm">Bild nicht verfügbar</div>'
-                  }
-                }}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
           )}

@@ -60,7 +60,7 @@ export function FooterMap({ address, href, fallbackSrc }: FooterMapProps) {
           alt="Standort"
           onLoad={() => setImgLoaded(true)}
           onError={() => setImgError(true)}
-          className="w-full max-w-[420px] sm:max-w-xs h-50 md:h-40 object-cover rounded shadow-md"
+          className="w-full max-w-105 sm:max-w-xs h-50 md:h-40 object-cover rounded shadow-md"
         />
         {(!imgLoaded || (isLoading && !generatedMapUrl)) && (
           <div className="absolute inset-0 bg-white/60 backdrop-blur-[1px] flex items-center justify-center rounded shadow-inner">
@@ -85,6 +85,6 @@ function Attribution({ loading }: { loading?: boolean }) {
 
 function MapLoader() {
   return (
-    <div className="w-full max-w-[420px] sm:max-w-xs h-50 md:h-40 rounded shadow-md bg-gray-200 animate-pulse mx-auto sm:mx-0" aria-label="Map wird vorbereitet" />
+    <div className="w-full max-w-105 sm:max-w-xs h-50 md:h-40 rounded shadow-md bg-gray-200 animate-pulse mx-auto sm:mx-0" aria-label="Map wird vorbereitet" />
   )
 }

@@ -26,8 +26,12 @@ interface ImageSliderProps {
 export function ImageSlider({ slides }: ImageSliderProps) {
   const [api, setApi] = React.useState<CarouselApi>()
   const [current, setCurrent] = React.useState(0)
+
   const plugin = React.useRef(
-    Autoplay({ delay: 5000, stopOnInteraction: true })
+    Autoplay({
+      delay: 5000,
+      stopOnInteraction: true,
+    })
   )
 
   React.useEffect(() => {
@@ -50,11 +54,11 @@ export function ImageSlider({ slides }: ImageSliderProps) {
   const headerHeight = '4rem' // 64px
 
   return (
-    <div 
+    <div
       className="relative w-full overflow-hidden"
-      style={{ 
+      style={{
         height: `calc(100vh - ${headerHeight})`,
-        minHeight: `calc(100vh - ${headerHeight})`
+        minHeight: `calc(100vh - ${headerHeight})`,
       }}
     >
       <Carousel
@@ -66,7 +70,7 @@ export function ImageSlider({ slides }: ImageSliderProps) {
           loop: true,
         }}
       >
-        <CarouselContent className="h-full -ml-0 [&>div]:h-full">
+        <CarouselContent className="h-full ml-0 [&>div]:h-full">
           {slides.map((slide, index) => (
             <CarouselItem key={index} className="h-full pl-0 basis-full">
               <div 
@@ -95,7 +99,7 @@ export function ImageSlider({ slides }: ImageSliderProps) {
                   />
                 ) : (
                   <div 
-                    className="absolute inset-0 w-full h-full bg-gradient-to-br from-primary/30 via-primary/20 to-accent/30 flex items-center justify-center"
+                    className="absolute inset-0 w-full h-full bg-linear-to-br from-primary/30 via-primary/20 to-accent/30 flex items-center justify-center"
                     style={{ 
                       height: `calc(100vh - ${headerHeight})`,
                       minHeight: `calc(100vh - ${headerHeight})`
@@ -108,7 +112,7 @@ export function ImageSlider({ slides }: ImageSliderProps) {
                 )}
                 
                 {(slide.title || slide.description || slide.linkText) && (
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30 flex items-end justify-center pb-16 md:pb-24 lg:pb-32">
+                  <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/50 to-black/30 flex items-end justify-center pb-16 md:pb-24 lg:pb-32">
                     <div className="text-center text-white px-4 max-w-4xl mb-8">
                       {slide.title && (
                         <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 md:mb-6 drop-shadow-lg">
@@ -132,8 +136,16 @@ export function ImageSlider({ slides }: ImageSliderProps) {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="left-4 md:left-8 lg:left-12 size-10 md:size-12" />
-        <CarouselNext className="right-4 md:right-8 lg:right-12 size-10 md:size-12" />
+        <CarouselPrevious
+          className="left-4 md:left-8 lg:left-12 size-10 md:size-12 cursor-pointer"
+          onMouseEnter={() => plugin.current?.stop?.()}
+          onMouseLeave={() => plugin.current?.play?.()}
+        />
+        <CarouselNext
+          className="right-4 md:right-8 lg:right-12 size-10 md:size-12 cursor-pointer"
+          onMouseEnter={() => plugin.current?.stop?.()}
+          onMouseLeave={() => plugin.current?.play?.()}
+        />
       </Carousel>
       
       {/* Dots indicator */}
