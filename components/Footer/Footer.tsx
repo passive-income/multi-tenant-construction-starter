@@ -1,4 +1,4 @@
-import { FooterMap } from './Footer/FooterMap'
+import { FooterMap } from './FooterMap'
 import Link from 'next/link'
 
 interface FooterProps {
@@ -175,8 +175,8 @@ export default function Footer({ footer }: FooterProps) {
       </div>
 
       <div className="bg-muted/50 border-t border-gray-300">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col sm:flex-row items-center justify-between text-sm text-center text-gray-700 gap-2">
-          <div className="block">© {year} Müller Bau</div>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between text-sm text-center text-gray-700">
+          <div className="hidden sm:block">© {year} Müller Bau</div>
           <div className="flex items-center gap-4 mx-auto sm:mx-0">
             {footerData.links?.map((link, idx) => (
               <Link key={idx} href={link.href} className="hover:underline">

@@ -3,11 +3,11 @@ import { ProjectGallery } from '@/components/ProjectGallery'
 import { HeroSection } from '@/components/Section/HeroSection'
 import { ImageSlider } from '@/components/Image/ImageSlider'
 import { BeforeAfterGridSection } from '@/components/BeforeAfter/BeforeAfterGridSection'
-import MainCompanySection from '@/components/Section/MainCompanySection'
-import ServicesSection from '@/components/Section/ServicesSection'
+import CompanySection from '@/components/Section/CompanySection'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import ServicesSection from './ServicesSection'
 
 interface MainSectionProps {
   data: any
@@ -113,8 +113,9 @@ export function MainSection({ data }: MainSectionProps) {
         </AnimatedSection>
       )}
 
-      <MainCompanySection company={data.company} companySections={data.companySections} />
+      <CompanySection company={data.company} companySections={data.companySections} />
 
+      {/* Services Section */}
       <ServicesSection services={data.services} />
 
       {/* Special Services Highlight */}

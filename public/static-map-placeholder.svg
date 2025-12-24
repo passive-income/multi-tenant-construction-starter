@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="200" viewBox="0 0 400 200">
+  <defs>
+    <linearGradient id="g" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#e6eef6" />
+      <stop offset="1" stop-color="#dfe8f0" />
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="#f3f6f9" />
+  <rect x="8" y="8" width="384" height="184" rx="6" fill="url(#g)" stroke="#d1dbe5" />
+
+  <!-- simple map lines -->
+  <path d="M30 150 C80 120, 120 130, 170 100 S260 80, 340 120" stroke="#c7d6e6" stroke-width="6" fill="none" stroke-linecap="round" />
+  <path d="M20 90 C70 70, 130 60, 190 80 S300 120, 360 95" stroke="#bcd0e6" stroke-width="4" fill="none" stroke-linecap="round" />
+
+  <!-- roads -->
+  <path d="M60 30 L120 45 L180 30 L240 50 L300 40" stroke="#f0f4f7" stroke-width="10" fill="none" stroke-linecap="round" opacity="0.9" />
+
+  <!-- marker -->
+  <g transform="translate(240,80)">
+    <circle cx="0" cy="0" r="10" fill="#d00" stroke="#fff" stroke-width="2" />
+    <path d="M0 12 L-6 0 A6 6 0 1 1 6 0 Z" fill="#d00" stroke="#fff" stroke-width="1" transform="translate(0,6)"/>
+  </g>
+
+  <text x="20" y="185" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#6b7280">Karte nicht verfügbar</text>
+</svg>

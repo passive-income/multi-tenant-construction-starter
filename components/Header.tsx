@@ -118,7 +118,7 @@ export async function Header() {
                 Leistungen
               </NavigationMenuTrigger>
               <NavigationMenuContent>
-                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                <ul className="grid w-100 gap-3 p-4 md:w-125 md:grid-cols-2 lg:w-150">
                   <li>
                     <NavigationMenuLink asChild>
                       <Link

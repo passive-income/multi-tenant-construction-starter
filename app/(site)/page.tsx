@@ -1,9 +1,9 @@
 import { Suspense } from 'react'
 import { cookies } from 'next/headers'
 import { getSiteData } from '@/lib/data'
-import { DataContent } from '@/components/DataContent'
+import { MainSection } from '@/components/Section/MainSection'
 import { CompanySectionLoading } from '@/components/loading/CompanySectionLoading'
-import { PreloadLCPImage } from '@/components/PreloadLCPImage'
+import { PreloadLCPImage } from '@/components/Image/PreloadLCPImage'
 import clients from '@/data/clients.json'
 
 async function HomePageContent() {
@@ -20,7 +20,7 @@ async function HomePageContent() {
   }
 
   const data = await getSiteData(clientForSiteData)
-  return <DataContent data={data} />
+  return <MainSection data={data} />
 }
 
 export default async function HomePage() {

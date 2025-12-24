@@ -14,14 +14,12 @@
         "title": "Kontakt Berlin",
         "companyName": "MÜLLER BAU GMBH",
         "address": {
-          "street": "Hauptstraße 123",
+          "street": "Kurfürstendamm 90",
           "city": "10709 Berlin",
           "country": "Germany"
         },
         "phone": "+49 30 123456",
-        "email": "info@muellerbau.de",
-        "lat": 52.494216,
-        "lon": 13.3028827
+        "email": "info@muellerbau.de"
       }
     ],
     "openingHours": {
@@ -82,6 +80,33 @@
         "description": "Von exklusiven Gestaltungen bis zu Industrieanstrichen",
         "linkText": "Mehr erfahren",
         "linkHref": "/services"
+      }
+    ]
+  ,
+    "beforeAfter": [
+      {
+        "before": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&h=1080&fit=crop&auto=format",
+        "after": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1920&h=1080&fit=crop&auto=format",
+        "title": "Wohnungsrenovierung (optional)",
+        "subtitle": "Vorher/Nachher Beispiel"
+      },
+      {
+        "before": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1920&h=1080&fit=crop&auto=format",
+        "after": "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=1920&h=1080&fit=crop&auto=format",
+        "title": "Bodenbelag erneuert (optional)",
+        "subtitle": "Vorher/Nachher Beispiel"
+      },
+      {
+        "before": "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=1920&h=1080&fit=crop&auto=format",
+        "after": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1920&h=1080&fit=crop&auto=format",
+        "title": "Fassadenrenovierung (optional)",
+        "subtitle": "Vorher/Nachher Beispiel"
+      },
+      {
+        "before": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1920&h=1080&fit=crop&auto=format",
+        "after": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&h=1080&fit=crop&auto=format",
+        "title": "Komplette Sanierung (optional)",
+        "subtitle": "Vorher/Nachher Beispiel"
       }
     ]
   },
