@@ -44,7 +44,7 @@ export function FooterMap({ address, href, fallbackSrc }: FooterMapProps) {
       <div>
         <a href={href} target="_blank" rel="noreferrer noopener" className="block mb-2 mx-auto sm:mx-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/static-map-placeholder.svg" alt="Karte nicht verfügbar" className="w-full max-w-[420px] sm:max-w-xs h-40 object-cover rounded shadow-md bg-white" />
+          <img src="/static-map-placeholder.svg" alt="Karte nicht verfügbar" className="w-full max-w-105 sm:max-w-xs h-40 object-cover rounded shadow-md bg-white" />
         </a>
         <Attribution />
       </div>

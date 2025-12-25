@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react'
-import { BeforeAfterSlider } from '@/components/BeforeAfter/BeforeAfterSlider'
+import { BeforeAfterSlider } from '@/components/before-after/BeforeAfterSlider'
 
 export interface BeforeAfterItem {
   beforeSrc: string
@@ -39,14 +39,14 @@ export default function BeforeAfterGrid({ items, columns, gap = '1rem', classNam
             <div className="mb-2">
               {it.title ? (
                 <div
-                  className="text-lg font-semibold text-gray-800 title-clamp break-words hyphens-auto"
+                  className="text-lg font-semibold text-gray-800 title-clamp wrap-break-word hyphens-auto"
                 >
                   {it.title}
                 </div>
               ) : null}
               {it.subtitle ? (
                 <div
-                  className="text-sm text-gray-600 subtitle-clamp break-words hyphens-auto mt-1"
+                  className="text-sm text-gray-600 subtitle-clamp wrap-break-word hyphens-auto mt-1"
                 >
                   {it.subtitle}
                 </div>

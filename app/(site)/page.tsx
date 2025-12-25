@@ -1,9 +1,9 @@
 import { Suspense } from 'react'
 import { cookies } from 'next/headers'
 import { getSiteData } from '@/lib/data'
-import { MainSection } from '@/components/Section/MainSection'
+import { MainSection } from '@/components/section/MainSection'
 import { CompanySectionLoading } from '@/components/loading/CompanySectionLoading'
-import { PreloadLCPImage } from '@/components/Image/PreloadLCPImage'
+import { PreloadLCPImage } from '@/components/image/PreloadLCPImage'
 import clients from '@/data/clients.json'
 
 async function HomePageContent() {

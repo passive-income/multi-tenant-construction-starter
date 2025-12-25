@@ -1,4 +1,4 @@
-import { FooterMap } from './Footer/FooterMap'
+import { FooterMap } from './footer/FooterMap'
 import Link from 'next/link'
 
 interface FooterProps {

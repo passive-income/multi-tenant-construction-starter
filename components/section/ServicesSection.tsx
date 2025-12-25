@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { AnimatedSection } from '@/components/Section/AnimatedSection'
+import { AnimatedSection } from '@/components/section/AnimatedSection'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 

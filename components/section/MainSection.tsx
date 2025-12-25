@@ -1,9 +1,9 @@
-import { AnimatedSection } from '@/components/Section/AnimatedSection'
+import { AnimatedSection } from '@/components/section/AnimatedSection'
 import { ProjectGallery } from '@/components/ProjectGallery'
-import { HeroSection } from '@/components/Section/HeroSection'
-import { ImageSlider } from '@/components/Image/ImageSlider'
-import { BeforeAfterGridSection } from '@/components/BeforeAfter/BeforeAfterGridSection'
-import CompanySection from '@/components/Section/CompanySection'
+import { HeroSection } from './HeroSection'
+import { ImageSlider } from '@/components/image/ImageSlider'
+import { BeforeAfterGridSection } from '@/components/before-after/BeforeAfterGridSection'
+import CompanySection from '@/components/section/CompanySection'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
@@ -78,7 +78,7 @@ export function MainSection({ data }: MainSectionProps) {
               linkText={hero.linkText}
               linkHref={hero.linkHref}
               imageUrl={hero.image}
-              className={`bg-gradient-to-r ${
+              className={`bg-linear-to-r ${
                 index % 3 === 0 ? 'from-primary/10 to-primary/5' :
                 index % 3 === 1 ? 'from-accent/10 to-accent/5' :
                 'from-secondary/10 to-secondary/5'
