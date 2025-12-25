@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { resolveClient } from '@/lib/resolveClient'
 import clients from '@/data/clients.json'
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const host = req.headers.get('host') || ''
   const client = resolveClient(host)
 
