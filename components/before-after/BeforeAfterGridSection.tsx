@@ -1,7 +1,7 @@
 "use client"
 
-import BeforeAfterGrid from '@/components/BeforeAfter/BeforeAfterGrid'
-import type { BeforeAfterItem } from '@/components/BeforeAfter/BeforeAfterGrid'
+import BeforeAfterGrid from './BeforeAfterGrid'
+import type { BeforeAfterItem } from './BeforeAfterGrid'
 
 interface BeforeAfterGridSectionProps {
   items: BeforeAfterItem[]
