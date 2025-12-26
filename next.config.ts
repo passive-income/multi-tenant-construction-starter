@@ -1,5 +1,8 @@
 import type { NextConfig } from "next";
 
+// Enable bundle analyzer when ANALYZE env var is truthy
+const withBundleAnalyzer = require('@next/bundle-analyzer')({ enabled: process.env.ANALYZE === 'true' })
+
 const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
@@ -11,4 +14,4 @@ const nextConfig: NextConfig = {
   allowedDevOrigins: ['local-origin.dev', '*.local-origin.dev', '192.168.178.62:3000'],
 };
 
-export default nextConfig;
+module.exports = withBundleAnalyzer(nextConfig)

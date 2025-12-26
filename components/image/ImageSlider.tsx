@@ -12,7 +12,6 @@ import {
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import Image from 'next/image'
-import Autoplay from 'embla-carousel-autoplay'
 
 interface ImageSliderProps {
   slides: Array<{
@@ -28,12 +27,32 @@ export function ImageSlider({ slides }: ImageSliderProps) {
   const [api, setApi] = React.useState<CarouselApi>()
   const [current, setCurrent] = React.useState(0)
 
-  const plugin = React.useRef(
-    Autoplay({
-      delay: 5000,
-      stopOnInteraction: true,
-    })
-  )
+  const plugin = React.useRef<any>(null)
+  const [pluginInstance, setPluginInstance] = React.useState<any>(null)
+
+  // dynamically import autoplay plugin on client to avoid shipping it in initial bundle
+  React.useEffect(() => {
+    let mounted = true
+    ;(async () => {
+      try {
+        const mod = await import('embla-carousel-autoplay')
+        const Autoplay = mod?.default ?? mod
+        const inst = Autoplay({ delay: 5000, stopOnInteraction: true })
+        if (mounted) {
+          plugin.current = inst
+          setPluginInstance(inst)
+        }
+      } catch (e) {
+        // ignore if plugin fails to load
+      }
+    })()
+    return () => {
+      mounted = false
+      try {
+        plugin.current = null
+      } catch {}
+    }
+  }, [])
 
   React.useEffect(() => {
     if (!api) {
@@ -64,7 +83,7 @@ export function ImageSlider({ slides }: ImageSliderProps) {
     >
       <Carousel
         setApi={setApi}
-        plugins={[plugin.current]}
+        plugins={pluginInstance ? [pluginInstance] : []}
         className="w-full h-full"
         opts={{
           align: 'start',

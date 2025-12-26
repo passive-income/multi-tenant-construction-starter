@@ -59,7 +59,7 @@ const MobileNavigation = ({ logoText }: { logoText: string }) => {
       ]
 
     return (
-        <>
+        <div className='block md:hidden'>
         {/* Mobile/Tablet Navigation - visible on tablet and smaller */}
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild className="lg:hidden">
@@ -115,7 +115,7 @@ const MobileNavigation = ({ logoText }: { logoText: string }) => {
             </nav>
           </SheetContent>
         </Sheet>
-        </>  
+        </div>  
     )
 }
 

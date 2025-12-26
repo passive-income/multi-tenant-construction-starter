@@ -78,11 +78,11 @@ export async function Header() {
     <header className="w-full bg-white border-b border-border">
       <div className="container header-nav mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
         <Link href="/" aria-label="Home" className="flex items-center space-x-2">
-          <span className="font-bold text-xl hidden lg:block">{logoText}</span>
+          <span className="font-bold text-xl hidden md:block">{logoText}</span>
         </Link>
 
         {/* Desktop Navigation - hidden on tablet and smaller */}
-        <NavigationMenu className="hidden lg:flex" aria-label="Main Navigation">
+        <NavigationMenu className="hidden md:flex" aria-label="Main Navigation">
           <NavigationMenuList>
             {/* Startseite: direct link, no chevron */}
             <NavigationMenuItem>
