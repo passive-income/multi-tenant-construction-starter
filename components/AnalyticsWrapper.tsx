@@ -1,9 +1,11 @@
-'use client'
+"use client";
 
-import dynamic from 'next/dynamic'
+import dynamic from "next/dynamic";
 
-const ClientOnlyAnalytics = dynamic(() => import('./ClientOnlyAnalytics'), { ssr: false })
+const ClientOnlyAnalytics = dynamic(() => import("./ClientOnlyAnalytics"), {
+  ssr: false,
+});
 
 export function AnalyticsWrapper() {
-  return <ClientOnlyAnalytics />
+  return <ClientOnlyAnalytics />;
 }

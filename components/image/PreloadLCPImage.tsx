@@ -1,9 +1,9 @@
 export function PreloadLCPImage({ src }: { src: string }) {
-  if (!src) return null
-  
+  if (!src) return null;
+
   // Escape the src for use in script
-  const escapedSrc = src.replace(/'/g, "\\'").replace(/"/g, '&quot;')
-  
+  const escapedSrc = src.replace(/'/g, "\\'").replace(/"/g, "&quot;");
+
   return (
     <script
       dangerouslySetInnerHTML={{
@@ -25,6 +25,5 @@ export function PreloadLCPImage({ src }: { src: string }) {
         `,
       }}
     />
-  )
+  );
 }
-

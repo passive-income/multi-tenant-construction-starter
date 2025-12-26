@@ -81,8 +81,7 @@
         "linkText": "Mehr erfahren",
         "linkHref": "/services"
       }
-    ]
-  ,
+    ],
     "beforeAfter": [
       {
         "before": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&h=1080&fit=crop&auto=format",
@@ -135,6 +134,39 @@
       "linkHref": "/berlin",
       "image": "https://images.unsplash.com/photo-1568605117037-72d268f1bfed?w=800&h=600&fit=crop&auto=format"
     }
+  ],
+  "menuItems": [
+    { "label": "Startseite", "href": "/" },
+    { "label": "Unternehmen", "href": "/company" },
+    {
+      "label": "Leistungen",
+      "href": "/services",
+      "subItems": [
+        {
+          "title": "Malerarbeiten",
+          "description": "Tapezierarbeiten, Stuck- und Zierprofile, exklusive Malerarbeiten",
+          "href": "/services"
+        },
+        {
+          "title": "Bodenbelagsarbeiten",
+          "description": "Bodensanierung, Parkett schleifen, ableitfähige Böden",
+          "href": "/services"
+        },
+        {
+          "title": "Fassadenarbeiten",
+          "description": "Fassadenanstrich und Renovierung",
+          "href": "/services"
+        },
+        {
+          "title": "Raumausstattung",
+          "description": "JAB Anstoetz Händler, Akustiklösungen",
+          "href": "/services"
+        }
+      ]
+    },
+    { "label": "Fachmarkt", "href": "/fachmarkt" },
+    { "label": "Referenzen", "href": "/projects" },
+    { "label": "Kontakt", "href": "/contact" }
   ],
   "companySections": [
     {

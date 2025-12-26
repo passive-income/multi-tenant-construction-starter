@@ -1,6 +1,6 @@
- 'use client'
+"use client";
 
-import * as React from 'react'
+import * as React from "react";
 import {
   Carousel,
   CarouselContent,
@@ -8,70 +8,70 @@ import {
   CarouselNext,
   CarouselPrevious,
   type CarouselApi,
-} from '@/components/ui/carousel'
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
-import Image from 'next/image'
+} from "@/components/ui/carousel";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import Image from "next/image";
 
 interface ImageSliderProps {
   slides: Array<{
-    image: string
-    title?: string
-    description?: string
-    linkText?: string
-    linkHref?: string
-  }>
+    image: string;
+    title?: string;
+    description?: string;
+    linkText?: string;
+    linkHref?: string;
+  }>;
 }
 
 export function ImageSlider({ slides }: ImageSliderProps) {
-  const [api, setApi] = React.useState<CarouselApi>()
-  const [current, setCurrent] = React.useState(0)
+  const [api, setApi] = React.useState<CarouselApi>();
+  const [current, setCurrent] = React.useState(0);
 
-  const plugin = React.useRef<any>(null)
-  const [pluginInstance, setPluginInstance] = React.useState<any>(null)
+  const plugin = React.useRef<any>(null);
+  const [pluginInstance, setPluginInstance] = React.useState<any>(null);
 
   // dynamically import autoplay plugin on client to avoid shipping it in initial bundle
   React.useEffect(() => {
-    let mounted = true
-    ;(async () => {
+    let mounted = true;
+    (async () => {
       try {
-        const mod = await import('embla-carousel-autoplay')
-        const Autoplay = mod?.default ?? mod
-        const inst = Autoplay({ delay: 5000, stopOnInteraction: true })
+        const mod = await import("embla-carousel-autoplay");
+        const Autoplay = mod?.default ?? mod;
+        const inst = Autoplay({ delay: 5000, stopOnInteraction: true });
         if (mounted) {
-          plugin.current = inst
-          setPluginInstance(inst)
+          plugin.current = inst;
+          setPluginInstance(inst);
         }
       } catch (e) {
         // ignore if plugin fails to load
       }
-    })()
+    })();
     return () => {
-      mounted = false
+      mounted = false;
       try {
-        plugin.current = null
+        plugin.current = null;
       } catch {}
-    }
-  }, [])
+    };
+  }, []);
 
   React.useEffect(() => {
     if (!api) {
-      return
+      return;
     }
 
-    setCurrent(api.selectedScrollSnap())
+    setCurrent(api.selectedScrollSnap());
 
-    api.on('select', () => {
-      setCurrent(api.selectedScrollSnap())
-    })
-  }, [api])
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap());
+    });
+  }, [api]);
 
   if (!slides || slides.length === 0) {
-    return null
+    return null;
   }
 
   // Header height is h-16 (4rem = 64px)
-  const headerHeight = '4rem' // 64px
+  const headerHeight = "4rem"; // 64px
 
   return (
     <div
@@ -86,18 +86,18 @@ export function ImageSlider({ slides }: ImageSliderProps) {
         plugins={pluginInstance ? [pluginInstance] : []}
         className="w-full h-full"
         opts={{
-          align: 'start',
+          align: "start",
           loop: true,
         }}
       >
         <CarouselContent className="h-full ml-0 [&>div]:h-full">
           {slides.map((slide, index) => (
             <CarouselItem key={index} className="h-full pl-0 basis-full">
-              <div 
-                className="relative w-full h-full" 
-                style={{ 
+              <div
+                className="relative w-full h-full"
+                style={{
                   height: `calc(100vh - ${headerHeight})`,
-                  minHeight: `calc(100vh - ${headerHeight})`
+                  minHeight: `calc(100vh - ${headerHeight})`,
                 }}
               >
                 {slide.image ? (
@@ -109,14 +109,16 @@ export function ImageSlider({ slides }: ImageSliderProps) {
                     priority={index === 0}
                     quality={75}
                     className="absolute inset-0 w-full h-full object-cover"
-                    onError={() => { /* let Next/Image handle fallback */ }}
+                    onError={() => {
+                      /* let Next/Image handle fallback */
+                    }}
                   />
                 ) : (
-                  <div 
+                  <div
                     className="absolute inset-0 w-full h-full bg-linear-to-br from-primary/30 via-primary/20 to-accent/30 flex items-center justify-center"
-                    style={{ 
+                    style={{
                       height: `calc(100vh - ${headerHeight})`,
-                      minHeight: `calc(100vh - ${headerHeight})`
+                      minHeight: `calc(100vh - ${headerHeight})`,
                     }}
                   >
                     <div className="text-center text-muted-foreground">
@@ -124,7 +126,7 @@ export function ImageSlider({ slides }: ImageSliderProps) {
                     </div>
                   </div>
                 )}
-                
+
                 {(slide.title || slide.description || slide.linkText) && (
                   <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/50 to-black/30 flex items-end justify-center pb-16 md:pb-24 lg:pb-32">
                     <div className="text-center text-white px-4 max-w-4xl mb-8">
@@ -139,7 +141,12 @@ export function ImageSlider({ slides }: ImageSliderProps) {
                         </p>
                       )}
                       {slide.linkText && slide.linkHref && (
-                        <Button size="lg" variant="secondary" className="shadow-lg text-base md:text-lg px-6 md:px-8 py-3 md:py-4" asChild>
+                        <Button
+                          size="lg"
+                          variant="secondary"
+                          className="shadow-lg text-base md:text-lg px-6 md:px-8 py-3 md:py-4"
+                          asChild
+                        >
                           <Link href={slide.linkHref}>{slide.linkText}</Link>
                         </Button>
                       )}
@@ -161,7 +168,7 @@ export function ImageSlider({ slides }: ImageSliderProps) {
           onMouseLeave={() => plugin.current?.play?.()}
         />
       </Carousel>
-      
+
       {/* Dots indicator */}
       <div className="absolute bottom-6 md:bottom-8 lg:bottom-12 left-1/2 -translate-x-1/2 flex gap-2 z-10">
         {slides.map((_, index) => (
@@ -173,13 +180,12 @@ export function ImageSlider({ slides }: ImageSliderProps) {
           >
             <span
               className={`slider-dot ${
-                index === current ? 'slider-dot-active' : 'slider-dot-inactive'
+                index === current ? "slider-dot-active" : "slider-dot-inactive"
               }`}
             />
           </button>
         ))}
       </div>
     </div>
-  )
+  );
 }
-

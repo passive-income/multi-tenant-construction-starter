@@ -1,16 +1,16 @@
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
-import Link from 'next/link'
-import Image from 'next/image'
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import Link from "next/link";
+import Image from "next/image";
 
 interface HeroSectionProps {
-  title: string
-  subtitle: string
-  description: string
-  linkText?: string
-  linkHref?: string
-  imageUrl?: string
-  className?: string
+  title: string;
+  subtitle: string;
+  description: string;
+  linkText?: string;
+  linkHref?: string;
+  imageUrl?: string;
+  className?: string;
 }
 
 export function HeroSection({
@@ -20,14 +20,16 @@ export function HeroSection({
   linkText,
   linkHref,
   imageUrl,
-  className = '',
+  className = "",
 }: HeroSectionProps) {
   return (
     <Card className={`border-0 shadow-lg ${className}`}>
       <CardContent className="p-8 md:p-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div>
-            <p className="text-sm font-semibold text-muted-foreground mb-2">{subtitle}</p>
+            <p className="text-sm font-semibold text-muted-foreground mb-2">
+              {subtitle}
+            </p>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">{title}</h2>
             <p className="text-lg text-muted-foreground mb-6">{description}</p>
             {linkText && linkHref && (
@@ -50,6 +52,5 @@ export function HeroSection({
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
-

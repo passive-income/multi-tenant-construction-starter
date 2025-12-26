@@ -1,16 +1,26 @@
-import Link from 'next/link'
-import { AnimatedSection } from '@/components/section/AnimatedSection'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
+import Link from "next/link";
+import { AnimatedSection } from "@/components/section/AnimatedSection";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 interface ServicesSectionProps {
-  services?: any[]
-  title?: string
-  description?: string
+  services?: any[];
+  title?: string;
+  description?: string;
 }
 
-export default function ServicesSection({ services = [], title = 'UNSERE LEISTUNGEN', description = 'Von der Idee bis zur Umsetzung an Ihrer Seite!' }: ServicesSectionProps) {
-  if (!services || services.length === 0) return null
+export default function ServicesSection({
+  services = [],
+  title = "UNSERE LEISTUNGEN",
+  description = "Von der Idee bis zur Umsetzung an Ihrer Seite!",
+}: ServicesSectionProps) {
+  if (!services || services.length === 0) return null;
 
   return (
     <AnimatedSection className="py-16 bg-white">
@@ -43,5 +53,5 @@ export default function ServicesSection({ services = [], title = 'UNSERE LEISTUN
         </div>
       </div>
     </AnimatedSection>
-  )
+  );
 }

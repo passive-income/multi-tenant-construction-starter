@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export function ServicesLoading() {
   return (
@@ -8,7 +8,7 @@ export function ServicesLoading() {
           <div className="h-10 w-64 bg-muted-foreground/20 rounded mx-auto"></div>
           <div className="h-6 w-96 bg-muted-foreground/20 rounded mx-auto"></div>
         </div>
-        
+
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
             <Card key={i} className="hover:shadow-lg">
@@ -27,11 +27,5 @@ export function ServicesLoading() {
         </div>
       </div>
     </section>
-  )
+  );
 }
-
-
-
-
-
-

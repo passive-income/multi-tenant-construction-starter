@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import React from 'react'
-import { Analytics } from '@vercel/analytics/next'
-import { SpeedInsights } from '@vercel/speed-insights/next'
+import React from "react";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export default function ClientOnlyAnalytics() {
   return (
@@ -10,5 +10,5 @@ export default function ClientOnlyAnalytics() {
       <Analytics />
       <SpeedInsights />
     </>
-  )
+  );
 }

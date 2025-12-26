@@ -95,46 +95,46 @@
   --muted: oklch(0.269 0 0);
   --muted-foreground: oklch(0.78 0 0);
 
-/* Footer: increase contrast while preserving color tones */
-footer {
-  color: var(--foreground);
-  background-color: #ffffff; /* force solid background to ensure contrast */
-}
-footer a,
-footer a:hover,
-footer a:focus {
-  color: var(--foreground);
-  text-decoration: underline;
-}
-footer .text-muted {
-  color: var(--muted-foreground);
-}
+  /* Footer: increase contrast while preserving color tones */
+  footer {
+    color: var(--foreground);
+    background-color: #ffffff; /* force solid background to ensure contrast */
+  }
+  footer a,
+  footer a:hover,
+  footer a:focus {
+    color: var(--foreground);
+    text-decoration: underline;
+  }
+  footer .text-muted {
+    color: var(--muted-foreground);
+  }
 
-/* Force utility classes in footer to respect theme foreground for contrast */
-footer .text-gray-700,
-footer .text-sm,
-footer span.block,
-footer a.underline,
-footer .text-muted-foreground,
-footer .text-muted {
-  color: var(--foreground) !important;
-}
+  /* Force utility classes in footer to respect theme foreground for contrast */
+  footer .text-gray-700,
+  footer .text-sm,
+  footer span.block,
+  footer a.underline,
+  footer .text-muted-foreground,
+  footer .text-muted {
+    color: var(--foreground) !important;
+  }
 
-/* Also override the secondary footer band which uses bg-muted/50 */
-footer > div.bg-muted\/50,
-footer .bg-muted\/50 {
-  background-color: #ffffff !important;
-}
+  /* Also override the secondary footer band which uses bg-muted/50 */
+  footer > div.bg-muted\/50,
+  footer .bg-muted\/50 {
+    background-color: #ffffff !important;
+  }
 
-/* Dark mode: ensure footer contrasts in dark theme */
-.dark footer {
-  background-color: oklch(0.12 0 0); /* a dark background retaining hue */
-  color: var(--foreground);
-}
-.dark footer > div.bg-muted\/50,
-.dark footer .bg-muted\/50 {
-  background-color: oklch(0.12 0 0) !important;
-}
+  /* Dark mode: ensure footer contrasts in dark theme */
+  .dark footer {
+    background-color: oklch(0.12 0 0); /* a dark background retaining hue */
+    color: var(--foreground);
+  }
+  .dark footer > div.bg-muted\/50,
+  .dark footer .bg-muted\/50 {
+    background-color: oklch(0.12 0 0) !important;
+  }
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
@@ -284,7 +284,7 @@ summary:focus-visible {
 
   .subtitle-clamp {
     @apply text-center text-muted-foreground;
-    font-size: clamp(.9rem, 1.8vw, 1rem);
+    font-size: clamp(0.9rem, 1.8vw, 1rem);
     line-height: 1rem;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -296,7 +296,9 @@ summary:focus-visible {
     min-height: calc(2 * 1rem);
   }
 
-  .grid-gap-sm { gap: 1rem; }
+  .grid-gap-sm {
+    gap: 1rem;
+  }
 }
 
 body {

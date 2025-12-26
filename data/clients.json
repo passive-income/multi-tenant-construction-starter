@@ -1,17 +1,16 @@
 [
-    {
-      "name": "Müller Bau GmbH",
-      "type": "json",
-      "source": "static-mueller.json",
-      "domain": "localhost:3000",
-      "theme": { "primaryColor": "#1E3A8A", "accentColor": "#F59E0B" }
-    },
-    {
-      "name": "Schmidt Construction",
-      "type": "sanity",
-      "source": "schmidt-dataset",
-      "domain": "schmidtbau.de",
-      "theme": { "primaryColor": "#059669", "accentColor": "#FBBF24" }
-    }
-  ]
-  
+  {
+    "name": "Müller Bau GmbH",
+    "type": "json",
+    "source": "static-mueller.json",
+    "domain": "localhost:3000",
+    "theme": { "primaryColor": "#1E3A8A", "accentColor": "#F59E0B" }
+  },
+  {
+    "name": "Schmidt Construction",
+    "type": "sanity",
+    "source": "schmidt-dataset",
+    "domain": "schmidtbau.de",
+    "theme": { "primaryColor": "#059669", "accentColor": "#FBBF24" }
+  }
+]

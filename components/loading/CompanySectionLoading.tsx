@@ -1,4 +1,10 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export function CompanySectionLoading() {
   return (
@@ -9,7 +15,7 @@ export function CompanySectionLoading() {
           <div className="h-6 w-64 bg-muted-foreground/20 rounded mx-auto"></div>
           <div className="h-4 w-full max-w-3xl bg-muted-foreground/20 rounded mx-auto"></div>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[1, 2, 3].map((i) => (
             <Card key={i}>
@@ -29,11 +35,5 @@ export function CompanySectionLoading() {
         </div>
       </div>
     </section>
-  )
+  );
 }
-
-
-
-
-
-

@@ -1,4 +1,4 @@
-import { Card, CardContent } from '@/components/ui/card'
+import { Card, CardContent } from "@/components/ui/card";
 
 export function HeroSectionsLoading() {
   return (
@@ -19,11 +19,5 @@ export function HeroSectionsLoading() {
         </Card>
       ))}
     </section>
-  )
+  );
 }
-
-
-
-
-
-

@@ -1,0 +1,182 @@
+[
+  {
+    "_id": "company-alpha",
+    "_type": "company",
+    "name": "Alpha Construction GmbH",
+    "logoText": "Alpha Bau",
+    "phone": "+49 40 987654",
+    "email": "kontakt@alpha-bau.de",
+    "street": "Hauptstraße 12",
+    "city": "Hamburg",
+    "country": "Germany",
+    "theme": "{\"primaryColor\": \"#0B74DE\", \"accentColor\": \"#F97316\"}",
+    "slider": []
+  },
+  {
+    "_id": "footer-alpha",
+    "_type": "footer",
+    "locations": [
+      {
+        "title": "Hamburg Office",
+        "companyName": "Alpha Construction GmbH",
+        "address": {
+          "street": "Hauptstraße 12",
+          "city": "Hamburg",
+          "country": "Germany"
+        },
+        "phone": "+49 40 987654",
+        "email": "kontakt@alpha-bau.de"
+      }
+    ],
+    "openingHours": {
+      "fachmarkt": {
+        "title": "FACHMARKT",
+        "weekdays": "Mo–Fr: 08:00–17:00",
+        "saturday": "Sa: 09:00–13:00"
+      },
+      "office": {
+        "title": "BÜRO",
+        "weekdays": "Mo–Fr: 07:30–16:00",
+        "friday": "Fr: 07:30–15:00"
+      }
+    },
+    "links": [
+      { "text": "Impressum", "href": "/impressum" },
+      { "text": "Datenschutz", "href": "/datenschutz" }
+    ],
+    "copyright": "© Alpha Construction 2025"
+  },
+  {
+    "_id": "navigation-alpha",
+    "_type": "navigation",
+    "menuItems": [
+      { "label": "Home", "href": "/" },
+      { "label": "Services", "href": "/services" },
+      { "label": "Projects", "href": "/projects" },
+      { "label": "Contact", "href": "/contact" }
+    ]
+  },
+  {
+    "_id": "service-alpha-paint",
+    "_type": "service",
+    "title": "Malerarbeiten",
+    "description": "Fassaden- und Innenanstriche, dekorative Techniken.",
+    "icon": "brush",
+    "clientId": "alpha"
+  },
+  {
+    "_id": "service-alpha-floor",
+    "_type": "service",
+    "title": "Bodenbelag",
+    "description": "Parkett, Laminat und industrietaugliche Bodenbeläge.",
+    "icon": "layers",
+    "clientId": "alpha"
+  },
+  {
+    "_id": "project-alpha-townhouse",
+    "_type": "project",
+    "title": "Townhouse Renovation",
+    "description": "Komplettrenovierung eines Stadthauses in Hamburg.",
+    "clientId": "alpha",
+    "link": "https://alpha.example/projects/townhouse"
+  },
+  {
+    "_id": "company-beta",
+    "_type": "company",
+    "name": "Beta Builders AG",
+    "logoText": "Beta Builders",
+    "phone": "+41 44 123321",
+    "email": "office@beta-builders.ch",
+    "street": "Bauweg 5",
+    "city": "Zurich",
+    "country": "Switzerland",
+    "theme": "{\"primaryColor\": \"#0F766E\", \"accentColor\": \"#E11D48\"}",
+    "slider": []
+  },
+  {
+    "_id": "footer-beta",
+    "_type": "footer",
+    "locations": [
+      {
+        "title": "Zurich HQ",
+        "companyName": "Beta Builders AG",
+        "address": {
+          "street": "Bauweg 5",
+          "city": "Zurich",
+          "country": "Switzerland"
+        },
+        "phone": "+41 44 123321",
+        "email": "office@beta-builders.ch"
+      }
+    ],
+    "openingHours": {
+      "fachmarkt": {
+        "title": "STORE",
+        "weekdays": "Mon–Fri: 08:30–17:00",
+        "saturday": "Sat: 09:00–14:00"
+      },
+      "office": {
+        "title": "OFFICE",
+        "weekdays": "Mon–Fri: 07:00–16:00",
+        "friday": "Fri: 07:00–15:00"
+      }
+    },
+    "links": [
+      { "text": "Impressum", "href": "/impressum" },
+      { "text": "Privacy", "href": "/privacy" }
+    ],
+    "copyright": "© Beta Builders 2025"
+  },
+  {
+    "_id": "navigation-beta",
+    "_type": "navigation",
+    "menuItems": [
+      { "label": "Start", "href": "/" },
+      { "label": "Leistungen", "href": "/services" },
+      { "label": "Referenzen", "href": "/projects" },
+      { "label": "Kontakt", "href": "/contact" }
+    ]
+  },
+  {
+    "_id": "service-beta-excavation",
+    "_type": "service",
+    "title": "Excavation",
+    "description": "Erdaushub und Fundamentarbeiten.",
+    "icon": "shovel",
+    "clientId": "beta"
+  },
+  {
+    "_id": "service-beta-roof",
+    "_type": "service",
+    "title": "Roofing",
+    "description": "Dachsanierung und -abdichtung.",
+    "icon": "home",
+    "clientId": "beta"
+  },
+  {
+    "_id": "project-beta-apartment",
+    "_type": "project",
+    "title": "Apartment Complex",
+    "description": "Neubau eines Mehrfamilienhauses in Zurich.",
+    "clientId": "beta",
+    "link": "https://beta.example/projects/apartment"
+  },
+  {
+    "_id": "client-alpha",
+    "_type": "client",
+    "clientId": "alpha",
+    "domains": ["localhost:3010", "alpha.local"],
+    "dataSource": "sanity",
+    "companyRef": { "_ref": "company-alpha", "_type": "reference" },
+    "footerRef": { "_ref": "footer-alpha", "_type": "reference" }
+  },
+  {
+    "_id": "client-beta",
+    "_type": "client",
+    "clientId": "beta",
+    "domains": ["beta.local", "localhost:3001"],
+    "dataSource": "sanity",
+    "companyRef": { "_ref": "company-beta", "_type": "reference" },
+    "footerRef": { "_ref": "footer-beta", "_type": "reference" }
+  }
+]
