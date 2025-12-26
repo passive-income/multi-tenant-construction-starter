@@ -75,10 +75,8 @@ export function FooterMap({ address, href, fallbackSrc }: FooterMapProps) {
 
 function Attribution({ loading }: { loading?: boolean }) {
   return (
-    <div className="hidden sm:block text-xs text-muted">
-      <span className="block">Zu Google Maps einfach klicken</span>
-      <span className="block mt-1">© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer" className="underline">OpenStreetMap</a> contributors</span>
-      {loading && <span className="block mt-1 text-[11px] text-gray-500">Karte wird generiert …</span>}
+    <div className="text-xs">
+      <span className="mt-1">© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer" className="underline">OpenStreetMap</a> contributors</span>
     </div>
   )
 }

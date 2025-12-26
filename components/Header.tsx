@@ -19,8 +19,8 @@ function MinimalHeader() {
   const logoText = 'Construction Multi-Tenant Starter'
   return (
     <header className="w-full bg-white border-b border-border">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-        <Link href="/" className="flex items-center space-x-2">
+      <div className="container header-nav mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+        <Link href="/" aria-label="Home" className="flex items-center space-x-2">
           <span className="font-bold text-xl hidden lg:block">{logoText}</span>
         </Link>
         <MobileNavigation logoText={logoText} />
@@ -63,8 +63,8 @@ export async function Header() {
   const logoText =
     data?.company?.logoText || data?.company?.name || 'Construction Multi-Tenant Starter'
 
-  const navBase =
-    'group inline-flex h-10 items-center justify-center rounded-md px-3 py-2 text-sm font-medium transition-colors'
+    const navBase =
+      'group inline-flex min-h-[44px] min-w-[44px] h-10 items-center justify-center rounded-md px-3 py-2 text-sm font-medium transition-colors'
   const activeClass = 'bg-accent text-accent-foreground'
   const hoverClass = 'hover:bg-accent hover:text-accent-foreground'
 
@@ -76,13 +76,13 @@ export async function Header() {
 
   return (
     <header className="w-full bg-white border-b border-border">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-        <Link href="/" className="flex items-center space-x-2">
+      <div className="container header-nav mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+        <Link href="/" aria-label="Home" className="flex items-center space-x-2">
           <span className="font-bold text-xl hidden lg:block">{logoText}</span>
         </Link>
 
         {/* Desktop Navigation - hidden on tablet and smaller */}
-        <NavigationMenu className="hidden lg:flex">
+        <NavigationMenu className="hidden lg:flex" aria-label="Main Navigation">
           <NavigationMenuList>
             {/* Startseite: direct link, no chevron */}
             <NavigationMenuItem>

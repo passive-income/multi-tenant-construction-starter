@@ -1,4 +1,4 @@
-'use client'
+ 'use client'
 
 import * as React from 'react'
 import {
@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/carousel'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import Image from 'next/image'
 import Autoplay from 'embla-carousel-autoplay'
 
 interface ImageSliderProps {
@@ -81,21 +82,15 @@ export function ImageSlider({ slides }: ImageSliderProps) {
                 }}
               >
                 {slide.image ? (
-                  <img
+                  <Image
                     src={slide.image}
                     alt={slide.title || `Slide ${index + 1}`}
+                    fill
+                    sizes="100vw"
+                    priority={index === 0}
+                    quality={75}
                     className="absolute inset-0 w-full h-full object-cover"
-                    style={{ 
-                      height: `calc(100vh - ${headerHeight})`,
-                      minHeight: `calc(100vh - ${headerHeight})`,
-                      width: '100%'
-                    }}
-                    fetchPriority={index === 0 ? 'high' : 'auto'}
-                    loading={index === 0 ? 'eager' : 'lazy'}
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement
-                      target.style.display = 'none'
-                    }}
+                    onError={() => { /* let Next/Image handle fallback */ }}
                   />
                 ) : (
                   <div 
@@ -153,14 +148,16 @@ export function ImageSlider({ slides }: ImageSliderProps) {
         {slides.map((_, index) => (
           <button
             key={index}
-            className={`h-2 md:h-2.5 rounded-full transition-all ${
-              index === current
-                ? 'w-8 md:w-10 bg-white'
-                : 'w-2 md:w-2.5 bg-white/50 hover:bg-white/75'
-            }`}
+            className={`slider-dot-button transition-colors`}
             onClick={() => api?.scrollTo(index)}
             aria-label={`Go to slide ${index + 1}`}
-          />
+          >
+            <span
+              className={`slider-dot ${
+                index === current ? 'slider-dot-active' : 'slider-dot-inactive'
+              }`}
+            />
+          </button>
         ))}
       </div>
     </div>

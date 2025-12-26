@@ -68,11 +68,11 @@ const MobileNavigation = ({ logoText }: { logoText: string }) => {
               <span className="sr-only">Toggle menu</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="right" className="w-75 sm:w-100 px-4 sm:px-6">
+          <SheetContent side="right" className="w-75 sm:w-100 px-4 sm:px-6 mobile-navigation">
             <SheetHeader className="pb-4 border-b border-border/50 px-0 sm:px-0">
               <SheetTitle className="text-lg font-bold">{logoText}</SheetTitle>
             </SheetHeader>
-            <nav className="flex flex-col">
+            <nav className="flex flex-col" aria-label="Mobile Navigation">
               {menuItems.map((item) => (
                 <div key={item.label} className="border-b border-border/40 last:border-b-0">
                   {item.subItems ? (

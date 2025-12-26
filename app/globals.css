@@ -49,7 +49,7 @@
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  --foreground: #000000;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -59,7 +59,7 @@
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
+  --muted-foreground: oklch(0.36 0 0);
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
@@ -83,7 +83,7 @@
 
 .dark {
   --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
+  --foreground: #ffffff;
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
@@ -93,7 +93,48 @@
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
+  --muted-foreground: oklch(0.78 0 0);
+
+/* Footer: increase contrast while preserving color tones */
+footer {
+  color: var(--foreground);
+  background-color: #ffffff; /* force solid background to ensure contrast */
+}
+footer a,
+footer a:hover,
+footer a:focus {
+  color: var(--foreground);
+  text-decoration: underline;
+}
+footer .text-muted {
+  color: var(--muted-foreground);
+}
+
+/* Force utility classes in footer to respect theme foreground for contrast */
+footer .text-gray-700,
+footer .text-sm,
+footer span.block,
+footer a.underline,
+footer .text-muted-foreground,
+footer .text-muted {
+  color: var(--foreground) !important;
+}
+
+/* Also override the secondary footer band which uses bg-muted/50 */
+footer > div.bg-muted\/50,
+footer .bg-muted\/50 {
+  background-color: #ffffff !important;
+}
+
+/* Dark mode: ensure footer contrasts in dark theme */
+.dark footer {
+  background-color: oklch(0.12 0 0); /* a dark background retaining hue */
+  color: var(--foreground);
+}
+.dark footer > div.bg-muted\/50,
+.dark footer .bg-muted\/50 {
+  background-color: oklch(0.12 0 0) !important;
+}
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
@@ -122,6 +163,100 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Accessibility helpers */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.skip-link:focus,
+.skip-link:active {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  z-index: 9999;
+  border-radius: 0.375rem;
+}
+
+/* Make keyboard focus clearly visible for interactive elements */
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* Improve touch target sizes for header/navigation without changing visual layout */
+.header-nav a,
+.header-nav button,
+.header-nav [role="button"],
+.mobile-navigation a,
+.mobile-navigation button,
+.mobile-navigation [role="button"] {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* keep visual spacing similar */
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+/* Ensure sheet content navigation has adequate hit area */
+.mobile-navigation nav a {
+  min-height: 44px;
+}
+
+/* Slider pagination: keep visual dot small but increase hit area to 44x44 */
+.slider-dot-button {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  cursor: pointer;
+}
+.slider-dot {
+  display: inline-block;
+  border-radius: 9999px;
+  width: 0.5rem; /* 8px */
+  height: 0.5rem; /* 8px */
+}
+.slider-dot-inactive {
+  background-color: color-mix(in srgb, white 50%, transparent);
+  opacity: 0.75;
+}
+.slider-dot-active {
+  width: 2rem; /* 32px visual for active */
+  height: 0.5rem; /* keep pill shape as before */
+  background-color: var(--primary-foreground, #ffffff);
+}
+
+/* Hover/focus improvements for accessibility */
+.slider-dot-button:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 8px;
 }
 
 @layer components {
