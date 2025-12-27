@@ -4,6 +4,7 @@ import { getHost } from "@/lib/utils/host";
 import { getSiteData } from "@/lib/data";
 import type { SiteData } from "@/lib/types/site";
 import { ServicesLoading } from "@/components/loading/ServicesLoading";
+import Image from 'next/image'
 import clients from "@/data/clients";
 
 async function CompanyContent() {
@@ -25,12 +26,9 @@ async function CompanyContent() {
         {(data.companyDetails || []).map((c: any) => (
           <div key={c.title} className="p-4 border rounded-lg bg-white">
             {c.image && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={c.image}
-                alt={c.title}
-                className="w-full h-40 object-cover mb-4 rounded"
-              />
+              <div className="w-full h-40 relative mb-4 rounded overflow-hidden">
+                <Image src={c.image} alt={c.title} fill sizes="(max-width:640px) 100vw, 33vw" quality={60} className="object-cover" />
+              </div>
             )}
             <h3 className="font-bold text-xl mb-1">{c.title}</h3>
             {c.subtitle && (

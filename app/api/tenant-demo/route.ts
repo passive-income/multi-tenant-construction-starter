@@ -6,8 +6,12 @@ import clients from "@/data/clients";
 export async function GET() {
   const host = await getHost();
 
-  // Try to detect client by domain in `clients.json` first (fallback for local dev)
-  const clientMeta = clients.find((c: any) => c.domain === host) || clients[0];
+  // Try to detect client by domain in `clients` first (support both `domain` and `domains` formats)
+  const clientMeta =
+    clients.find((c: any) =>
+      c.domain === host ||
+      (Array.isArray(c.domains) && c.domains.includes(host)),
+    ) || clients[0];
   const clientForSiteData = {
     ...clientMeta,
     type: clientMeta.type || "json",

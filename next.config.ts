@@ -10,7 +10,10 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
   reactStrictMode: true,
   images: {
-    remotePatterns: [{ hostname: "images.unsplash.com" }],
+    remotePatterns: [
+      { hostname: "images.unsplash.com" },
+      { hostname: "cdn.sanity.io", protocol: 'https', pathname: '/images/**' },
+    ],
     formats: ["image/avif", "image/webp"],
   },
   allowedDevOrigins: [

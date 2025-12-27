@@ -6,6 +6,7 @@ import {
 } from "@/sanity/queries";
 import type { SiteData } from "@/lib/types/site";
 import { z } from "zod";
+import { urlFor } from '@/sanity/lib/image'
 
 // Zod schemas for runtime validation
 const companySchema = z
@@ -100,6 +101,16 @@ export async function getSanityData(
         })
       : null;
 
+      // Map company slider images if present
+      try {
+        if (company?.slider && Array.isArray(company.slider)) {
+          company.slider = company.slider.map((it: any) => ({
+            ...it,
+            image: it?.image ? urlFor(it.image).width(1600).auto('format').url() : it?.image,
+          }))
+        }
+      } catch (e) {}
+
     const footer = clientDoc.footerRef
       ? await client.fetch("*[_id == $id][0]", { id: clientDoc.footerRef._ref })
       : null;
@@ -109,14 +120,36 @@ export async function getSanityData(
       { id: `navigation-${clientId}` },
     );
 
-    const services = await client.fetch(
+    let services = await client.fetch(
       '*[_type == "service" && clientId == $clientId] | order(title asc)',
       { clientId },
     );
-    const projects = await client.fetch(
+    let projects = await client.fetch(
       '*[_type == "project" && clientId == $clientId] | order(year desc)',
       { clientId },
     );
+
+    // Map common Sanity image objects to optimized URL strings using urlFor
+    try {
+      services = (services || []).map((s: any) => ({
+        ...s,
+        image: s?.image ? urlFor(s.image).width(800).auto('format').url() : s?.image,
+      }))
+    } catch (e) {
+      // continue with un-mapped services
+    }
+
+    try {
+      projects = (projects || []).map((p: any) => ({
+        ...p,
+        image: p?.image ? urlFor(p.image).width(1200).auto('format').url() : p?.image,
+        images: Array.isArray(p?.images)
+          ? p.images.map((im: any) => (im ? urlFor(im).width(1200).auto('format').url() : im))
+          : p.images,
+      }))
+    } catch (e) {
+      // continue with un-mapped projects
+    }
 
     const parsed = siteDataSchema.safeParse({
       company,

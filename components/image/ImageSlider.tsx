@@ -101,18 +101,18 @@ export function ImageSlider({ slides }: ImageSliderProps) {
                 }}
               >
                 {slide.image ? (
-                  <Image
-                    src={slide.image}
-                    alt={slide.title || `Slide ${index + 1}`}
-                    fill
-                    sizes="100vw"
-                    priority={index === 0}
-                    quality={75}
-                    className="absolute inset-0 w-full h-full object-cover"
-                    onError={() => {
-                      /* let Next/Image handle fallback */
-                    }}
-                  />
+                    <Image
+                      src={slide.image}
+                      alt={slide.title || `Slide ${index + 1}`}
+                      fill
+                      sizes="100vw"
+                      priority={index === 0}
+                      quality={65}
+                      className="absolute inset-0 w-full h-full object-cover"
+                      onError={() => {
+                        /* let Next/Image handle fallback */
+                      }}
+                    />
                 ) : (
                   <div
                     className="absolute inset-0 w-full h-full bg-linear-to-br from-primary/30 via-primary/20 to-accent/30 flex items-center justify-center"
