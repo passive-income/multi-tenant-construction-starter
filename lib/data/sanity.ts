@@ -92,6 +92,33 @@ export async function getSanityData(
   const clientDoc = await resolveClientByHost(client, host);
 
   if (clientDoc) {
+    // If the client doc explicitly points to a static JSON data source,
+    // return that file directly (useful for staging/prod mappings that
+    // should serve the repository's static JSON instead of Sanity docs).
+    // Expected fields on the client doc in Sanity:
+    // - `dataSource: 'json'` (or 'static')
+    // - optional `staticFileName`: e.g. 'static-mueller.json'
+    try {
+      const ds = clientDoc.dataSource || clientDoc.type || null;
+      if (ds === "json" || ds === "static") {
+        const staticFile = clientDoc.staticFileName || "static-mueller.json";
+        // dynamic import to avoid adding fs at module top-level in browser bundles
+        const fs = await import("fs/promises");
+        const path = await import("path");
+        try {
+          const filePath = path.join(process.cwd(), "data", staticFile);
+          const file = await fs.readFile(filePath, "utf-8");
+          const parsed = JSON.parse(file) as SiteData;
+          return parsed;
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.warn(`Failed to load static JSON '${staticFile}' for client ${clientDoc._id}:`, err);
+          // fall through to attempt normal Sanity-based lookup below
+        }
+      }
+    } catch (e) {
+      // ignore and continue with sanity fetch
+    }
     const clientId = clientDoc.clientId;
 
     // company and footer are stored as references on the client doc
