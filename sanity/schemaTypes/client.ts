@@ -50,7 +50,12 @@ export default defineType({
   preview: {
     select: {
       title: "clientId",
-      subtitle: "domains",
+      domains: "domains",
+    },
+    prepare(selection) {
+      const { title, domains } = selection as any;
+      const subtitle = Array.isArray(domains) ? domains.join(", ") : domains || "";
+      return { title, subtitle };
     },
   },
 });

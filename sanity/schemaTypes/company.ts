@@ -37,6 +37,14 @@ export default defineType({
         },
       ],
     },
+    {
+      name: "beforeAfter",
+      title: "Before / After Pairs",
+      type: "array",
+      of: [
+        { type: "beforeAfter" },
+      ],
+    },
     // Add more fields as needed (e.g. social links)
   ],
 });

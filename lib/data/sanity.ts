@@ -61,6 +61,7 @@ const projectSchema = z
 const siteDataSchema = z
   .object({
     company: companySchema.optional(),
+    slider: z.any().optional(),
     footer: footerSchema.optional(),
     navigation: navigationSchema.optional(),
     services: z.array(serviceSchema).optional(),
@@ -136,6 +137,14 @@ export async function getSanityData(
             image: it?.image ? urlFor(it.image).width(1600).auto('format').url() : it?.image,
           }))
         }
+        // Map company before/after pairs to URL strings when present
+        if (company?.beforeAfter && Array.isArray(company.beforeAfter)) {
+          company.beforeAfter = company.beforeAfter.map((it: any) => ({
+            ...it,
+            before: it?.before ? urlFor(it.before).width(1200).auto('format').url() : it?.before,
+            after: it?.after ? urlFor(it.after).width(1200).auto('format').url() : it?.after,
+          }))
+        }
       } catch (e) {}
 
     const footer = clientDoc.footerRef
@@ -180,6 +189,12 @@ export async function getSanityData(
 
     const parsed = siteDataSchema.safeParse({
       company,
+      slider: company
+        ? {
+            slides: company.slider,
+            beforeAfter: company.beforeAfter,
+          }
+        : undefined,
       footer,
       navigation,
       services,

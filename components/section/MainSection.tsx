@@ -21,10 +21,6 @@ interface MainSectionProps {
 
 export function MainSection({ data }: MainSectionProps) {
   const sliderSlides = data.slider?.slides || [];
-  const beforeAfterSources = sliderSlides
-    .map((s: any) => s.image)
-    .filter(Boolean);
-
   const beforeAfterArray = data.slider?.beforeAfter || [];
 
   const makeItemsFromBeforeAfter = (arr: any[]) =>
@@ -38,39 +34,13 @@ export function MainSection({ data }: MainSectionProps) {
       minHeight: it.minHeight ?? 320,
     }));
 
-  let itemsRow2: any[] = [];
-  let itemsRow3: any[] = [];
+  let beforeAfterItems: any[] = [];
 
   if (beforeAfterArray && beforeAfterArray.length > 0) {
-    itemsRow2 = makeItemsFromBeforeAfter(beforeAfterArray.slice(0, 2));
-    itemsRow3 = makeItemsFromBeforeAfter(beforeAfterArray.slice(0, 3));
+    beforeAfterItems = makeItemsFromBeforeAfter(beforeAfterArray);
   } else {
-    // fallback to using sliderSlides pairs when no explicit beforeAfter data exists
-    const makeItemsFromSlides = (start: number, count: number) => {
-      const items: any[] = [];
-      for (
-        let i = start;
-        i < Math.min(sliderSlides.length - 1, start + count);
-        i++
-      ) {
-        const before = sliderSlides[i];
-        const after = sliderSlides[i + 1];
-        if (!before?.image || !after?.image) continue;
-        items.push({
-          beforeSrc: before.image,
-          afterSrc: after.image,
-          beforeLabel: "Vorher",
-          afterLabel: "Nachher",
-          title: before.title || undefined,
-          subtitle: before.description || undefined,
-          minHeight: 320,
-        });
-      }
-      return items;
-    };
-
-    itemsRow2 = makeItemsFromSlides(0, 2);
-    itemsRow3 = makeItemsFromSlides(0, 3);
+    // No explicit before/after data provided — do not fall back to slider images.
+    beforeAfterItems = [];
   }
 
   return (
@@ -103,7 +73,7 @@ export function MainSection({ data }: MainSectionProps) {
       )}
 
       {/* Before / After showcase (uses first two slider images) */}
-      {itemsRow2.length > 0 && (
+      {beforeAfterItems.length > 0 && (
         <AnimatedSection className="py-16 bg-white">
           <div className="container">
             <div className="text-center mb-8">
@@ -114,21 +84,7 @@ export function MainSection({ data }: MainSectionProps) {
                 Zwei verschiedene Paare nebeneinander.
               </p>
             </div>
-            <BeforeAfterGridSection items={itemsRow2} columns={2} gap="1rem" />
-          </div>
-        </AnimatedSection>
-      )}
-
-      {itemsRow3.length > 0 && (
-        <AnimatedSection className="py-12 bg-muted/10">
-          <div className="container">
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-semibold">Weitere Paare</h3>
-              <p className="text-muted-foreground mt-2">
-                Drei Paare in einer Zeile (responsive).
-              </p>
-            </div>
-            <BeforeAfterGridSection items={itemsRow3} columns={3} gap="1rem" />
+            <BeforeAfterGridSection items={beforeAfterItems} columns={2} gap="1rem" />
           </div>
         </AnimatedSection>
       )}

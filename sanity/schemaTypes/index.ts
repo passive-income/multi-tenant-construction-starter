@@ -4,7 +4,8 @@ import service from "./service";
 import project from "./project";
 import footer from "./footer";
 import navigation from "./navigation";
+import beforeAfter from "./beforeAfter";
 
 export const schema = {
-  types: [client, company, service, project, footer, navigation],
+  types: [client, company, service, project, footer, navigation, beforeAfter],
 };
