@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-import { AnalyticsWrapper } from "@/components/AnalyticsWrapper";
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -56,7 +54,6 @@ export default function RootLayout({
         <div className="min-h-screen flex flex-col">
           <main id="main-content" className="flex-1" role="main">
             {children}
-            <AnalyticsWrapper />
           </main>
         </div>
       </body>

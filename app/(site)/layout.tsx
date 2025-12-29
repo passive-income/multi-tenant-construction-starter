@@ -1,3 +1,4 @@
+import { AnalyticsWrapper } from "@/components/AnalyticsWrapper";
 import { Header } from "@/components/Header";
 import Footer from "@/components/footer/Footer";
 
@@ -8,6 +9,7 @@ export default function SiteLayout({
 }) {
   return (
     <div className="min-h-screen flex flex-col">
+      <AnalyticsWrapper />
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />
