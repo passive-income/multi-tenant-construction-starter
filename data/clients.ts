@@ -8,14 +8,14 @@ const clients: ClientMeta[] = [
     name: "Alpha (local)",
     type: "sanity",
     source: dataset,
-    domains: ["localhost:3010", "alpha.local"],
+    domains: ["localhost:3001", "alpha.local"],
     theme: { primaryColor: "#0B74DE", accentColor: "#F97316" },
   },
   {
     name: "Beta (local)",
     type: "sanity",
     source: dataset,
-    domains: ["localhost:3001", "beta.local"],
+    domains: ["localhost:3010", "beta.local"],
     theme: { primaryColor: "#0F766E", accentColor: "#E11D48" },
   },
   {

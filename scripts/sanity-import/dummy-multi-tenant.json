@@ -17,12 +17,12 @@
     "_type": "footer",
     "locations": [
       {
-        "title": "Hamburg Office",
+        "title": "Büro Hamburg",
         "companyName": "Alpha Construction GmbH",
         "address": {
           "street": "Hauptstraße 12",
           "city": "Hamburg",
-          "country": "Germany"
+          "country": "Deutschland"
         },
         "phone": "+49 40 987654",
         "email": "kontakt@alpha-bau.de"
@@ -50,35 +50,85 @@
     "_id": "navigation-alpha",
     "_type": "navigation",
     "menuItems": [
-      { "label": "Home", "href": "/" },
-      { "label": "Services", "href": "/services" },
-      { "label": "Projects", "href": "/projects" },
-      { "label": "Contact", "href": "/contact" }
+      { "label": "Start", "href": "/" },
+      {
+        "label": "Leistungen",
+        "link": { "externalUrl": "/services" },
+        "subItems": [
+          {
+            "title": "Malerarbeiten",
+            "description": "Fassaden- und Innenanstriche, dekorative Techniken.",
+            "link": { "internalRef": { "_type": "reference", "_ref": "service-alpha-paint" } }
+          },
+          {
+            "title": "Bodenbelag",
+            "description": "Parkett, Laminat und industrietaugliche Bodenbeläge.",
+            "link": { "internalRef": { "_type": "reference", "_ref": "service-alpha-floor" } }
+          }
+        ]
+      },
+      { "label": "Referenzen", "href": "/projects" },
+      { "label": "Kontakt", "href": "/contact" }
     ]
   },
   {
     "_id": "service-alpha-paint",
     "_type": "service",
+    "slug": {"_type":"slug","current":"malerarbeiten"},
     "title": "Malerarbeiten",
     "description": "Fassaden- und Innenanstriche, dekorative Techniken.",
+    "imageUrl": "https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=1200&h=800&fit=crop&auto=format",
+    "measures": [
+      "Untergrundprüfung und Vorbereitung (Reinigen, Spachteln, Schleifen)",
+      "Geeignete Grundierung nach Untergrund",
+      "Hochwertige Beschichtungssysteme je nach Nutzung",
+      "Saubere Abdeckung und Kantenführung",
+      "Mehrlagenanstrich mit Endkontrolle"
+    ],
     "icon": "brush",
     "clientId": "alpha"
   },
   {
     "_id": "service-alpha-floor",
     "_type": "service",
+    "slug": {"_type":"slug","current":"bodenbelag"},
     "title": "Bodenbelag",
     "description": "Parkett, Laminat und industrietaugliche Bodenbeläge.",
+    "imageUrl": "https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=1200&h=800&fit=crop&auto=format",
+    "measures": [
+      "Untergrundprüfung und Ausgleichsspachtel",
+      "Feuchtigkeitsmessung und Kleberauswahl",
+      "Verlegung nach Herstellervorgaben",
+      "Randabschlüsse und Dehnfugen",
+      "Oberflächenbehandlung und Pflegehinweise"
+    ],
     "icon": "layers",
     "clientId": "alpha"
   },
   {
     "_id": "project-alpha-townhouse",
     "_type": "project",
-    "title": "Townhouse Renovation",
+    "slug": {"_type":"slug","current":"townhouse-renovation"},
+    "title": "Stadthaus-Renovierung",
     "description": "Komplettrenovierung eines Stadthauses in Hamburg.",
     "clientId": "alpha",
     "link": "https://alpha.example/projects/townhouse"
+  },
+  {
+    "_id": "page-alpha-impressum",
+    "_type": "page",
+    "title": "Impressum",
+    "slug": {"_type":"slug","current":"impressum"},
+    "description": "Rechtliche Angaben für Alpha Construction.",
+    "clientId": "alpha"
+  },
+  {
+    "_id": "page-alpha-datenschutz",
+    "_type": "page",
+    "title": "Datenschutz",
+    "slug": {"_type":"slug","current":"datenschutz"},
+    "description": "Datenschutzhinweise für Alpha Construction.",
+    "clientId": "alpha"
   },
   {
     "_id": "company-beta",
@@ -88,7 +138,7 @@
     "phone": "+41 44 123321",
     "email": "office@beta-builders.ch",
     "street": "Bauweg 5",
-    "city": "Zurich",
+    "city": "Zürich",
     "country": "Switzerland",
     "theme": "{\"primaryColor\": \"#0F766E\", \"accentColor\": \"#E11D48\"}",
     "slider": []
@@ -98,12 +148,12 @@
     "_type": "footer",
     "locations": [
       {
-        "title": "Zurich HQ",
+        "title": "Zürich Hauptsitz",
         "companyName": "Beta Builders AG",
         "address": {
           "street": "Bauweg 5",
-          "city": "Zurich",
-          "country": "Switzerland"
+          "city": "Zürich",
+          "country": "Schweiz"
         },
         "phone": "+41 44 123321",
         "email": "office@beta-builders.ch"
@@ -111,19 +161,19 @@
     ],
     "openingHours": {
       "fachmarkt": {
-        "title": "STORE",
-        "weekdays": "Mon–Fri: 08:30–17:00",
-        "saturday": "Sat: 09:00–14:00"
+        "title": "FACHMARKT",
+        "weekdays": "Mo–Fr: 08:30–17:00",
+        "saturday": "Sa: 09:00–14:00"
       },
       "office": {
-        "title": "OFFICE",
-        "weekdays": "Mon–Fri: 07:00–16:00",
-        "friday": "Fri: 07:00–15:00"
+        "title": "BÜRO",
+        "weekdays": "Mo–Fr: 07:00–16:00",
+        "friday": "Fr: 07:00–15:00"
       }
     },
     "links": [
       { "text": "Impressum", "href": "/impressum" },
-      { "text": "Privacy", "href": "/privacy" }
+      { "text": "Datenschutz", "href": "/datenschutz" }
     ],
     "copyright": "© Beta Builders 2025"
   },
@@ -132,7 +182,22 @@
     "_type": "navigation",
     "menuItems": [
       { "label": "Start", "href": "/" },
-      { "label": "Leistungen", "href": "/services" },
+      {
+        "label": "Leistungen",
+        "link": { "externalUrl": "/services" },
+        "subItems": [
+          {
+            "title": "Aushub",
+            "description": "Erdaushub und Fundamentarbeiten.",
+            "link": { "internalRef": { "_type": "reference", "_ref": "service-beta-excavation" } }
+          },
+          {
+            "title": "Dacharbeiten",
+            "description": "Dachsanierung und -abdichtung.",
+            "link": { "internalRef": { "_type": "reference", "_ref": "service-beta-roof" } }
+          }
+        ]
+      },
       { "label": "Referenzen", "href": "/projects" },
       { "label": "Kontakt", "href": "/contact" }
     ]
@@ -140,26 +205,61 @@
   {
     "_id": "service-beta-excavation",
     "_type": "service",
-    "title": "Excavation",
+    "slug": {"_type":"slug","current":"aushub"},
+    "title": "Aushub",
     "description": "Erdaushub und Fundamentarbeiten.",
+    "imageUrl": "https://images.unsplash.com/photo-1581094271901-8022df4466f9?w=1200&h=800&fit=crop&auto=format",
+    "measures": [
+      "Baugrunduntersuchung und Tragfähigkeitsbewertung",
+      "Absteckung und Sicherung der Baugrube",
+      "Maschineller Aushub unter Beachtung der Leitungen",
+      "Bodenentsorgung / Recycling nach Vorgaben",
+      "Verdichtung und Planum für Fundament"
+    ],
     "icon": "shovel",
     "clientId": "beta"
   },
   {
     "_id": "service-beta-roof",
     "_type": "service",
-    "title": "Roofing",
+    "slug": {"_type":"slug","current":"dacharbeiten"},
+    "title": "Dacharbeiten",
     "description": "Dachsanierung und -abdichtung.",
+    "imageUrl": "https://images.unsplash.com/photo-1632498815810-99f60080fef8?w=1200&h=800&fit=crop&auto=format",
+    "measures": [
+      "Bestandsaufnahme und Dachinspektion",
+      "Demontage schadhafter Komponenten",
+      "Unterkonstruktion und Dämmung erneuern",
+      "Abdichtungssysteme und Eindeckung fachgerecht",
+      "Anschlüsse, Entwässerung und Endabnahme"
+    ],
     "icon": "home",
     "clientId": "beta"
   },
   {
     "_id": "project-beta-apartment",
     "_type": "project",
-    "title": "Apartment Complex",
-    "description": "Neubau eines Mehrfamilienhauses in Zurich.",
+    "slug": {"_type":"slug","current":"museum-umbau"},
+    "title": "Wohnanlage",
+    "description": "Neubau eines Mehrfamilienhauses in Zürich.",
     "clientId": "beta",
     "link": "https://beta.example/projects/apartment"
+  },
+  {
+    "_id": "page-beta-impressum",
+    "_type": "page",
+    "title": "Impressum",
+    "slug": {"_type":"slug","current":"impressum"},
+    "description": "Rechtliche Angaben für Beta Builders.",
+    "clientId": "beta"
+  },
+  {
+    "_id": "page-beta-datenschutz",
+    "_type": "page",
+    "title": "Datenschutz",
+    "slug": {"_type":"slug","current":"datenschutz"},
+    "description": "Datenschutzhinweise für Beta Builders.",
+    "clientId": "beta"
   },
   {
     "_id": "client-alpha",

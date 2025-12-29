@@ -37,28 +37,38 @@ export function FooterMap({ address, href, fallbackSrc }: FooterMapProps) {
 
   const src = generatedMapUrl ?? fallbackSrc;
 
-  if (!src) {
-    return isLoading ? (
-      <MapLoader />
-    ) : (
-      <p className="text-sm text-muted">Adresse nicht verfügbar</p>
+  // Always render container with fixed dimensions to prevent CLS
+  if (!src && !isLoading) {
+    return (
+      <div style={{minHeight: '200px'}}>
+        <div style={{display: 'block', width: '100%', maxWidth: '400px', height: '200px', margin: '0 auto'}} className="sm:mx-0">
+          <p className="text-sm text-muted flex items-center justify-center h-full">Adresse nicht verfügbar</p>
+        </div>
+      </div>
     );
+  }
+
+  if (!src && isLoading) {
+    return <MapLoader />;
   }
 
   if (imgError) {
     return (
-      <div>
+      <div style={{minHeight: '200px'}}>
         <a
           href={href}
           target="_blank"
           rel="noreferrer noopener"
           className="block mb-2 mx-auto sm:mx-0"
+          style={{display: 'block', width: '100%', maxWidth: '400px', height: '200px'}}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/static-map-placeholder.svg"
             alt="Karte nicht verfügbar"
-            className="w-full max-w-105 sm:max-w-xs h-40 object-cover rounded shadow-md bg-white"
+            width="400"
+            height="160"
+            className="w-full h-full object-cover rounded shadow-md bg-white"
           />
         </a>
         <Attribution />
@@ -67,20 +77,23 @@ export function FooterMap({ address, href, fallbackSrc }: FooterMapProps) {
   }
 
   return (
-    <div>
+    <div style={{minHeight: '200px'}}>
       <a
         href={href}
         target="_blank"
         rel="noreferrer noopener"
         className="block mb-2 relative mx-auto sm:mx-0"
+        style={{display: 'block', width: '100%', maxWidth: '400px', height: '200px'}}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={src}
           alt="Standort"
+          width="400"
+          height="200"
           onLoad={() => setImgLoaded(true)}
           onError={() => setImgError(true)}
-          className="w-full max-w-105 sm:max-w-xs h-50 md:h-40 object-cover rounded shadow-md"
+          className="w-full h-full object-cover rounded shadow-md"
         />
         {(!imgLoaded || (isLoading && !generatedMapUrl)) && (
           <div className="absolute inset-0 bg-white/60 backdrop-blur-[1px] flex items-center justify-center rounded shadow-inner">
@@ -117,9 +130,12 @@ function Attribution({ loading }: { loading?: boolean }) {
 
 function MapLoader() {
   return (
-    <div
-      className="w-full max-w-105 sm:max-w-xs h-50 md:h-40 rounded shadow-md bg-gray-200 animate-pulse mx-auto sm:mx-0"
-      aria-label="Map wird vorbereitet"
-    />
+    <div style={{minHeight: '200px'}}>
+      <div
+        className="rounded shadow-md bg-gray-200 animate-pulse mx-auto sm:mx-0"
+        style={{width: '100%', maxWidth: '400px', height: '200px'}}
+        aria-label="Map wird vorbereitet"
+      />
+    </div>
   );
 }

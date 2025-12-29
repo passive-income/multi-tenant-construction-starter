@@ -1,8 +1,8 @@
 import { defineType } from "sanity";
 
 export default defineType({
-  name: "project",
-  title: "Project",
+  name: "page",
+  title: "Page",
   type: "document",
   fields: [
     {
@@ -15,20 +15,20 @@ export default defineType({
       name: "slug",
       title: "Slug",
       type: "slug",
-      options: {
-        source: "title",
-        maxLength: 96,
-      },
+      options: { source: "title", maxLength: 96 },
       validation: (Rule) => Rule.required(),
     },
-    { name: "description", title: "Description", type: "text" },
+    {
+      name: "description",
+      title: "Description",
+      type: "text",
+    },
     {
       name: "image",
-      title: "Cover Image",
+      title: "Hero Image",
       type: "image",
       options: { hotspot: true },
     },
     { name: "clientId", title: "Client ID", type: "string" },
-    { name: "link", title: "Project Link", type: "url" },
   ],
 });

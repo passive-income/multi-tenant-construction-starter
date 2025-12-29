@@ -1,16 +1,10 @@
-"use client";
-
-import { StyleSheetManager } from "styled-components";
+import StyledSheetWrapper from "@/components/StyledSheetWrapper";
 
 export default function StudioLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // Filter out unknown props (like disableTransition) from reaching DOM elements in Studio
-  return (
-    <StyleSheetManager shouldForwardProp={(prop) => prop !== "disableTransition"}>
-      {children}
-    </StyleSheetManager>
-  );
+  // Keep layout server-rendered; mount styled-components manager client-side via wrapper
+  return <StyledSheetWrapper>{children}</StyledSheetWrapper>;
 }

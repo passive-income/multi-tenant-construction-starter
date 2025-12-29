@@ -22,8 +22,8 @@ import type { SiteData } from "@/lib/types/site";
 function MinimalHeader() {
   const logoText = "Construction Multi-Tenant Starter";
   return (
-    <header className="w-full bg-white border-b border-border">
-      <div className="container header-nav mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+    <header className="w-full bg-white border-b border-border" style={{height: '64px', overflow: 'hidden'}}>
+      <div className="container header-nav mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16" style={{maxWidth: '100%'}}>
         <Link
           href="/"
           aria-label="Home"
@@ -74,25 +74,26 @@ export async function Header() {
     data?.company?.name ||
     "Construction Multi-Tenant Starter";
 
-  const navItems: MenuItem[] =
-    (data?.menuItems as MenuItem[]) ||
-    (staticData as unknown as MenuData)?.menuItems ||
-    [];
+  const navItems: MenuItem[] = ((data?.menuItems as MenuItem[]) || (staticData as unknown as MenuData)?.menuItems || [])
+    .map((item) => ({
+      ...item,
+      href: item.href || "/",
+      subItems: item.subItems
+        ?.map((sub) => ({ ...sub, href: sub.href || item.href || "/" }))
+        .filter((sub) => !!sub.href),
+    }))
+    .filter((item) => !!item.href);
 
   const navBase =
     "group inline-flex min-h-[44px] min-w-[44px] h-10 items-center justify-center rounded-md px-3 py-2 text-sm font-medium transition-colors";
   const activeClass = "bg-accent text-accent-foreground";
   const hoverClass = "hover:bg-accent hover:text-accent-foreground";
 
-  const isActive = (href: string) => {
-    if (href === "/") return pathname === "/";
-    if (href === "/services") return pathname.startsWith("/services");
-    return pathname === href;
-  };
+  const isActive = (href: string) => pathname === href;
 
   return (
-    <header className="w-full bg-white border-b border-border">
-      <div className="container header-nav mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+    <header className="w-full bg-white border-b border-border" style={{height: '64px', overflow: 'hidden'}}>
+      <div className="container header-nav mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16 relative overflow-x-clip" style={{maxWidth: '100%'}}>
         <Link
           href="/"
           aria-label="Home"
@@ -111,7 +112,11 @@ export async function Header() {
                     <NavigationMenuTrigger
                       className={`${isActive(item.href) ? activeClass : ""}`}
                     >
-                      {item.label}
+                      {item.href ? (
+                        <Link href={item.href}>{item.label}</Link>
+                      ) : (
+                        <span>{item.label}</span>
+                      )}
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
                       <ul className="grid w-100 gap-3 p-4 md:w-125 md:grid-cols-2 lg:w-150">

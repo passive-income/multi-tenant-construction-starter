@@ -51,6 +51,62 @@
     "accentColor": "#F59E0B",
     "enableAnimations": true
   },
+  "services": [
+    {
+      "slug": "malerarbeiten",
+      "title": "Malerarbeiten",
+      "description": "Tapezierarbeiten, Stuck- und Zierprofile, exklusive Malerarbeiten",
+      "descriptionHtml": "<h2>Malerarbeiten für Innen und Außen</h2><br /><p>Wir bieten professionelle Anstriche und Beschichtungen für Wohn- und Gewerbeobjekte. Unsere Leistungen umfassen <strong>Tapezierarbeiten</strong>, <em>Stuck- und Zierprofile</em> sowie exklusive Malerarbeiten.</p><br /><ul><li>Untergrundprüfung und Vorbereitung</li><li>Grundierung und Beschichtungssysteme</li><li>Saubere Abdeckung und Schutz</li></ul>",      "image": "https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=1200&h=800&fit=crop&auto=format",      "measures": [
+        "Untergrundprüfung und fachgerechte Vorbereitung (Reinigung, Spachteln, Schleifen)",
+        "Grundierung passend zum Untergrund und Material",
+        "Auswahl hochwertiger Farben und Beschichtungen nach Einsatzbereich",
+        "Saubere Abdeckung und Schutz umliegender Flächen",
+        "Mehrlagenanstrich mit Trocknungszeiten und Endkontrolle"
+      ],
+      "clientId": "mueller"
+    },
+    {
+      "slug": "bodenbelaege",
+      "title": "Bodenbelagsarbeiten",
+      "description": "Bodensanierung, Parkett schleifen, ableitfähige Böden",
+      "descriptionHtml": "<h2>Fachgerechte Bodenbelagsarbeiten</h2><br /><p>Von der <strong>Untergrundvorbereitung</strong> bis zur <em>Versiegelung</em> — wir verlegen Parkett, Laminat und industrielle Beläge nach Norm.</p><br /><ul><li>Feuchtigkeitsprüfung</li><li>Ausgleichsspachtel</li><li>Professionelle Verlegung</li></ul>",      "image": "https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=1200&h=800&fit=crop&auto=format",      "measures": [
+        "Aufmaß und Feuchtigkeitsprüfung des Untergrunds",
+        "Untergrundvorbereitung (Ausgleichsspachtel, Schleifen)",
+        "Geeignete Kleber und Beläge nach Nutzungsklasse",
+        "Fachgerechte Verlegung und Randanbindung",
+        "Versiegelung, Pflegehinweise und Abnahme"
+      ],
+      "clientId": "mueller"
+    },
+    {
+      "slug": "fassadenarbeiten",
+      "title": "Fassadenarbeiten",
+      "description": "Fassadenanstrich und Renovierung",
+      "descriptionHtml": "<h2>Langlebige Fassadenbeschichtungen</h2><br /><p>Wir analysieren den Zustand der Fassade, führen <em>Reinigung</em>, <strong>Putzreparaturen</strong> und geeignete Beschichtungen durch.</p><br /><ul><li>Zustandsanalyse</li><li>Hochdruckreinigung</li><li>Armierung und Beschichtung</li></ul>",      "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=800&fit=crop&auto=format",      "measures": [
+        "Zustandsanalyse inkl. Riss- und Feuchtebewertung",
+        "Reinigung (Hochdruck) und Algen-/Pilzbehandlung",
+        "Putzreparaturen und Armierung wo nötig",
+        "Diffusionsoffene Grundierung und Beschichtungssystem",
+        "Schutzmaßnahmen, Gerüst und Endabnahme"
+      ],
+      "clientId": "mueller"
+    },
+    {
+      "slug": "raumausstattung",
+      "title": "Raumausstattung",
+      "description": "JAB Anstoetz Händler, Akustiklösungen",
+      "descriptionHtml": "<h2>Raumausstattung & Akustik</h2><br /><p>Individuelle <strong>Textilien</strong> und <em>Akustiklösungen</em> für optimale Raumwirkung — von Planung bis Montage.</p><br /><ul><li>Material- und Designauswahl</li><li>Aufmaß und Konfektion</li><li>Fachgerechte Montage</li></ul>",
+      "image": "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1200&h=800&fit=crop&auto=format",
+      "measures": [
+        "Bedarfsanalyse und Raumakustik-Beratung",
+        "Material- und Designauswahl (Textilien, Wand-/Deckenpaneele)",
+        "Aufmaß und Konfektion",
+        "Montage mit geeigneten Befestigungssystemen",
+        "Funktionsprüfung und Pflegeempfehlungen"
+      ],
+      "clientId": "mueller"
+    }
+  ],
   "slider": {
     "slides": [
       {
@@ -145,22 +201,22 @@
         {
           "title": "Malerarbeiten",
           "description": "Tapezierarbeiten, Stuck- und Zierprofile, exklusive Malerarbeiten",
-          "href": "/services"
+          "link": { "type": "service", "slug": "malerarbeiten" }
         },
         {
           "title": "Bodenbelagsarbeiten",
           "description": "Bodensanierung, Parkett schleifen, ableitfähige Böden",
-          "href": "/services"
+          "link": { "type": "service", "slug": "bodenbelaege" }
         },
         {
           "title": "Fassadenarbeiten",
           "description": "Fassadenanstrich und Renovierung",
-          "href": "/services"
+          "link": { "type": "service", "slug": "fassadenarbeiten" }
         },
         {
           "title": "Raumausstattung",
           "description": "JAB Anstoetz Händler, Akustiklösungen",
-          "href": "/services"
+          "link": { "type": "service", "slug": "raumausstattung" }
         }
       ]
     },
@@ -185,6 +241,22 @@
       "description": "LEISTUNGSSTARK RUND UM SANIERUNG! – Wir bieten Ihnen ein umfangreiches Leistungsspektrum im Bereich Wohnungs- und Leerwohnungssanierung an. Wir überzeugen durch Erfahrung und Qualität."
     }
   ],
+  "pages": [
+    {
+      "title": "Impressum",
+      "slug": "impressum",
+      "description": "Rechtliche Angaben und Anbieterkennzeichnung.",
+      "contentHtml": "<h2>Impressum</h2><p><strong>Anbieter:</strong> MÜLLER BAU GMBH</p><p><strong>Anschrift:</strong> Kurfürstendamm 90, 10709 Berlin, Deutschland</p><p><strong>Kontakt:</strong> Telefon: +49 30 123456 · E-Mail: info@muellerbau.de</p><p><strong>Vertreten durch:</strong> Geschäftsführung</p><p><strong>Registereintrag:</strong> Handelsregister, Amtsgericht Berlin</p><p><strong>USt-IdNr.:</strong> DE123456789</p><h3>Haftung für Inhalte</h3><p>Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte verantwortlich. Nach §§ 8 bis 10 TMG sind wir jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.</p><h3>Haftung für Links</h3><p>Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber verantwortlich.</p><h3>Urheberrecht</h3><p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Beiträge Dritter sind entsprechend gekennzeichnet.</p>",
+      "image": "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?w=1200&h=800&fit=crop&auto=format"
+    },
+    {
+      "title": "Datenschutz",
+      "slug": "datenschutz",
+      "description": "Informationen zum Datenschutz gemäß DSGVO.",
+      "contentHtml": "<h2>Datenschutzerklärung</h2><p>Wir nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Personenbezogene Daten werden vertraulich und gemäß den gesetzlichen Datenschutzvorschriften sowie dieser Erklärung behandelt.</p><h3>Verantwortlicher</h3><p>MÜLLER BAU GMBH · Kurfürstendamm 90, 10709 Berlin · info@muellerbau.de</p><h3>Erhebung und Verarbeitung</h3><p>Wir verarbeiten personenbezogene Daten (z.B. Name, E-Mail, Telefonnummer) nur, soweit dies zur Bereitstellung unserer Leistungen erforderlich ist.</p><h3>Cookies</h3><p>Unsere Website verwendet Cookies, um bestimmte Funktionen bereitzustellen und die Nutzung zu analysieren. Sie können Cookies in Ihrem Browser deaktivieren.</p><h3>Analyse</h3><p>Es können anonymisierte Nutzungsdaten zur Verbesserung unseres Angebots ausgewertet werden.</p><h3>Ihre Rechte</h3><ul><li>Recht auf Auskunft, Berichtigung, Löschung</li><li>Recht auf Einschränkung der Verarbeitung</li><li>Recht auf Datenübertragbarkeit</li><li>Recht auf Widerspruch</li></ul><p>Wenden Sie sich zur Ausübung Ihrer Rechte an die oben genannten Kontaktdaten.</p>",
+      "image": "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1200&h=800&fit=crop&auto=format"
+    }
+  ],
   "companyDetails": [
     {
       "title": "Über Müller Bau",
@@ -203,40 +275,6 @@
       "subtitle": "Verantwortung in jedem Schritt",
       "description": "Wir setzen auf langlebige Materialien, energieeffiziente Lösungen und transparente Prozesse — zum Schutz der Umwelt und für die Zufriedenheit unserer Kunden.",
       "image": "https://images.unsplash.com/photo-1506912527923-1d9a0b7d78f9?w=1200&h=800&fit=crop&auto=format"
-    }
-  ],
-  "services": [
-    {
-      "title": "Malerarbeiten",
-      "description": "Tapezierarbeiten, Stuck- und Zierprofile, exklusive Malerarbeiten, Marmorputz, Industrieanstrich / Objektbau"
-    },
-    {
-      "title": "Bodenbelagsarbeiten",
-      "description": "Bodensanierung, Parkett schleifen, ableitfähige Böden für Krankenhäuser und Industrie"
-    },
-    {
-      "title": "Fassadenarbeiten",
-      "description": "Fassadenanstrich und Renovierung für Wohn- und Gewerbeobjekte"
-    },
-    {
-      "title": "Renovierung",
-      "description": "Modernisation of existing buildings. Komplette Renovierung von Wohnungen und Gewerberäumen"
-    },
-    {
-      "title": "New Construction",
-      "description": "Residential and commercial construction projects. Von der Planung bis zur Fertigstellung"
-    },
-    {
-      "title": "Raumausstattung",
-      "description": "JAB Anstoetz Händler, Akustiklösungen, perfekte Raumakustik"
-    },
-    {
-      "title": "Trocknungsservice",
-      "description": "Professionelle Trocknung nach Wasserschäden"
-    },
-    {
-      "title": "Schimmelsanierung",
-      "description": "Professionelle Schimmelbekämpfung und Sanierung"
     }
   ],
   "specialServices": [

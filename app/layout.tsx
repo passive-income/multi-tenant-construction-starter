@@ -7,11 +7,15 @@ import { AnalyticsWrapper } from "@/components/AnalyticsWrapper";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
+  adjustFontFallback: true,
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
+  adjustFontFallback: true,
 });
 
 export const metadata: Metadata = {
@@ -31,11 +35,16 @@ export default function RootLayout({
           rel="preload"
           as="image"
           href="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop&auto=format"
+          fetchPriority="high"
         />
         <link
           rel="preconnect"
           href="https://images.unsplash.com"
           crossOrigin="anonymous"
+        />
+        <link
+          rel="preconnect"
+          href="https://staticmap.openstreetmap.de"
         />
       </head>
       <body

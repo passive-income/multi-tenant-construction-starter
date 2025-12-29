@@ -28,4 +28,4 @@ export function proxy(req: NextRequest) {
   return NextResponse.rewrite(new URL("/no-client", req.url));
 }
 
-export const config = { matcher: ["/"] };
+export const config = { matcher: ["/:path*"] };

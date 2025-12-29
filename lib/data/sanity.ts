@@ -7,6 +7,7 @@ import {
 import type { SiteData } from "@/lib/types/site";
 import { z } from "zod";
 import { urlFor } from '@/sanity/lib/image'
+import { resolveLink } from '@/lib/utils/links'
 
 // Zod schemas for runtime validation
 const companySchema = z
@@ -30,15 +31,18 @@ const footerSchema = z
   })
   .passthrough();
 
+// Navigation coming from Sanity may contain `link` objects without concrete hrefs.
+// Be permissive here; we normalize to concrete hrefs separately at top-level `menuItems`.
 const navItem = z
   .object({
     label: z.string(),
-    href: z.string(),
+    href: z.string().optional(),
+    link: z.any().optional(),
     subItems: z.array(z.any()).optional(),
   })
   .passthrough();
 const navigationSchema = z
-  .object({ menuItems: z.array(navItem).optional() })
+  .object({ menuItems: z.array(z.any()).optional() })
   .passthrough();
 
 const serviceSchema = z
@@ -156,6 +160,30 @@ export async function getSanityData(
       { id: `navigation-${clientId}` },
     );
 
+    // Resolve navigation links to concrete hrefs
+    let menuItems: any[] = [];
+    try {
+      const rawItems = navigation?.menuItems || [];
+      menuItems = await Promise.all(
+        rawItems.map(async (item: any) => {
+          const href = await resolveLink(client, item.link || { externalUrl: item.href });
+          const subItems = Array.isArray(item.subItems)
+            ? await Promise.all(
+                item.subItems.map(async (sub: any) => ({
+                  title: sub.title,
+                  description: sub.description,
+                  href: await resolveLink(client, sub.link || { externalUrl: sub.href }),
+                }))
+              )
+            : undefined;
+          return { label: item.label, href, subItems };
+        })
+      );
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.warn('Failed to resolve navigation links', e);
+    }
+
     let services = await client.fetch(
       '*[_type == "service" && clientId == $clientId] | order(title asc)',
       { clientId },
@@ -169,7 +197,9 @@ export async function getSanityData(
     try {
       services = (services || []).map((s: any) => ({
         ...s,
-        image: s?.image ? urlFor(s.image).width(800).auto('format').url() : s?.image,
+        image: s?.image
+          ? urlFor(s.image).width(800).auto('format').url()
+          : s?.imageUrl ?? s?.image,
       }))
     } catch (e) {
       // continue with un-mapped services
@@ -197,6 +227,7 @@ export async function getSanityData(
         : undefined,
       footer,
       navigation,
+      menuItems,
       services,
       projects,
     });

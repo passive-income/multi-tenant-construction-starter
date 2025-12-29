@@ -20,9 +20,10 @@ export default defineType({
               validation: (Rule: any) => Rule.required(),
             },
             {
-              name: "href",
-              title: "Href",
-              type: "string",
+              name: "link",
+              title: "Link",
+              type: "link",
+              description: "Choose an existing document or enter an external URL",
               validation: (Rule: any) => Rule.required(),
             },
             {
@@ -35,7 +36,7 @@ export default defineType({
                   fields: [
                     { name: "title", title: "Title", type: "string" },
                     { name: "description", title: "Description", type: "text" },
-                    { name: "href", title: "Href", type: "string" },
+                    { name: "link", title: "Link", type: "link" },
                   ],
                 },
               ],

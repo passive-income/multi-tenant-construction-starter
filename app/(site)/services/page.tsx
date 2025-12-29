@@ -5,6 +5,8 @@ import { getSiteData } from "@/lib/data";
 import type { SiteData } from "@/lib/types/site";
 import { ServicesLoading } from "@/components/loading/ServicesLoading";
 import clients from "@/data/clients";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 async function ServicesContent() {
   const clientName = (await cookies()).get("clientId")?.value;
@@ -26,6 +28,17 @@ async function ServicesContent() {
           <div key={s.title} className="p-4 border rounded-lg">
             <h3 className="font-bold text-xl mb-2">{s.title}</h3>
             <p>{s.description}</p>
+            {(() => {
+              const slug = typeof s.slug === "string" ? s.slug : s?.slug?.current;
+              const href = slug ? `/services/${slug}` : undefined;
+              return href ? (
+                <div className="mt-4">
+                  <Button asChild>
+                    <Link href={href} aria-label={`Mehr zu ${s.title}`}>Mehr erfahren</Link>
+                  </Button>
+                </div>
+              ) : null;
+            })()}
           </div>
         ))}
       </div>

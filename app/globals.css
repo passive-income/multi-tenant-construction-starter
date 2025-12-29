@@ -199,6 +199,39 @@ summary:focus-visible {
   outline-offset: 2px;
 }
 
+/* Prevent CLS from navigation menu viewport */
+[data-slot="navigation-menu-viewport"] {
+  will-change: width, height;
+}
+
+/* Prevent header and footer from causing layout shifts */
+header {
+  contain: layout;
+}
+
+footer {
+  contain: layout;
+}
+
+/* Ensure navigation content doesn't overflow */
+.header-nav {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* Prevent text size changes from causing CLS */
+body {
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+}
+
+/* Force footer columns to maintain width */
+footer .grid > div {
+  min-width: 0;
+  max-width: 100%;
+}
+
 /* Improve touch target sizes for header/navigation without changing visual layout */
 .header-nav a,
 .header-nav button,
