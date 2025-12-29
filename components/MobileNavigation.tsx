@@ -26,8 +26,7 @@ const MobileNavigation = ({ logoText }: { logoText: string }) => {
     return pathname === href;
   };
 
-  const menuItems: MenuItem[] = (staticData as unknown as MenuData)
-    ?.menuItems || [
+  const rawItems: MenuItem[] = ((staticData as unknown as MenuData)?.menuItems as MenuItem[]) || [
     { label: "Startseite", href: "/" },
     { label: "Unternehmen", href: "/company" },
     { label: "Leistungen", href: "/services" },
@@ -35,6 +34,18 @@ const MobileNavigation = ({ logoText }: { logoText: string }) => {
     { label: "Referenzen", href: "/projects" },
     { label: "Kontakt", href: "/contact" },
   ];
+
+  const menuItems: MenuItem[] = rawItems
+    .map((item) => ({
+      ...item,
+      href: item.href || "/",
+      subItems: Array.isArray(item.subItems)
+        ? item.subItems
+            .map((sub) => ({ ...sub, href: sub.href || item.href || "/" }))
+            .filter((sub) => !!sub.href)
+        : undefined,
+    }))
+    .filter((item) => !!item.href);
 
   return (
     <div className="block md:hidden">
@@ -68,20 +79,23 @@ const MobileNavigation = ({ logoText }: { logoText: string }) => {
                     </div>
                     <div className="space-y-2.5">
                       {item.subItems.map((subItem) => {
-                        const subActive = isActive(subItem.href);
+                        const href = subItem.href || item.href || "/";
+                        const subActive = isActive(href);
                         return (
                           <Link
                             key={subItem.title}
-                            href={subItem.href}
+                            href={href}
                             className={`block py-2 hover:opacity-80 transition-opacity ${subActive ? "text-gray-500 font-semibold" : ""}`}
                             onClick={() => setOpen(false)}
                           >
                             <div className="font-semibold text-sm text-foreground mb-0.5 leading-tight">
                               {subItem.title}
                             </div>
-                            <div className="text-xs text-muted-foreground leading-relaxed">
-                              {subItem.description}
-                            </div>
+                            {subItem.description && (
+                              <div className="text-xs text-muted-foreground leading-relaxed">
+                                {subItem.description}
+                              </div>
+                            )}
                           </Link>
                         );
                       })}
@@ -89,8 +103,8 @@ const MobileNavigation = ({ logoText }: { logoText: string }) => {
                   </div>
                 ) : (
                   <Link
-                    href={item.href}
-                    className={`block text-base font-semibold py-3 hover:opacity-80 transition-opacity ${isActive(item.href) ? "text-gray-500 font-semibold" : "text-foreground"}`}
+                    href={item.href || "/"}
+                    className={`block text-base font-semibold py-3 hover:opacity-80 transition-opacity ${isActive(item.href || "/") ? "text-gray-500 font-semibold" : "text-foreground"}`}
                     onClick={() => setOpen(false)}
                   >
                     {item.label}
