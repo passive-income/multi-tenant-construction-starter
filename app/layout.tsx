@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import ClsLogger from "@/components/ClsLogger";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -55,6 +56,7 @@ export default function RootLayout({
           <main id="main-content" className="flex-1" role="main">
             {children}
           </main>
+          {process.env.NEXT_PUBLIC_LOG_CLS === "1" && <ClsLogger />}
         </div>
       </body>
     </html>

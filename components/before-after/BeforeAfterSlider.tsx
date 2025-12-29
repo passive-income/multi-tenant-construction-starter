@@ -116,8 +116,11 @@ export function BeforeAfterSlider({
       <img
         src={afterSrc}
         alt={afterLabel}
+        width={1920}
+        height={1080}
         className="absolute inset-0 h-full w-full object-cover"
         loading="lazy"
+        decoding="async"
       />
 
       {/* Before layer (clipped) */}
@@ -128,8 +131,11 @@ export function BeforeAfterSlider({
         <img
           src={beforeSrc}
           alt={beforeLabel}
+          width={1920}
+          height={1080}
           className="absolute inset-0 h-full w-full object-cover"
           loading="lazy"
+          decoding="async"
         />
       </div>
 

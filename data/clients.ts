@@ -15,14 +15,14 @@ const clients: ClientMeta[] = [
     name: "Beta (local)",
     type: "sanity",
     source: dataset,
-    domains: ["localhost:3010", "beta.local"],
+    domains: ["localhost:3002", "beta.local"],
     theme: { primaryColor: "#0F766E", accentColor: "#E11D48" },
   },
   {
     name: "Müller Bau GmbH",
     type: "json",
     source: "static-mueller.json",
-    domains: ["localhost:3000"],
+    domains: ["localhost:3000", "localhost:3010", "multi-tenant-construction-starter.vercel.app"],
     theme: { primaryColor: "#1E3A8A", accentColor: "#F59E0B" },
   },
   {

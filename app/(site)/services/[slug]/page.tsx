@@ -14,7 +14,14 @@ export default async function ServiceDetail({ params }: { params: Promise<{ slug
   const host = await getHost();
   const cookieStore = await cookies();
   const clientName = cookieStore.get("clientId")?.value;
-  const clientMeta = clientName ? clients.find((c: any) => c.name === clientName) : null;
+  const clientMeta =
+    (clientName && clients.find((c: any) => c.name === clientName)) ||
+    (host
+      ? // prefer JSON client for this host if available, else any matching client
+        clients.find((c: any) => c.domains?.includes(host) && c.type === "json") ||
+        clients.find((c: any) => c.domains?.includes(host))
+      : null) ||
+    clients.find((c: any) => c.type === "json");
 
   if (!clientMeta) {
     return (

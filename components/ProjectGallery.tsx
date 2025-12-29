@@ -23,6 +23,10 @@ export const ProjectGallery = ({ images }: { images: string[] }) => {
               <img
                 src={src}
                 alt={`Projekt ${idx + 1}`}
+                width={800}
+                height={800}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;

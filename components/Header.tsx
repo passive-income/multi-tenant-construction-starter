@@ -103,7 +103,7 @@ export async function Header() {
         </Link>
 
         {/* Desktop Navigation - hidden on tablet and smaller */}
-        <NavigationMenu className="hidden md:flex" aria-label="Main Navigation">
+        <NavigationMenu className="hidden md:flex" aria-label="Main Navigation" viewport={false}>
           <NavigationMenuList>
             {navItems.map((item: any) => (
               <NavigationMenuItem key={item.label || item.href}>
