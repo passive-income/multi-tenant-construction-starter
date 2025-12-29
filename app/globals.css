@@ -204,15 +204,6 @@ summary:focus-visible {
   will-change: width, height;
 }
 
-/* Prevent header and footer from causing layout shifts */
-header {
-  contain: layout;
-}
-
-footer {
-  contain: layout;
-}
-
 /* Ensure navigation content doesn't overflow */
 .header-nav {
   max-width: 100%;

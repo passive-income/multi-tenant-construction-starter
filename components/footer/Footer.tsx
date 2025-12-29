@@ -97,8 +97,8 @@ export default function Footer({ footer }: FooterProps) {
 
   return (
     <footer role="contentinfo" className="border-t bg-muted/50 shrink-0">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12" style={{minHeight: '350px'}}>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-gray-700" style={{gridTemplateRows: 'auto', minHeight: '250px', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))'}}>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-gray-700" style={{gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))'}}>
           {/* Column 1: Map / Anfahrt */}
           <div>
             <h3 className="text-sm font-semibold tracking-wider mb-4">

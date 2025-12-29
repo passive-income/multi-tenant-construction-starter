@@ -22,8 +22,8 @@ import type { SiteData } from "@/lib/types/site";
 function MinimalHeader() {
   const logoText = "Construction Multi-Tenant Starter";
   return (
-    <header className="w-full bg-white border-b border-border" style={{height: '64px', overflow: 'hidden'}}>
-      <div className="container header-nav mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16" style={{maxWidth: '100%'}}>
+    <header className="w-full h-16 shrink-0 bg-white border-b border-border">
+      <div className="container header-nav mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-full">
         <Link
           href="/"
           aria-label="Home"
@@ -92,8 +92,8 @@ export async function Header() {
   const isActive = (href: string) => pathname === href;
 
   return (
-    <header className="w-full bg-white border-b border-border" style={{height: '64px', overflow: 'hidden'}}>
-      <div className="container header-nav mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16 relative overflow-x-clip" style={{maxWidth: '100%'}}>
+    <header className="w-full h-16 shrink-0 bg-white border-b border-border">
+      <div className="container header-nav mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-full relative overflow-x-clip">
         <Link
           href="/"
           aria-label="Home"

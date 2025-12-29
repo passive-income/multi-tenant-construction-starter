@@ -77,8 +77,8 @@ export function ImageSlider({ slides }: ImageSliderProps) {
     <div
       className="relative w-full overflow-hidden"
       style={{
-        height: `calc(100vh - ${headerHeight})`,
-        minHeight: `calc(100vh - ${headerHeight})`,
+        height: `calc(100dvh - ${headerHeight})`,
+        minHeight: `calc(100dvh - ${headerHeight})`,
       }}
     >
       <Carousel
@@ -96,8 +96,8 @@ export function ImageSlider({ slides }: ImageSliderProps) {
               <div
                 className="relative w-full h-full"
                 style={{
-                  height: `calc(100vh - ${headerHeight})`,
-                  minHeight: `calc(100vh - ${headerHeight})`,
+                  height: `calc(100dvh - ${headerHeight})`,
+                  minHeight: `calc(100dvh - ${headerHeight})`,
                 }}
               >
                 {slide.image ? (
@@ -117,8 +117,8 @@ export function ImageSlider({ slides }: ImageSliderProps) {
                   <div
                     className="absolute inset-0 w-full h-full bg-linear-to-br from-primary/30 via-primary/20 to-accent/30 flex items-center justify-center"
                     style={{
-                      height: `calc(100vh - ${headerHeight})`,
-                      minHeight: `calc(100vh - ${headerHeight})`,
+                      height: `calc(100dvh - ${headerHeight})`,
+                      minHeight: `calc(100dvh - ${headerHeight})`,
                     }}
                   >
                     <div className="text-center text-muted-foreground">
