@@ -1,26 +1,21 @@
 import { NextResponse } from "next/server";
 import { getHost } from "@/lib/utils/host";
-import { getSiteData } from "@/lib/data";
-import clients from "@/data/clients";
+import { getSanityData } from "@/lib/data/sanity";
+import { getJsonData } from "@/lib/data/json";
 
 export async function GET() {
   const host = await getHost();
 
-  // Try to detect client by domain in `clients` first (support both `domain` and `domains` formats)
-  const clientMeta =
-    clients.find((c: any) =>
-      c.domain === host ||
-      (Array.isArray(c.domains) && c.domains.includes(host)),
-    ) || clients[0];
-  const clientForSiteData = {
-    ...clientMeta,
-    type: clientMeta.type || "json",
-    source: clientMeta.source ?? clientMeta.name ?? "",
-  };
-
   try {
-    const data = await getSiteData(clientForSiteData, host);
-    return NextResponse.json({ host, client: clientForSiteData.source, data });
+    let data = null;
+    let source = "sanity";
+    try {
+      data = await getSanityData(process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production", host);
+    } catch (e) {
+      source = "json";
+      data = await getJsonData("static-mueller.json");
+    }
+    return NextResponse.json({ host, source, data });
   } catch (err: any) {
     return NextResponse.json(
       { error: err.message || String(err) },

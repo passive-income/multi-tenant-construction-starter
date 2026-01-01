@@ -47,4 +47,9 @@ export default defineType({
     },
     // Add more fields as needed (e.g. social links)
   ],
+  preview: {
+    select: {
+      title: "name",
+    },
+  },
 });

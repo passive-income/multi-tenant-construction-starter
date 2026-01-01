@@ -2,6 +2,7 @@ import { FooterMap } from "./FooterMap";
 import Link from "next/link";
 
 interface FooterProps {
+  clientId?: string;
   footer?: {
     locations?: Array<{
       title: string;
@@ -29,12 +30,18 @@ interface FooterProps {
     copyright?: string;
     links?: Array<{
       text: string;
-      href: string;
+      href?: string;
+      pageRef?: {
+        _type: string;
+        slug?: {
+          current: string;
+        };
+      };
     }>;
   };
 }
 
-export default function Footer({ footer }: FooterProps) {
+export default function Footer({ clientId, footer }: FooterProps) {
   const defaultFooter = {
     locations: [
       {
@@ -74,7 +81,6 @@ export default function Footer({ footer }: FooterProps) {
   // derive map link / static image if location available
   const primaryLocation = footerData.locations?.[0];
   let mapHref = undefined;
-  let staticMapSrc = undefined;
   if (primaryLocation) {
     const addressParts = [];
     if (primaryLocation.address?.street)
@@ -87,11 +93,8 @@ export default function Footer({ footer }: FooterProps) {
       const lat = (primaryLocation as any).lat;
       const lon = (primaryLocation as any).lon;
       mapHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(lat + "," + lon)}`;
-      staticMapSrc = `https://staticmap.openstreetmap.de/staticmap.php?center=${lat},${lon}&zoom=15&size=400x200&markers=${lat},${lon},red-pushpin`;
     } else if (addressStr) {
       mapHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addressStr)}`;
-      // fallback: use a static map centered on the city (not exact without geocoding)
-      staticMapSrc = `https://staticmap.openstreetmap.de/staticmap.php?center=${encodeURIComponent(addressStr)}&zoom=13&size=400x200`;
     }
   }
 
@@ -105,6 +108,7 @@ export default function Footer({ footer }: FooterProps) {
               ANFAHRT
             </h3>
             <FooterMap
+              clientId={clientId}
               address={
                 primaryLocation
                   ? [
@@ -116,7 +120,6 @@ export default function Footer({ footer }: FooterProps) {
                   : ""
               }
               href={mapHref}
-              fallbackSrc={staticMapSrc}
             />
           </div>
 
@@ -222,11 +225,16 @@ export default function Footer({ footer }: FooterProps) {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between text-sm text-center text-gray-700">
           <div className="hidden sm:block">© {year} Müller Bau</div>
           <div className="flex items-center gap-4 mx-auto sm:mx-0">
-            {footerData.links?.map((link, idx) => (
-              <Link key={idx} href={link.href} className="hover:underline">
-                {link.text}
-              </Link>
-            ))}
+            {footerData.links?.map((link, idx) => {
+              const href = ('pageRef' in link && link.pageRef?.slug?.current)
+                ? `/${link.pageRef.slug.current}` 
+                : (link.href || '#');
+              return (
+                <Link key={idx} href={href} className="hover:underline">
+                  {link.text}
+                </Link>
+              );
+            })}
           </div>
         </div>
       </div>

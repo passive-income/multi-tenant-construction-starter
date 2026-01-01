@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { getHost } from "@/lib/utils/host";
 import { getClient } from "@/sanity/lib/client";
 import Image from "next/image";
-import { urlFor } from "@/sanity/lib/image";
+import { normalizeImageSrc } from "@/lib/utils/image";
 
 export const dynamic = "force-dynamic";
 
@@ -30,9 +30,9 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
     );
   }
 
-  const coverUrl = project?.image ? urlFor(project.image).width(1600).auto('format').url() : null;
+  const coverUrl = normalizeImageSrc(project?.image, { width: 1600, autoFormat: true });
   const gallery = Array.isArray(project?.images)
-    ? project.images.map((im: any) => (im ? urlFor(im).width(1200).auto('format').url() : null)).filter(Boolean)
+    ? project.images.map((im: any) => normalizeImageSrc(im, { width: 1200, autoFormat: true })).filter(Boolean)
     : [];
 
   return (

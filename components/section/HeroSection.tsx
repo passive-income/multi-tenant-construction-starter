@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import Image from "next/image";
+import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
+import { normalizeImageSrc } from "@/lib/utils/image";
 
 interface HeroSectionProps {
   title: string;
@@ -9,7 +11,7 @@ interface HeroSectionProps {
   description: string;
   linkText?: string;
   linkHref?: string;
-  imageUrl?: string;
+  imageUrl?: string | SanityImageSource;
   className?: string;
 }
 
@@ -22,6 +24,8 @@ export function HeroSection({
   imageUrl,
   className = "",
 }: HeroSectionProps) {
+  const normalizedSrc = normalizeImageSrc(imageUrl, { width: 1600 });
+
   return (
     <Card className={`border-0 shadow-lg ${className}`}>
       <CardContent className="p-8 md:p-12">
@@ -38,10 +42,10 @@ export function HeroSection({
               </Button>
             )}
           </div>
-          {imageUrl && (
+          {normalizedSrc && (
             <div className="relative h-64 md:h-96 bg-muted rounded-lg overflow-hidden">
               <Image
-                src={imageUrl}
+                src={normalizedSrc}
                 alt={title}
                 fill
                 className="object-cover"

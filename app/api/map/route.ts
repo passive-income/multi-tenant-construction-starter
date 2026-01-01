@@ -117,34 +117,16 @@ export async function GET(req: Request) {
 
     const url = new URL(req.url);
     const providedAddress = url.searchParams.get("address") || "";
+    const clientId = url.searchParams.get("clientId") || "default";
 
-    // load default location data
-    let loc: any = null;
-    try {
-      const raw = await fs.readFile(
-        path.join(process.cwd(), "data", "static-mueller.json"),
-        "utf8",
-      );
-      const json = JSON.parse(raw);
-      loc = json.footer?.locations?.[0] || json.company?.address || null;
-    } catch (e) {
-      // ignore
-    }
-
-    const presetCoords = pickLatLonFromLocation(loc);
-    const baseQuery = buildQueryFromLocation(loc);
-    const resolvedQuery = providedAddress || baseQuery;
-
-    if (!resolvedQuery && !presetCoords) {
+    if (!providedAddress) {
       return NextResponse.json(
-        { error: "No address provided and no default location found" },
+        { error: "No address provided" },
         { status: 400 },
       );
     }
 
-    const companyName =
-      loc?.companyName || loc?.title || loc?.name || "location";
-    const fileBase = `${slugifyName(companyName)}-position`;
+    const fileBase = `${clientId}-map`;
 
     const cacheDir = path.join(process.cwd(), "public", "generated-maps");
     await ensureDir(cacheDir);
@@ -172,26 +154,24 @@ export async function GET(req: Request) {
     }
 
     // resolve coordinates (only when no cached map exists)
-    let lat = presetCoords?.lat;
-    let lon = presetCoords?.lon;
+    let lat: number | undefined;
+    let lon: number | undefined;
     let geoDebug: any = null;
 
-    if (typeof lat !== "number" || typeof lon !== "number") {
-      const queries = [resolvedQuery];
-      if (resolvedQuery && !/germany/i.test(resolvedQuery))
-        queries.push(resolvedQuery + ", Germany");
+    const queries = [providedAddress];
+    if (providedAddress && !/germany/i.test(providedAddress))
+      queries.push(providedAddress + ", Germany");
 
-      for (const q of queries) {
-        const g = await geocode(q, apiKey).catch((e) => {
-          geoDebug = { query: q, error: String(e) };
-          return null;
-        });
-        if (g?.lat && g?.lon) {
-          lat = g.lat;
-          lon = g.lon;
-          geoDebug = { query: q, confidence: g.confidence };
-          break;
-        }
+    for (const q of queries) {
+      const g = await geocode(q, apiKey).catch((e) => {
+        geoDebug = { query: q, error: String(e) };
+        return null;
+      });
+      if (g?.lat && g?.lon) {
+        lat = g.lat;
+        lon = g.lon;
+        geoDebug = { query: q, confidence: g.confidence };
+        break;
       }
     }
 
@@ -206,17 +186,26 @@ export async function GET(req: Request) {
     const staticMapUrl = buildStaticMapUrl({ lat, lon }, apiKey);
     try {
       await fetchAndSave(staticMapUrl, pngPath);
+      
+      // Verify the file was actually saved and has content
+      const stat = await fs.stat(pngPath).catch(() => null);
+      if (!stat || stat.size === 0) {
+        throw new Error("Map image file was not saved or is empty");
+      }
+      
       const meta = {
-        address: resolvedQuery,
+        address: providedAddress,
         lat,
         lon,
         generatedAt: new Date().toISOString(),
         staticMapUrl,
-        companyName,
+        clientId,
       };
       await fs.writeFile(metaPath, JSON.stringify(meta, null, 2), "utf8");
+      console.log(`[Map API] Generated and saved map for clientId: ${clientId}, file size: ${stat.size} bytes`);
       return NextResponse.json({ url: `/generated-maps/${fileName}`, meta });
     } catch (e: any) {
+      console.error(`[Map API] Failed to generate map for clientId: ${clientId}`, e);
       return NextResponse.json(
         {
           error: "Failed to fetch static map",

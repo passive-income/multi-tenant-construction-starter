@@ -20,7 +20,11 @@ const companySchema = z
   .passthrough();
 
 const footerLink = z
-  .object({ text: z.string(), href: z.string() })
+  .object({ 
+    text: z.string(), 
+    href: z.string().optional(),
+    pageRef: z.any().optional(),
+  })
   .passthrough();
 const footerSchema = z
   .object({
@@ -64,10 +68,11 @@ const projectSchema = z
 
 const siteDataSchema = z
   .object({
-    company: companySchema.optional(),
+    clientId: z.string().optional(),
+    company: companySchema.nullable().optional(),
     slider: z.any().optional(),
-    footer: footerSchema.optional(),
-    navigation: navigationSchema.optional(),
+    footer: footerSchema.nullable().optional(),
+    navigation: navigationSchema.nullable().optional(),
     services: z.array(serviceSchema).optional(),
     projects: z.array(projectSchema).optional(),
   })
@@ -218,6 +223,7 @@ export async function getSanityData(
     }
 
     const parsed = siteDataSchema.safeParse({
+      clientId,
       company,
       slider: company
         ? {
@@ -238,7 +244,7 @@ export async function getSanityData(
         "Sanity site data validation failed:",
         parsed.error.format(),
       );
-      return { company, footer, navigation, services, projects } as SiteData;
+      return { clientId, company, footer, navigation, services, projects } as SiteData;
     }
 
     return parsed.data as SiteData;

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useRef, useState, useEffect } from "react";
+import Image from "next/image";
 import { useIsMobile } from "@/lib/hooks/useIsMobile";
 
 interface BeforeAfterSliderProps {
@@ -113,30 +114,38 @@ export function BeforeAfterSlider({
       onMouseLeave={() => setIsHoveringImages(false)}
     >
       {/* After layer (full) */}
-      <img
-        src={afterSrc}
-        alt={afterLabel}
-        width={1920}
-        height={1080}
-        className="absolute inset-0 h-full w-full object-cover"
-        loading="lazy"
-        decoding="async"
-      />
+      {afterSrc && afterSrc.trim().length > 0 ? (
+        <Image
+          src={afterSrc}
+          alt={afterLabel}
+          fill
+          sizes="100vw"
+          className="absolute inset-0 h-full w-full object-cover"
+          priority={false}
+          quality={70}
+        />
+      ) : (
+        <div className="absolute inset-0 h-full w-full bg-muted" />
+      )}
 
       {/* Before layer (clipped) */}
       <div
         className="absolute inset-0 overflow-hidden"
         style={{ width: `${position}%` }}
       >
-        <img
-          src={beforeSrc}
-          alt={beforeLabel}
-          width={1920}
-          height={1080}
-          className="absolute inset-0 h-full w-full object-cover"
-          loading="lazy"
-          decoding="async"
-        />
+        {beforeSrc && beforeSrc.trim().length > 0 ? (
+          <Image
+            src={beforeSrc}
+            alt={beforeLabel}
+            fill
+            sizes="100vw"
+            className="absolute inset-0 h-full w-full object-cover"
+            priority={false}
+            quality={70}
+          />
+        ) : (
+          <div className="absolute inset-0 h-full w-full bg-muted" />
+        )}
       </div>
 
       {/* Overlays (before/after) rendered via mapping to reduce duplication */}

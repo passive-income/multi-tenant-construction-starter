@@ -1,37 +1,47 @@
-import { cookies } from "next/headers";
 import { getHost } from "@/lib/utils/host";
-import { getSiteData } from "@/lib/data";
 import type { SiteData } from "@/lib/types/site";
 import { MainSection } from "@/components/section/MainSection";
 import { PreloadLCPImage } from "@/components/image/PreloadLCPImage";
-import clients from "@/data/clients";
+import { getClient } from "@/sanity/lib/client";
+import { getJsonData } from "@/lib/data/json";
+import { SectionRenderer } from "@/components/SectionRenderer";
+
+export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const clientName = (await cookies()).get("clientId")?.value;
-  const clientMeta = clients.find((c: any) => c.name === clientName);
+  const host = await getHost();
 
-  if (!clientMeta) {
-    return (
-      <main>
-        <p>No client found</p>
-      </main>
-    );
+  // Try Sanity-resolved home page first (resolve client by host internally)
+  try {
+    const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production";
+    const client = getClient(dataset);
+    const clientDoc = await client.fetch('*[_type == "client" && $host in domains][0]', { host });
+    const clientId = clientDoc?.clientId;
+    if (clientId) {
+      const homePage = await client.fetch(
+        '*[_type == "page" && slug.current == "home" && clientId == $clientId][0]',
+        { clientId }
+      );
+      if (homePage?.sections) {
+        return (
+          <main>
+            <SectionRenderer sections={homePage.sections} />
+          </main>
+        );
+      }
+    }
+  } catch (error) {
+    // ignore and fall back to JSON
   }
 
-  const clientForSiteData = {
-    ...clientMeta,
-    type: clientMeta.type || "json",
-    source: clientMeta.source ?? clientMeta.name ?? "",
-  };
-
-  const host = await getHost();
-  const data: SiteData = await getSiteData(clientForSiteData, host);
-  const firstSlideImage = data.slider?.slides?.[0]?.image;
+  // JSON fallback (repo-static)
+  const siteData: SiteData = await getJsonData("static-mueller.json");
+  const firstSlideImage = siteData.slider?.slides?.[0]?.image;
 
   return (
     <>
       {firstSlideImage && <PreloadLCPImage src={firstSlideImage} />}
-      <MainSection data={data} />
+      <MainSection data={siteData} />
     </>
   );
 }

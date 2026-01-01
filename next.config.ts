@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { hostname: "images.unsplash.com" },
       { hostname: "cdn.sanity.io", protocol: 'https', pathname: '/images/**' },
+      { hostname: "staticmap.openstreetmap.de" },
     ],
     formats: ["image/avif", "image/webp"],
   },

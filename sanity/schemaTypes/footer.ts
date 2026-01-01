@@ -67,11 +67,33 @@ export default defineType({
           type: "object",
           fields: [
             { name: "text", title: "Link Text", type: "string" },
-            { name: "href", title: "URL", type: "url" },
+            { 
+              name: "href", 
+              title: "External URL", 
+              type: "url",
+              description: "Full URL for external links (e.g., https://example.com)",
+            },
+            {
+              name: "pageRef",
+              title: "Internal Page",
+              type: "reference",
+              to: [{ type: "page" }],
+              description: "Link to an internal page (takes priority over external URL)",
+            },
           ],
         },
       ],
     },
     { name: "copyright", title: "Copyright", type: "string" },
   ],
+  preview: {
+    select: {
+      title: "copyright",
+    },
+    prepare({ title }) {
+      return {
+        title: title || "Footer Configuration",
+      };
+    },
+  },
 });

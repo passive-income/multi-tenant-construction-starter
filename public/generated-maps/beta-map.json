@@ -1,0 +1,8 @@
+{
+  "address": "Bauweg 5, Zürich",
+  "lat": 47.37497,
+  "lon": 8.528064,
+  "generatedAt": "2026-01-01T15:11:51.942Z",
+  "staticMapUrl": "https://maps.geoapify.com/v1/staticmap?style=osm-bright&width=600&height=300&center=lonlat%3A8.528064%2C47.37497&zoom=16&format=png&apiKey=6ec7537251fd4d73b5262ea253b00d2c&marker=lonlat%3A8.528064%2C47.37497%3Btype%3Amaterial%3Bcolor%3A%23ff0000%3Bsize%3A48",
+  "clientId": "beta"
+}

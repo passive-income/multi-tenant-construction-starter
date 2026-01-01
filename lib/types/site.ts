@@ -27,7 +27,13 @@ export interface CompanyData {
 
 export interface FooterLink {
   text: string;
-  href: string;
+  href?: string;
+  pageRef?: {
+    _type: string;
+    slug?: {
+      current: string;
+    };
+  };
 }
 
 export interface FooterData {
@@ -38,6 +44,7 @@ export interface FooterData {
 }
 
 export interface SiteData {
+  clientId?: string;
   company?: CompanyData;
   footer?: FooterData;
   theme?: Record<string, any>;

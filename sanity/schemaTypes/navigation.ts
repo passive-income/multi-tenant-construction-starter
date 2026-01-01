@@ -46,4 +46,16 @@ export default defineType({
       ],
     },
   ],
+  preview: {
+    select: {
+      items: "menuItems",
+    },
+    prepare({ items }) {
+      const count = Array.isArray(items) ? items.length : 0;
+      return {
+        title: "Navigation Menu",
+        subtitle: `${count} menu items`,
+      };
+    },
+  },
 });

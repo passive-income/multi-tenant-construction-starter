@@ -1,14 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 interface FooterMapProps {
+  clientId?: string;
   address: string | undefined;
   href?: string;
-  fallbackSrc?: string;
 }
 
-export function FooterMap({ address, href, fallbackSrc }: FooterMapProps) {
+export function FooterMap({ clientId, address, href }: FooterMapProps) {
   const [generatedMapUrl, setGeneratedMapUrl] = useState<string | undefined>(
     undefined,
   );
@@ -20,22 +21,32 @@ export function FooterMap({ address, href, fallbackSrc }: FooterMapProps) {
     if (!address) return;
     let cancelled = false;
     setIsLoading(true);
-    fetch(`/api/map?address=${encodeURIComponent(address)}`)
+    const params = new URLSearchParams({ address });
+    if (clientId) params.set('clientId', clientId);
+    fetch(`/api/map?${params.toString()}`)
       .then((r) => r.json())
       .then((j) => {
         if (cancelled) return;
-        if (j?.url) setGeneratedMapUrl(j.url);
+        if (j?.error) {
+          console.error('[FooterMap] API error:', j.error, j.detail);
+          setImgError(true);
+        } else if (j?.url) {
+          setGeneratedMapUrl(j.url);
+        }
       })
-      .catch(() => {})
+      .catch((e) => {
+        console.error('[FooterMap] Fetch failed:', e);
+        setImgError(true);
+      })
       .finally(() => {
         if (!cancelled) setIsLoading(false);
       });
     return () => {
       cancelled = true;
     };
-  }, [address]);
+  }, [address, clientId]);
 
-  const src = generatedMapUrl ?? fallbackSrc;
+  const src = generatedMapUrl;
 
   // Always render container with fixed dimensions to prevent CLS
   if (!src && !isLoading) {
@@ -62,12 +73,11 @@ export function FooterMap({ address, href, fallbackSrc }: FooterMapProps) {
           className="block mb-2 mx-auto sm:mx-0"
           style={{display: 'block', width: '100%', maxWidth: '400px', height: '200px'}}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src="/static-map-placeholder.svg"
             alt="Karte nicht verfügbar"
-            width="400"
-            height="160"
+            width={400}
+            height={200}
             className="w-full h-full object-cover rounded shadow-md bg-white"
           />
         </a>
@@ -85,13 +95,13 @@ export function FooterMap({ address, href, fallbackSrc }: FooterMapProps) {
         className="block mb-2 relative mx-auto sm:mx-0"
         style={{display: 'block', width: '100%', maxWidth: '400px', height: '200px'}}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={src}
+        <Image
+          src={src as string}
           alt="Standort"
-          width="400"
-          height="200"
-          onLoad={() => setImgLoaded(true)}
+          width={400}
+          height={200}
+          unoptimized
+          onLoadingComplete={() => setImgLoaded(true)}
           onError={() => setImgError(true)}
           className="w-full h-full object-cover rounded shadow-md"
         />

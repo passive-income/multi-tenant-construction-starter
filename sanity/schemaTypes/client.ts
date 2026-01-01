@@ -14,6 +14,13 @@ export default defineType({
         'Unique key, e.g. "mueller". Used for filtering and routing.',
     },
     {
+      name: "name",
+      title: "Client Name",
+      type: "string",
+      validation: (Rule) => Rule.required(),
+      description: "Display name for the client (e.g., 'MÜLLER BAU GMBH'). Used in navigation, footer, etc.",
+    },
+    {
       name: "domains",
       title: "Domains",
       type: "array",
@@ -49,13 +56,15 @@ export default defineType({
   ],
   preview: {
     select: {
-      title: "clientId",
-      domains: "domains",
+      name: "name",
+      clientId: "clientId",
     },
     prepare(selection) {
-      const { title, domains } = selection as any;
-      const subtitle = Array.isArray(domains) ? domains.join(", ") : domains || "";
-      return { title, subtitle };
+      const { name, clientId } = selection as any;
+      return { 
+        title: String(name || clientId || "Untitled Client"),
+        subtitle: String(clientId || ""),
+      };
     },
   },
 });

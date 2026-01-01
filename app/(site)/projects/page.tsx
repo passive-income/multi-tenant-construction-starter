@@ -1,24 +1,22 @@
 import { Suspense } from "react";
-import { cookies } from "next/headers";
 import { getHost } from "@/lib/utils/host";
-import { getSiteData } from "@/lib/data";
 import type { SiteData } from "@/lib/types/site";
 import { ProjectGallery } from "@/components/ProjectGallery";
 import { ProjectsLoading } from "@/components/loading/ProjectsLoading";
-import clients from "@/data/clients";
+import { getSanityData } from "@/lib/data/sanity";
+import { getJsonData } from "@/lib/data/json";
 
 async function ProjectsContent() {
-  const clientName = (await cookies()).get("clientId")?.value;
-  const clientMeta = clients.find((c: any) => c.name === clientName);
-  if (!clientMeta) return <p>No client found</p>;
-
-  const clientForSiteData = {
-    ...clientMeta,
-    type: clientMeta.type || "json",
-    source: clientMeta.source ?? clientMeta.name ?? "",
-  };
+  let data: SiteData | null = null;
   const host = await getHost();
-  const data: SiteData = await getSiteData(clientForSiteData, host);
+  try {
+    data = await getSanityData(process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production", host);
+  } catch (e) {
+    data = null;
+  }
+  if (!data) {
+    data = await getJsonData("static-mueller.json");
+  }
   return (
     <section className="container py-16">
       <h2 className="text-3xl mb-8 text-center">Projects</h2>

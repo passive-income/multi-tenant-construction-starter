@@ -9,8 +9,8 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import clients from "@/data/clients";
-import { getSiteData } from "@/lib/data";
+import { getJsonData } from "@/lib/data/json";
+import { getSanityData } from "@/lib/data/sanity";
 import MobileNavigation from "./MobileNavigation";
 import staticData from "@/data/static-mueller.json";
 import type { MenuData, MenuItem } from "@/lib/types/navigation";
@@ -39,34 +39,24 @@ function MinimalHeader() {
 
 export async function Header() {
   const pathname = (await getHeader("x-invoke-pathname")) ?? "/";
-  const cookieStore = await cookies();
-  const clientName = cookieStore.get("clientId")?.value;
-  const clientMeta = clientName
-    ? clients.find((c: any) => c.name === clientName)
-    : null;
-
-  if (!clientMeta) {
-    return <MinimalHeader />;
-  }
-
-  // Normalize shape for getSiteData
-  const clientForSiteData = {
-    ...clientMeta,
-    type: clientMeta.type ?? "json",
-    source: clientMeta.source ?? clientMeta.name ?? "",
-  };
-
-  // Defensive: if malformed, fallback to minimal header
-  if (!clientForSiteData.type || !clientForSiteData.source) {
-    return <MinimalHeader />;
-  }
-
+  // Prefer resolving tenant via Sanity (single source of truth). If Sanity
+  // doesn't provide data for this host, fall back to the repository's
+  // static JSON file `data/static-mueller.json`.
   let data: SiteData | null = null;
   try {
     const host = await getHost();
-    data = await getSiteData(clientForSiteData, host);
-  } catch {
-    return <MinimalHeader />;
+    // Try Sanity first (uses client resolution by host internally)
+    data = await getSanityData(process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production", host);
+  } catch (e) {
+    data = null;
+  }
+
+  if (!data) {
+    try {
+      data = await getJsonData("static-mueller.json");
+    } catch (e) {
+      return <MinimalHeader />;
+    }
   }
 
   const logoText =

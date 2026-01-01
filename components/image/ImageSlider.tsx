@@ -12,15 +12,19 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
+import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
+import { normalizeImageSrc } from "@/lib/utils/image";
+
+interface SlideItem {
+  image?: string | SanityImageSource | null;
+  title?: string;
+  description?: string;
+  linkText?: string;
+  linkHref?: string;
+}
 
 interface ImageSliderProps {
-  slides: Array<{
-    image: string;
-    title?: string;
-    description?: string;
-    linkText?: string;
-    linkHref?: string;
-  }>;
+  slides: Array<SlideItem>;
 }
 
 export function ImageSlider({ slides }: ImageSliderProps) {
@@ -91,7 +95,11 @@ export function ImageSlider({ slides }: ImageSliderProps) {
         }}
       >
         <CarouselContent className="h-full ml-0 [&>div]:h-full">
-          {slides.map((slide, index) => (
+          {slides.map((slide, index) => {
+            // Normalize image to a usable URL or null
+            const normalizedSrc = normalizeImageSrc(slide.image, { width: 1920 });
+
+            return (
             <CarouselItem key={index} className="h-full pl-0 basis-full">
               <div
                 className="relative w-full h-full"
@@ -100,9 +108,9 @@ export function ImageSlider({ slides }: ImageSliderProps) {
                   minHeight: `calc(100dvh - ${headerHeight})`,
                 }}
               >
-                {slide.image ? (
+                {normalizedSrc ? (
                     <Image
-                      src={slide.image}
+                      src={normalizedSrc}
                       alt={slide.title || `Slide ${index + 1}`}
                       fill
                       sizes="100vw"
@@ -140,7 +148,7 @@ export function ImageSlider({ slides }: ImageSliderProps) {
                           {slide.description}
                         </p>
                       )}
-                      {slide.linkText && slide.linkHref && (
+                      {slide.linkText && typeof slide.linkHref === "string" && slide.linkHref.trim().length > 0 && (
                         <Button
                           size="lg"
                           variant="secondary"
@@ -155,7 +163,8 @@ export function ImageSlider({ slides }: ImageSliderProps) {
                 )}
               </div>
             </CarouselItem>
-          ))}
+            );
+          })}
         </CarouselContent>
         <CarouselPrevious
           className="left-4 md:left-8 lg:left-12 size-10 md:size-12 cursor-pointer"
