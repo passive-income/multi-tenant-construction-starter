@@ -54,7 +54,7 @@ export default function ClsLogger() {
     const observer = new PerformanceObserver((list) => {
       for (const entry of list.getEntries() as PerformanceEntry[]) {
         // Layout shift specific fields not in standard PerformanceEntry type
-        // @ts-expect-error - hadRecentInput and value are layout-shift specific
+
         const ls = entry as any;
         if (ls?.hadRecentInput) continue; // ignore input-driven shifts
         const value = Number(ls?.value || 0);
