@@ -1,24 +1,24 @@
-import { ImageSliderLoading } from "@/components/loading/ImageSliderLoading";
-import { HeroSectionsLoading } from "@/components/loading/HeroSectionsLoading";
-import { CompanySectionLoading } from "@/components/loading/CompanySectionLoading";
-import { ServicesLoading } from "@/components/loading/ServicesLoading";
-import { ProjectsLoading } from "@/components/loading/ProjectsLoading";
+import { CompanySectionLoading } from '@/components/loading/CompanySectionLoading';
+import { HeroSectionsLoading } from '@/components/loading/HeroSectionsLoading';
+import { ImageSliderLoading } from '@/components/loading/ImageSliderLoading';
+import { ProjectsLoading } from '@/components/loading/ProjectsLoading';
+import { ServicesLoading } from '@/components/loading/ServicesLoading';
 
 export default function Loading() {
   return (
     <>
       {/* Image Slider Skeleton */}
       <ImageSliderLoading />
-      
+
       {/* Hero Sections Skeleton */}
       <HeroSectionsLoading />
-      
+
       {/* Company Section Skeleton */}
       <CompanySectionLoading />
-      
+
       {/* Services Section Skeleton */}
       <ServicesLoading />
-      
+
       {/* References/Projects Section Skeleton */}
       <section className="py-16 bg-white">
         <div className="container">
@@ -32,7 +32,7 @@ export default function Loading() {
           </div>
         </div>
       </section>
-      
+
       {/* Contact CTA Section Skeleton */}
       <section className="py-16 bg-primary/10">
         <div className="container text-center">

@@ -1,5 +1,5 @@
-import { urlFor } from "@/sanity/lib/image";
-import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
+import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import { urlFor } from '@/sanity/lib/image';
 
 /**
  * Normalize mixed image sources to a usable URL string or null.
@@ -11,14 +11,14 @@ export function normalizeImageSrc(
   opts?: { width?: number; autoFormat?: boolean },
 ): string | null {
   if (!src) return null;
-  if (typeof src === "string") {
+  if (typeof src === 'string') {
     const s = src.trim();
     return s.length > 0 ? s : null;
   }
   try {
     let builder = urlFor(src as SanityImageSource);
     if (opts?.width) builder = builder.width(opts.width);
-    if (opts?.autoFormat !== false) builder = builder.auto("format");
+    if (opts?.autoFormat !== false) builder = builder.auto('format');
     return builder.url();
   } catch {
     return null;

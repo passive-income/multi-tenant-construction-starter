@@ -1,6 +1,5 @@
-import React from "react";
-import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
-import { normalizeImageSrc } from "@/lib/utils/image";
+import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import { normalizeImageSrc } from '@/lib/utils/image';
 
 export function PreloadLCPImage({ src }: { src: string | SanityImageSource }) {
   // Normalize to a usable URL string, else return null
@@ -23,4 +22,4 @@ export function PreloadLCPImage({ src }: { src: string | SanityImageSource }) {
   );
 }
 
-export default PreloadLCPImage
+export default PreloadLCPImage;

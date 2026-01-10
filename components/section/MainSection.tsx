@@ -1,29 +1,20 @@
-import { AnimatedSection } from "@/components/section/AnimatedSection";
-import { ProjectGallery } from "@/components/ProjectGallery";
-import { HeroSection } from "./HeroSection";
-import { ImageSlider } from "@/components/image/ImageSlider";
-import { BeforeAfterGridSection } from "@/components/before-after/BeforeAfterGridSection";
-import CompanySection from "@/components/section/CompanySection";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import ServicesSection from "./ServicesSection";
-import type { Testimonial } from "@/lib/types/testimonial";
-import type { FAQ } from "@/lib/types/faq";
-import type { TeamMember } from "@/lib/types/teamMember";
-import type { Certification } from "@/lib/types/certification";
-import { TestimonialCard } from "@/components/testimonial/TestimonialCard";
-import { FAQAccordion } from "@/components/faq/FAQAccordion";
-import { TeamMemberCard } from "@/components/team/TeamMemberCard";
-import { Card as CertCard } from "@/components/ui/card";
-import { Calendar, Award } from "lucide-react";
-import Image from "next/image";
+import { Award, Calendar } from 'lucide-react';
+import Link from 'next/link';
+import { BeforeAfterGridSection } from '@/components/before-after/BeforeAfterGridSection';
+import { FAQAccordion } from '@/components/faq/FAQAccordion';
+import { ImageSlider } from '@/components/image/ImageSlider';
+import { ProjectGallery } from '@/components/ProjectGallery';
+import { AnimatedSection } from '@/components/section/AnimatedSection';
+import CompanySection from '@/components/section/CompanySection';
+import { TeamMemberCard } from '@/components/team/TeamMemberCard';
+import { TestimonialCard } from '@/components/testimonial/TestimonialCard';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle, Card as CertCard } from '@/components/ui/card';
+import type { Certification } from '@/lib/types/certification';
+import type { TeamMember } from '@/lib/types/teamMember';
+import type { Testimonial } from '@/lib/types/testimonial';
+import { HeroSection } from './HeroSection';
+import ServicesSection from './ServicesSection';
 
 interface MainSectionProps {
   data: any;
@@ -37,8 +28,8 @@ export function MainSection({ data }: MainSectionProps) {
     arr.map((it: any) => ({
       beforeSrc: it.before,
       afterSrc: it.after,
-      beforeLabel: it.beforeLabel || "Vorher",
-      afterLabel: it.afterLabel || "Nachher",
+      beforeLabel: it.beforeLabel || 'Vorher',
+      afterLabel: it.afterLabel || 'Nachher',
       title: it.title,
       subtitle: it.subtitle,
       minHeight: it.minHeight ?? 320,
@@ -72,10 +63,10 @@ export function MainSection({ data }: MainSectionProps) {
               imageUrl={hero.image}
               className={`bg-linear-to-r ${
                 index % 3 === 0
-                  ? "from-primary/10 to-primary/5"
+                  ? 'from-primary/10 to-primary/5'
                   : index % 3 === 1
-                    ? "from-accent/10 to-accent/5"
-                    : "from-secondary/10 to-secondary/5"
+                    ? 'from-accent/10 to-accent/5'
+                    : 'from-secondary/10 to-secondary/5'
               }`}
             />
           ))}
@@ -87,22 +78,15 @@ export function MainSection({ data }: MainSectionProps) {
         <AnimatedSection className="py-16 bg-white">
           <div className="container">
             <div className="text-center mb-8">
-              <h2 className="text-3xl md:text-4xl font-bold">
-                Vorher / Nachher - Beispiele
-              </h2>
-              <p className="text-muted-foreground mt-2">
-                Zwei verschiedene Paare nebeneinander.
-              </p>
+              <h2 className="text-3xl md:text-4xl font-bold">Vorher / Nachher - Beispiele</h2>
+              <p className="text-muted-foreground mt-2">Zwei verschiedene Paare nebeneinander.</p>
             </div>
             <BeforeAfterGridSection items={beforeAfterItems} columns={2} gap="1rem" />
           </div>
         </AnimatedSection>
       )}
 
-      <CompanySection
-        company={data.company}
-        companySections={data.companySections}
-      />
+      <CompanySection company={data.company} companySections={data.companySections} />
 
       {/* Services Section */}
       <ServicesSection services={data.services} />
@@ -121,20 +105,13 @@ export function MainSection({ data }: MainSectionProps) {
                     <p className="mb-4">{service.description}</p>
                     {service.features && service.features.length > 0 && (
                       <ul className="list-disc list-inside space-y-2 text-sm text-muted-foreground mb-4">
-                        {service.features.map(
-                          (feature: string, idx: number) => (
-                            <li
-                              key={idx}
-                              dangerouslySetInnerHTML={{ __html: feature }}
-                            />
-                          ),
-                        )}
+                        {service.features.map((feature: string, idx: number) => (
+                          <li key={idx} dangerouslySetInnerHTML={{ __html: feature }} />
+                        ))}
                       </ul>
                     )}
                     {service.description2 && (
-                      <p className="text-sm text-muted-foreground mb-4">
-                        {service.description2}
-                      </p>
+                      <p className="text-sm text-muted-foreground mb-4">{service.description2}</p>
                     )}
                     {service.linkText && service.linkHref && (
                       <Button variant="outline" asChild>
@@ -154,15 +131,11 @@ export function MainSection({ data }: MainSectionProps) {
         <div className="container">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Referenzen</h2>
-            <p className="text-muted-foreground">
-              Von der Idee, bis zur Umsetzung!
-            </p>
+            <p className="text-muted-foreground">Von der Idee, bis zur Umsetzung!</p>
           </div>
 
           <div className="mb-8">
-            <ProjectGallery
-              images={data.projects.map((p: any) => p.images).flat()}
-            />
+            <ProjectGallery images={data.projects.flatMap((p: any) => p.images)} />
           </div>
 
           <div className="text-center">
@@ -178,9 +151,7 @@ export function MainSection({ data }: MainSectionProps) {
         <AnimatedSection className="py-16 bg-muted/30">
           <div className="container">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Was unsere Kunden sagen
-              </h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Was unsere Kunden sagen</h2>
               <p className="text-muted-foreground">
                 Erfahrungen und Bewertungen zufriedener Kunden
               </p>
@@ -265,13 +236,17 @@ export function MainSection({ data }: MainSectionProps) {
                         {cert.validFrom && (
                           <div className="flex items-center">
                             <Calendar className="h-3 w-3 mr-2" />
-                            <span>Gültig ab: {new Date(cert.validFrom).toLocaleDateString("de-DE")}</span>
+                            <span>
+                              Gültig ab: {new Date(cert.validFrom).toLocaleDateString('de-DE')}
+                            </span>
                           </div>
                         )}
                         {cert.validUntil && (
                           <div className="flex items-center">
                             <Calendar className="h-3 w-3 mr-2" />
-                            <span>Gültig bis: {new Date(cert.validUntil).toLocaleDateString("de-DE")}</span>
+                            <span>
+                              Gültig bis: {new Date(cert.validUntil).toLocaleDateString('de-DE')}
+                            </span>
                           </div>
                         )}
                       </div>
@@ -289,12 +264,8 @@ export function MainSection({ data }: MainSectionProps) {
         <AnimatedSection className="py-16 bg-white">
           <div className="container max-w-4xl">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Häufig gestellte Fragen
-              </h2>
-              <p className="text-muted-foreground">
-                Antworten auf die wichtigsten Fragen
-              </p>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Häufig gestellte Fragen</h2>
+              <p className="text-muted-foreground">Antworten auf die wichtigsten Fragen</p>
             </div>
             <FAQAccordion faqs={data.faqs} showSearch={false} />
           </div>
@@ -306,33 +277,30 @@ export function MainSection({ data }: MainSectionProps) {
         <AnimatedSection className="py-16 bg-primary text-primary-foreground">
           <div className="container text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              {data.contact.ctaTitle || "ERHALTEN SIE IHR ANGEBOT"}
+              {data.contact.ctaTitle || 'ERHALTEN SIE IHR ANGEBOT'}
             </h2>
             <p className="text-lg mb-8 max-w-2xl mx-auto">
               {data.contact.ctaDescription ||
-                "Haben Sie eine Idee, einen Wunsch? Wir können Ihnen helfen diesen umzusetzen! Nehmen Sie Kontakt zu uns auf und wir helfen und beraten Sie gerne!"}
+                'Haben Sie eine Idee, einen Wunsch? Wir können Ihnen helfen diesen umzusetzen! Nehmen Sie Kontakt zu uns auf und wir helfen und beraten Sie gerne!'}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               {data.contact.ctaButtonText && data.contact.ctaButtonHref && (
                 <Button size="lg" variant="secondary" asChild>
-                  <Link href={data.contact.ctaButtonHref}>
-                    {data.contact.ctaButtonText}
+                  <Link href={data.contact.ctaButtonHref}>{data.contact.ctaButtonText}</Link>
+                </Button>
+              )}
+              {data.contact.secondaryButtonText && data.contact.secondaryButtonHref && (
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="bg-transparent border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10"
+                  asChild
+                >
+                  <Link href={data.contact.secondaryButtonHref}>
+                    {data.contact.secondaryButtonText}
                   </Link>
                 </Button>
               )}
-              {data.contact.secondaryButtonText &&
-                data.contact.secondaryButtonHref && (
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="bg-transparent border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10"
-                    asChild
-                  >
-                    <Link href={data.contact.secondaryButtonHref}>
-                      {data.contact.secondaryButtonText}
-                    </Link>
-                  </Button>
-                )}
             </div>
           </div>
         </AnimatedSection>

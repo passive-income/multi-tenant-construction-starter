@@ -1,16 +1,16 @@
-import { Suspense } from "react";
-import { getHost } from "@/lib/utils/host";
-import { getServices } from "@/lib/data/streaming";
-import { ServicesLoading } from "@/components/loading/ServicesLoading";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import Image from 'next/image';
+import Link from 'next/link';
+import { Suspense } from 'react';
+import { ServicesLoading } from '@/components/loading/ServicesLoading';
+import { Button } from '@/components/ui/button';
+import { getServices } from '@/lib/data/streaming';
+import { getHost } from '@/lib/utils/host';
 
 // Individual service card as async component (can fetch individually if needed)
 async function ServiceCard({ service }: { service: any }) {
-  const slug = typeof service.slug === "string" ? service.slug : service?.slug?.current;
+  const slug = typeof service.slug === 'string' ? service.slug : service?.slug?.current;
   const href = slug ? `/services/${slug}` : undefined;
-  
+
   return (
     <div className="p-4 border rounded-lg bg-white shadow-sm hover:shadow-md transition-shadow">
       {service.image && (
@@ -41,7 +41,7 @@ async function ServiceCard({ service }: { service: any }) {
 async function ServicesGrid() {
   const host = await getHost();
   const services = await getServices(host);
-  
+
   if (!services || services.length === 0) {
     return (
       <div className="text-center py-12">
@@ -49,7 +49,7 @@ async function ServicesGrid() {
       </div>
     );
   }
-  
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {services.map((service: any, index: number) => (
@@ -78,7 +78,7 @@ export default function ServicesPage() {
       <p className="text-center text-muted-foreground mb-12">
         Professionelle Bau- und Renovierungsarbeiten
       </p>
-      
+
       <Suspense fallback={<ServicesLoading />}>
         <ServicesGrid />
       </Suspense>

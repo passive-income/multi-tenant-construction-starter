@@ -1,22 +1,22 @@
-import { Suspense } from "react";
-import { getHost } from "@/lib/utils/host";
-import type { SiteData } from "@/lib/types/site";
-import { ServicesLoading } from "@/components/loading/ServicesLoading";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { getSanityData } from "@/lib/data/sanity";
-import { getJsonData } from "@/lib/data/json";
+import Link from 'next/link';
+import { Suspense } from 'react';
+import { ServicesLoading } from '@/components/loading/ServicesLoading';
+import { Button } from '@/components/ui/button';
+import { getJsonData } from '@/lib/data/json';
+import { getSanityData } from '@/lib/data/sanity';
+import type { SiteData } from '@/lib/types/site';
+import { getHost } from '@/lib/utils/host';
 
 async function ServicesContent() {
   let data: SiteData | null = null;
   const host = await getHost();
   try {
-    data = await getSanityData(process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production", host);
-  } catch (e) {
+    data = await getSanityData(process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production', host);
+  } catch (_e) {
     data = null;
   }
   if (!data) {
-    data = await getJsonData("static-mueller.json");
+    data = await getJsonData('static-mueller.json');
   }
   return (
     <section className="container py-16 bg-gray-50">
@@ -27,12 +27,14 @@ async function ServicesContent() {
             <h3 className="font-bold text-xl mb-2">{s.title}</h3>
             <p>{s.description}</p>
             {(() => {
-              const slug = typeof s.slug === "string" ? s.slug : s?.slug?.current;
+              const slug = typeof s.slug === 'string' ? s.slug : s?.slug?.current;
               const href = slug ? `/services/${slug}` : undefined;
               return href ? (
                 <div className="mt-4">
                   <Button asChild>
-                    <Link href={href} aria-label={`Mehr zu ${s.title}`}>Mehr erfahren</Link>
+                    <Link href={href} aria-label={`Mehr zu ${s.title}`}>
+                      Mehr erfahren
+                    </Link>
                   </Button>
                 </div>
               ) : null;

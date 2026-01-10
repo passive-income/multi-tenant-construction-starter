@@ -1,11 +1,13 @@
-"use client";
+'use client';
 
-import React from "react";
-import { StyleSheetManager } from "styled-components";
+import type React from 'react';
+import { StyleSheetManager } from 'styled-components';
 
 export function StyledSheetWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <StyleSheetManager shouldForwardProp={(prop) => prop !== "disableTransition" && prop !== "disabletransition"}>
+    <StyleSheetManager
+      shouldForwardProp={(prop) => prop !== 'disableTransition' && prop !== 'disabletransition'}
+    >
       {children}
     </StyleSheetManager>
   );

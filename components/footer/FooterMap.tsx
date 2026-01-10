@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import Image from "next/image";
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 interface FooterMapProps {
   clientId?: string;
@@ -11,9 +11,7 @@ interface FooterMapProps {
 }
 
 export function FooterMap({ clientId, address, href, className }: FooterMapProps) {
-  const [generatedMapUrl, setGeneratedMapUrl] = useState<string | undefined>(
-    undefined,
-  );
+  const [generatedMapUrl, setGeneratedMapUrl] = useState<string | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [imgError, setImgError] = useState(false);
   const [imgLoaded, setImgLoaded] = useState(false);
@@ -52,12 +50,20 @@ export function FooterMap({ clientId, address, href, className }: FooterMapProps
   // Always render container with fixed dimensions to prevent CLS
   if (!src && !isLoading) {
     return (
-      <div style={{ minHeight: "200px" }} className={className}>
+      <div style={{ minHeight: '200px' }} className={className}>
         <div
-          style={{ display: "block", width: "100%", maxWidth: "400px", height: "200px", margin: "0 auto" }}
+          style={{
+            display: 'block',
+            width: '100%',
+            maxWidth: '400px',
+            height: '200px',
+            margin: '0 auto',
+          }}
           className="sm:mx-0"
         >
-          <p className="text-sm text-muted flex items-center justify-center h-full">Adresse nicht verfügbar</p>
+          <p className="text-sm text-muted flex items-center justify-center h-full">
+            Adresse nicht verfügbar
+          </p>
         </div>
       </div>
     );
@@ -69,13 +75,13 @@ export function FooterMap({ clientId, address, href, className }: FooterMapProps
 
   if (imgError) {
     return (
-      <div style={{ minHeight: "200px" }} className={className}>
+      <div style={{ minHeight: '200px' }} className={className}>
         <a
           href={href}
           target="_blank"
           rel="noreferrer noopener"
           className="block mb-2 mx-auto sm:mx-0"
-          style={{ display: "block", width: "100%", maxWidth: "400px", height: "200px" }}
+          style={{ display: 'block', width: '100%', maxWidth: '400px', height: '200px' }}
         >
           <Image
             src="/static-map-placeholder.svg"
@@ -91,13 +97,13 @@ export function FooterMap({ clientId, address, href, className }: FooterMapProps
   }
 
   return (
-    <div style={{ minHeight: "200px" }} className={className}>
+    <div style={{ minHeight: '200px' }} className={className}>
       <a
         href={href}
         target="_blank"
         rel="noreferrer noopener"
         className="block mb-2 relative mx-auto sm:mx-0"
-        style={{display: 'block', width: '100%', maxWidth: '400px', height: '200px'}}
+        style={{ display: 'block', width: '100%', maxWidth: '400px', height: '200px' }}
       >
         <Image
           src={src as string}
@@ -127,7 +133,7 @@ function Attribution({ loading }: { loading?: boolean }) {
   return (
     <div className="text-xs">
       <span className="mt-1">
-        ©{" "}
+        ©{' '}
         <a
           href="https://www.openstreetmap.org/copyright"
           target="_blank"
@@ -135,7 +141,7 @@ function Attribution({ loading }: { loading?: boolean }) {
           className="underline"
         >
           OpenStreetMap
-        </a>{" "}
+        </a>{' '}
         contributors
       </span>
     </div>
@@ -144,10 +150,10 @@ function Attribution({ loading }: { loading?: boolean }) {
 
 function MapLoader() {
   return (
-    <div style={{minHeight: '200px'}}>
+    <div style={{ minHeight: '200px' }}>
       <div
         className="rounded shadow-md bg-gray-200 animate-pulse mx-auto sm:mx-0"
-        style={{width: '100%', maxWidth: '400px', height: '200px'}}
+        style={{ width: '100%', maxWidth: '400px', height: '200px' }}
         aria-label="Map wird vorbereitet"
       />
     </div>

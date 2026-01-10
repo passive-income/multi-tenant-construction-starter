@@ -1,4 +1,4 @@
-import type { MenuItem } from "./navigation";
+import type { MenuItem } from './navigation';
 
 export interface SliderItem {
   image?: string;

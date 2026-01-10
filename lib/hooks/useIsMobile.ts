@@ -1,16 +1,15 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export function useIsMobile() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => {
-      const isMobileUA =
-        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          navigator.userAgent,
-        );
+      const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent,
+      );
       setIsMobile(isMobileUA);
     };
 
@@ -18,8 +17,8 @@ export function useIsMobile() {
     checkMobile();
 
     // Listen for orientation changes on mobile
-    window.addEventListener("orientationchange", checkMobile);
-    return () => window.removeEventListener("orientationchange", checkMobile);
+    window.addEventListener('orientationchange', checkMobile);
+    return () => window.removeEventListener('orientationchange', checkMobile);
   }, []);
 
   return isMobile;

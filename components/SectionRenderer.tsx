@@ -1,21 +1,14 @@
-"use client";
+'use client';
 
-import { AnimatedSection } from "@/components/section/AnimatedSection";
-import { HeroSection } from "@/components/section/HeroSection";
-import { ImageSlider } from "@/components/image/ImageSlider";
-import { BeforeAfterGridSection } from "@/components/before-after/BeforeAfterGridSection";
-import CompanySection from "@/components/section/CompanySection";
-import ServicesSection from "@/components/section/ServicesSection";
-import { ProjectGallery } from "@/components/ProjectGallery";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import Link from "next/link";
+import Link from 'next/link';
+import { BeforeAfterGridSection } from '@/components/before-after/BeforeAfterGridSection';
+import { ImageSlider } from '@/components/image/ImageSlider';
+import { ProjectGallery } from '@/components/ProjectGallery';
+import { AnimatedSection } from '@/components/section/AnimatedSection';
+import CompanySection from '@/components/section/CompanySection';
+import { HeroSection } from '@/components/section/HeroSection';
+import ServicesSection from '@/components/section/ServicesSection';
+import { Button } from '@/components/ui/button';
 
 interface SectionRendererProps {
   sections: any[];
@@ -32,7 +25,7 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
         if (!section._type) return null;
 
         switch (section._type) {
-          case "imageSliderSection":
+          case 'imageSliderSection':
             return (
               <ImageSlider
                 key={index}
@@ -45,7 +38,7 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
               />
             );
 
-          case "heroSection":
+          case 'heroSection':
             return (
               <section key={index} className="container py-12 space-y-8">
                 <HeroSection
@@ -57,27 +50,23 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
                   linkHref={section.linkHref}
                   className={`bg-linear-to-r ${
                     index % 3 === 0
-                      ? "from-primary/10 to-primary/5"
+                      ? 'from-primary/10 to-primary/5'
                       : index % 3 === 1
-                        ? "from-accent/10 to-accent/5"
-                        : "from-secondary/10 to-secondary/5"
+                        ? 'from-accent/10 to-accent/5'
+                        : 'from-secondary/10 to-secondary/5'
                   }`}
                 />
               </section>
             );
 
-          case "beforeAfterSection":
+          case 'beforeAfterSection':
             return (
               <AnimatedSection key={index} className="py-16 bg-white">
                 <div className="container">
                   <div className="text-center mb-8">
-                    <h2 className="text-3xl md:text-4xl font-bold">
-                      {section.title}
-                    </h2>
+                    <h2 className="text-3xl md:text-4xl font-bold">{section.title}</h2>
                     {section.description && (
-                      <p className="text-muted-foreground mt-2">
-                        {section.description}
-                      </p>
+                      <p className="text-muted-foreground mt-2">{section.description}</p>
                     )}
                   </div>
                   <BeforeAfterGridSection
@@ -85,21 +74,21 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
                       section.pairs?.map((pair: any) => ({
                         beforeSrc: pair.before,
                         afterSrc: pair.after,
-                        beforeLabel: "Vorher",
-                        afterLabel: "Nachher",
+                        beforeLabel: 'Vorher',
+                        afterLabel: 'Nachher',
                         title: pair.title,
                         subtitle: pair.subtitle,
                         minHeight: 320,
                       })) || []
                     }
                     columns={section.columns || 2}
-                    gap={section.gap || "1rem"}
+                    gap={section.gap || '1rem'}
                   />
                 </div>
               </AnimatedSection>
             );
 
-          case "companySection":
+          case 'companySection': {
             const subsections =
               section.subsections?.map((sub: any) => ({
                 title: sub.title,
@@ -118,8 +107,9 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
                 companySections={subsections}
               />
             );
+          }
 
-          case "servicesSection":
+          case 'servicesSection':
             return (
               <ServicesSection
                 key={index}
@@ -129,7 +119,7 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
               />
             );
 
-          case "projectsSection":
+          case 'projectsSection': {
             const projects =
               section.projects?.map((ref: any) => ({
                 ...ref,
@@ -139,36 +129,23 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
               <AnimatedSection key={index} className="py-16 bg-white">
                 <div className="container">
                   <div className="text-center mb-12">
-                    <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                      {section.title}
-                    </h2>
+                    <h2 className="text-3xl md:text-4xl font-bold mb-4">{section.title}</h2>
                     {section.description && (
-                      <p className="text-muted-foreground">
-                        {section.description}
-                      </p>
+                      <p className="text-muted-foreground">{section.description}</p>
                     )}
                   </div>
 
                   {projects.length > 0 && (
                     <div className="mb-8">
-                      <ProjectGallery
-                        images={projects
-                          .map((p: any) => p.images || [])
-                          .flat()}
-                      />
+                      <ProjectGallery images={projects.flatMap((p: any) => p.images || [])} />
                     </div>
                   )}
 
                   {section.showViewAllButton && (
                     <div className="text-center">
-                      <Button
-                        size="lg"
-                        variant="outline"
-                        asChild
-                      >
-                        <Link href={section.viewAllButtonLink || "/projects"}>
-                          {section.viewAllButtonText ||
-                            "Alle Referenzen anzeigen"}
+                      <Button size="lg" variant="outline" asChild>
+                        <Link href={section.viewAllButtonLink || '/projects'}>
+                          {section.viewAllButtonText || 'Alle Referenzen anzeigen'}
                         </Link>
                       </Button>
                     </div>
@@ -176,44 +153,37 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
                 </div>
               </AnimatedSection>
             );
+          }
 
-          case "ctaSection":
+          case 'ctaSection':
             return (
               <AnimatedSection
                 key={index}
-                className={`py-16 ${section.backgroundColor || "bg-primary"} ${section.textColor || "text-primary-foreground"}`}
+                className={`py-16 ${section.backgroundColor || 'bg-primary'} ${section.textColor || 'text-primary-foreground'}`}
               >
                 <div className="container text-center">
-                  <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                    {section.title}
-                  </h2>
+                  <h2 className="text-3xl md:text-4xl font-bold mb-4">{section.title}</h2>
                   {section.description && (
-                    <p className="text-lg mb-8 max-w-2xl mx-auto">
-                      {section.description}
-                    </p>
+                    <p className="text-lg mb-8 max-w-2xl mx-auto">{section.description}</p>
                   )}
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    {section.primaryButton?.text &&
-                      section.primaryButton?.href && (
-                        <Button size="lg" variant="secondary" asChild>
-                          <Link href={section.primaryButton.href}>
-                            {section.primaryButton.text}
-                          </Link>
-                        </Button>
-                      )}
-                    {section.secondaryButton?.text &&
-                      section.secondaryButton?.href && (
-                        <Button
-                          size="lg"
-                          variant="outline"
-                          className={`${section.backgroundColor || "bg-primary"}-foreground/20 border-current text-current hover:${section.backgroundColor || "bg-primary"}-foreground/10`}
-                          asChild
-                        >
-                          <Link href={section.secondaryButton.href}>
-                            {section.secondaryButton.text}
-                          </Link>
-                        </Button>
-                      )}
+                    {section.primaryButton?.text && section.primaryButton?.href && (
+                      <Button size="lg" variant="secondary" asChild>
+                        <Link href={section.primaryButton.href}>{section.primaryButton.text}</Link>
+                      </Button>
+                    )}
+                    {section.secondaryButton?.text && section.secondaryButton?.href && (
+                      <Button
+                        size="lg"
+                        variant="outline"
+                        className={`${section.backgroundColor || 'bg-primary'}-foreground/20 border-current text-current hover:${section.backgroundColor || 'bg-primary'}-foreground/10`}
+                        asChild
+                      >
+                        <Link href={section.secondaryButton.href}>
+                          {section.secondaryButton.text}
+                        </Link>
+                      </Button>
+                    )}
                   </div>
                 </div>
               </AnimatedSection>

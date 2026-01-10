@@ -1,6 +1,6 @@
 export interface FormField {
   name: string;
-  type: "text" | "email" | "tel" | "textarea" | "select";
+  type: 'text' | 'email' | 'tel' | 'textarea' | 'select';
   label: string;
   placeholder?: string;
   required?: boolean;

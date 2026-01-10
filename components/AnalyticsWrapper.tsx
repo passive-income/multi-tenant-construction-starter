@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import dynamic from "next/dynamic";
+import dynamic from 'next/dynamic';
 
-const ClientOnlyAnalytics = dynamic(() => import("./ClientOnlyAnalytics"), {
+const ClientOnlyAnalytics = dynamic(() => import('./ClientOnlyAnalytics'), {
   ssr: false,
 });
 

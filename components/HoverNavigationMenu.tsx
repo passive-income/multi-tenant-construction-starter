@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { useState, useRef, useEffect } from "react";
-import Link from "next/link";
-import { ChevronDownIcon } from "lucide-react";
+import { ChevronDownIcon } from 'lucide-react';
+import Link from 'next/link';
+import { useEffect, useRef, useState } from 'react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 
 interface SubItem {
   title: string;
@@ -71,10 +71,7 @@ function HoverNavItem({
 
   if (!item.subItems || item.subItems.length === 0) {
     return (
-      <Link
-        href={item.href}
-        className={`${navBase} ${isActive ? activeClass : hoverClass}`}
-      >
+      <Link href={item.href} className={`${navBase} ${isActive ? activeClass : hoverClass}`}>
         {item.label}
       </Link>
     );
@@ -82,18 +79,14 @@ function HoverNavItem({
 
   return (
     <DropdownMenu open={open} modal={false}>
-      <div
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        className="relative"
-      >
+      <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="relative">
         <DropdownMenuTrigger asChild>
           <button
             className={`${navBase} ${isActive ? activeClass : hoverClass} flex items-center gap-1`}
           >
             {item.label}
             <ChevronDownIcon
-              className={`size-3 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+              className={`size-3 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
             />
           </button>
         </DropdownMenuTrigger>

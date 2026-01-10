@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useCallback, useRef, useState, useEffect } from "react";
-import Image from "next/image";
-import { useIsMobile } from "@/lib/hooks/useIsMobile";
+import Image from 'next/image';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useIsMobile } from '@/lib/hooks/useIsMobile';
 
 interface BeforeAfterSliderProps {
   beforeSrc: string;
@@ -19,9 +19,9 @@ interface BeforeAfterSliderProps {
 export function BeforeAfterSlider({
   beforeSrc,
   afterSrc,
-  beforeLabel = "Vorher",
-  afterLabel = "Nachher",
-  className = "",
+  beforeLabel = 'Vorher',
+  afterLabel = 'Nachher',
+  className = '',
   minHeight = 360,
   labelScale = 1,
 }: BeforeAfterSliderProps) {
@@ -42,23 +42,26 @@ export function BeforeAfterSlider({
       else setResponsiveScale(1);
     };
     calc();
-    window.addEventListener("resize", calc);
-    return () => window.removeEventListener("resize", calc);
+    window.addEventListener('resize', calc);
+    return () => window.removeEventListener('resize', calc);
   }, []);
 
   const overlayVisibleBefore = isMobile
     ? !isDragging && !isOnButton
     : isHoveringImages && !isOnButton && !isDragging;
-  const overlayVisibleAfter = overlayVisibleBefore;
+  const _overlayVisibleAfter = overlayVisibleBefore;
 
   const clamp = (v: number) => Math.min(100, Math.max(0, v));
 
-  const updateFromClientX = useCallback((clientX: number) => {
-    const rect = containerRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    const next = ((clientX - rect.left) / rect.width) * 100;
-    setPosition(clamp(next));
-  }, []);
+  const updateFromClientX = useCallback(
+    (clientX: number) => {
+      const rect = containerRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      const next = ((clientX - rect.left) / rect.width) * 100;
+      setPosition(clamp(next));
+    },
+    [clamp],
+  );
 
   const onPointerDown = (e: React.PointerEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -87,19 +90,19 @@ export function BeforeAfterSlider({
   };
 
   const onKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "ArrowLeft") {
+    if (e.key === 'ArrowLeft') {
       e.preventDefault();
       setPosition((p) => clamp(p - 2));
     }
-    if (e.key === "ArrowRight") {
+    if (e.key === 'ArrowRight') {
       e.preventDefault();
       setPosition((p) => clamp(p + 2));
     }
-    if (e.key === "Home") {
+    if (e.key === 'Home') {
       e.preventDefault();
       setPosition(0);
     }
-    if (e.key === "End") {
+    if (e.key === 'End') {
       e.preventDefault();
       setPosition(100);
     }
@@ -109,7 +112,7 @@ export function BeforeAfterSlider({
     <div
       ref={containerRef}
       className={`relative w-full overflow-hidden rounded-xl shadow-lg bg-muted ${className}`}
-      style={{ minHeight, touchAction: "none" }}
+      style={{ minHeight, touchAction: 'none' }}
       onMouseEnter={() => setIsHoveringImages(true)}
       onMouseLeave={() => setIsHoveringImages(false)}
     >
@@ -129,10 +132,7 @@ export function BeforeAfterSlider({
       )}
 
       {/* Before layer (clipped) */}
-      <div
-        className="absolute inset-0 overflow-hidden"
-        style={{ width: `${position}%` }}
-      >
+      <div className="absolute inset-0 overflow-hidden" style={{ width: `${position}%` }}>
         {beforeSrc && beforeSrc.trim().length > 0 ? (
           <Image
             src={beforeSrc}
@@ -151,13 +151,13 @@ export function BeforeAfterSlider({
       {/* Overlays (before/after) rendered via mapping to reduce duplication */}
       {[
         {
-          key: "before",
+          key: 'before',
           style: { width: `${position}%` } as React.CSSProperties,
           label: beforeLabel,
           rotated: position < 20,
         },
         {
-          key: "after",
+          key: 'after',
           style: { left: `${position}%` } as React.CSSProperties,
           label: afterLabel,
           rotated: position > 80,
@@ -165,21 +165,21 @@ export function BeforeAfterSlider({
       ].map((side) => {
         const visibleClass = isMobile
           ? !isDragging
-            ? "opacity-100"
-            : "opacity-0"
+            ? 'opacity-100'
+            : 'opacity-0'
           : isHoveringImages && !isOnButton && !isDragging
-            ? "opacity-100"
-            : "opacity-0";
+            ? 'opacity-100'
+            : 'opacity-0';
 
         const baseScale = isMobile
-          ? side.key === "before"
+          ? side.key === 'before'
             ? position < 20
               ? 1
               : 1.2
             : position > 80
               ? 1
               : 1.2
-          : side.key === "before"
+          : side.key === 'before'
             ? position < 20
               ? 0.6
               : 1
@@ -187,9 +187,7 @@ export function BeforeAfterSlider({
               ? 0.6
               : 1;
 
-        const scale = (baseScale * (labelScale ?? 1) * responsiveScale).toFixed(
-          3,
-        );
+        const scale = (baseScale * (labelScale ?? 1) * responsiveScale).toFixed(3);
 
         return (
           <div
@@ -199,7 +197,7 @@ export function BeforeAfterSlider({
           >
             <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
               <span
-                className={`text-white ${isMobile ? "text-base md:text-lg" : "text-2xl md:text-4xl"} font-bold uppercase tracking-wider drop-shadow-lg transition-transform duration-300`}
+                className={`text-white ${isMobile ? 'text-base md:text-lg' : 'text-2xl md:text-4xl'} font-bold uppercase tracking-wider drop-shadow-lg transition-transform duration-300`}
                 style={{
                   transform: `rotate(${side.rotated ? 90 : 0}deg) scale(${scale})`,
                 }}
@@ -216,7 +214,7 @@ export function BeforeAfterSlider({
         <div className="absolute top-0 bottom-0 w-px bg-white/80" aria-hidden />
         <button
           className={`absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 h-12 w-12 rounded-full border border-white/80 bg-white/80 text-gray-800 shadow-lg flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary ${
-            isDragging ? "cursor-grabbing" : "cursor-grab"
+            isDragging ? 'cursor-grabbing' : 'cursor-grab'
           }`}
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}

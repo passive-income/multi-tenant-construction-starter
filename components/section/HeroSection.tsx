@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import Link from "next/link";
-import Image from "next/image";
-import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
-import { normalizeImageSrc } from "@/lib/utils/image";
+import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { normalizeImageSrc } from '@/lib/utils/image';
 
 interface HeroSectionProps {
   title: string;
@@ -22,7 +22,7 @@ export function HeroSection({
   linkText,
   linkHref,
   imageUrl,
-  className = "",
+  className = '',
 }: HeroSectionProps) {
   const normalizedSrc = normalizeImageSrc(imageUrl, { width: 1600 });
 
@@ -31,9 +31,7 @@ export function HeroSection({
       <CardContent className="p-8 md:p-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div>
-            <p className="text-sm font-semibold text-muted-foreground mb-2">
-              {subtitle}
-            </p>
+            <p className="text-sm font-semibold text-muted-foreground mb-2">{subtitle}</p>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">{title}</h2>
             <p className="text-lg text-muted-foreground mb-6">{description}</p>
             {linkText && linkHref && (

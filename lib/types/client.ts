@@ -1,4 +1,4 @@
-export type ClientType = "sanity" | "json";
+export type ClientType = 'sanity' | 'json';
 
 export interface ClientMeta {
   name?: string;

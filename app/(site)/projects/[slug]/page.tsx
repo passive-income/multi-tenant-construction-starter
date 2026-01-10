@@ -1,16 +1,16 @@
-import { cookies } from "next/headers";
-import { getHost } from "@/lib/utils/host";
-import { getClient } from "@/sanity/lib/client";
-import Image from "next/image";
-import { normalizeImageSrc } from "@/lib/utils/image";
+import Image from 'next/image';
+import { getHost } from '@/lib/utils/host';
+import { normalizeImageSrc } from '@/lib/utils/image';
+import { getClient } from '@/sanity/lib/client';
 
-export const dynamic = "force-dynamic";
+// Cache for 10 minutes, revalidate in background
+export const revalidate = 600;
 
 export default async function ProjectDetail({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const host = await getHost();
 
-  const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production";
+  const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production';
   const client = getClient(dataset);
 
   // Find client doc by host to scope by clientId
@@ -32,7 +32,9 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
 
   const coverUrl = normalizeImageSrc(project?.image, { width: 1600, autoFormat: true });
   const gallery = Array.isArray(project?.images)
-    ? project.images.map((im: any) => normalizeImageSrc(im, { width: 1200, autoFormat: true })).filter(Boolean)
+    ? project.images
+        .map((im: any) => normalizeImageSrc(im, { width: 1200, autoFormat: true }))
+        .filter(Boolean)
     : [];
 
   return (
@@ -40,14 +42,29 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
       <h1 className="text-3xl font-bold mb-4">{project.title}</h1>
       {coverUrl && (
         <div className="mb-6">
-          <Image src={coverUrl} alt={project.title || "Projekt"} width={1200} height={675} className="w-full h-auto rounded" />
+          <Image
+            src={coverUrl}
+            alt={project.title || 'Projekt'}
+            width={1200}
+            height={675}
+            className="w-full h-auto rounded"
+          />
         </div>
       )}
-      {project.description && <p className="text-lg text-muted-foreground mb-8">{project.description}</p>}
+      {project.description && (
+        <p className="text-lg text-muted-foreground mb-8">{project.description}</p>
+      )}
       {gallery.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {gallery.map((src: any, idx: number) => (
-            <Image key={idx} src={src as string} alt={`Bild ${idx + 1}`} width={600} height={338} className="w-full h-auto rounded" />
+            <Image
+              key={idx}
+              src={src as string}
+              alt={`Bild ${idx + 1}`}
+              width={600}
+              height={338}
+              className="w-full h-auto rounded"
+            />
           ))}
         </div>
       )}

@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Search } from "lucide-react";
+import { PortableText } from '@portabletext/react';
+import { Search } from 'lucide-react';
+import { useState } from 'react';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import type { FAQ } from "@/lib/types/faq";
-import { PortableText } from "@portabletext/react";
+} from '@/components/ui/accordion';
+import type { FAQ } from '@/lib/types/faq';
 
 interface FAQAccordionProps {
   faqs: FAQ[];
@@ -17,16 +17,14 @@ interface FAQAccordionProps {
 }
 
 export function FAQAccordion({ faqs, showSearch = false }: FAQAccordionProps) {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
 
   const filteredFaqs = searchTerm
     ? faqs.filter(
         (faq) =>
           faq.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
           (faq.answer &&
-            JSON.stringify(faq.answer)
-              .toLowerCase()
-              .includes(searchTerm.toLowerCase()))
+            JSON.stringify(faq.answer).toLowerCase().includes(searchTerm.toLowerCase())),
       )
     : faqs;
 
@@ -48,18 +46,14 @@ export function FAQAccordion({ faqs, showSearch = false }: FAQAccordionProps) {
       )}
 
       {filteredFaqs.length === 0 ? (
-        <p className="text-center text-muted-foreground py-8">
-          Keine passenden Fragen gefunden.
-        </p>
+        <p className="text-center text-muted-foreground py-8">Keine passenden Fragen gefunden.</p>
       ) : (
         <Accordion type="single" collapsible className="w-full">
           {filteredFaqs.map((faq, idx) => {
             const keyId = faq._id ?? `faq-${idx}`;
             return (
               <AccordionItem key={keyId} value={String(keyId)}>
-                <AccordionTrigger className="text-left">
-                  {faq.question}
-                </AccordionTrigger>
+                <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
                 <AccordionContent>
                   {faq.answer ? (
                     <div className="prose prose-sm max-w-none">

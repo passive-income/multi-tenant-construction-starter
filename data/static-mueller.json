@@ -56,7 +56,9 @@
       "slug": "malerarbeiten",
       "title": "Malerarbeiten",
       "description": "Tapezierarbeiten, Stuck- und Zierprofile, exklusive Malerarbeiten",
-      "descriptionHtml": "<h2>Malerarbeiten für Innen und Außen</h2><br /><p>Wir bieten professionelle Anstriche und Beschichtungen für Wohn- und Gewerbeobjekte. Unsere Leistungen umfassen <strong>Tapezierarbeiten</strong>, <em>Stuck- und Zierprofile</em> sowie exklusive Malerarbeiten.</p><br /><ul><li>Untergrundprüfung und Vorbereitung</li><li>Grundierung und Beschichtungssysteme</li><li>Saubere Abdeckung und Schutz</li></ul>",      "image": "https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=1200&h=800&fit=crop&auto=format",      "measures": [
+      "descriptionHtml": "<h2>Malerarbeiten für Innen und Außen</h2><br /><p>Wir bieten professionelle Anstriche und Beschichtungen für Wohn- und Gewerbeobjekte. Unsere Leistungen umfassen <strong>Tapezierarbeiten</strong>, <em>Stuck- und Zierprofile</em> sowie exklusive Malerarbeiten.</p><br /><ul><li>Untergrundprüfung und Vorbereitung</li><li>Grundierung und Beschichtungssysteme</li><li>Saubere Abdeckung und Schutz</li></ul>",
+      "image": "https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=1200&h=800&fit=crop&auto=format",
+      "measures": [
         "Untergrundprüfung und fachgerechte Vorbereitung (Reinigung, Spachteln, Schleifen)",
         "Grundierung passend zum Untergrund und Material",
         "Auswahl hochwertiger Farben und Beschichtungen nach Einsatzbereich",
@@ -69,7 +71,9 @@
       "slug": "bodenbelaege",
       "title": "Bodenbelagsarbeiten",
       "description": "Bodensanierung, Parkett schleifen, ableitfähige Böden",
-      "descriptionHtml": "<h2>Fachgerechte Bodenbelagsarbeiten</h2><br /><p>Von der <strong>Untergrundvorbereitung</strong> bis zur <em>Versiegelung</em> — wir verlegen Parkett, Laminat und industrielle Beläge nach Norm.</p><br /><ul><li>Feuchtigkeitsprüfung</li><li>Ausgleichsspachtel</li><li>Professionelle Verlegung</li></ul>",      "image": "https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=1200&h=800&fit=crop&auto=format",      "measures": [
+      "descriptionHtml": "<h2>Fachgerechte Bodenbelagsarbeiten</h2><br /><p>Von der <strong>Untergrundvorbereitung</strong> bis zur <em>Versiegelung</em> — wir verlegen Parkett, Laminat und industrielle Beläge nach Norm.</p><br /><ul><li>Feuchtigkeitsprüfung</li><li>Ausgleichsspachtel</li><li>Professionelle Verlegung</li></ul>",
+      "image": "https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=1200&h=800&fit=crop&auto=format",
+      "measures": [
         "Aufmaß und Feuchtigkeitsprüfung des Untergrunds",
         "Untergrundvorbereitung (Ausgleichsspachtel, Schleifen)",
         "Geeignete Kleber und Beläge nach Nutzungsklasse",
@@ -82,7 +86,9 @@
       "slug": "fassadenarbeiten",
       "title": "Fassadenarbeiten",
       "description": "Fassadenanstrich und Renovierung",
-      "descriptionHtml": "<h2>Langlebige Fassadenbeschichtungen</h2><br /><p>Wir analysieren den Zustand der Fassade, führen <em>Reinigung</em>, <strong>Putzreparaturen</strong> und geeignete Beschichtungen durch.</p><br /><ul><li>Zustandsanalyse</li><li>Hochdruckreinigung</li><li>Armierung und Beschichtung</li></ul>",      "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=800&fit=crop&auto=format",      "measures": [
+      "descriptionHtml": "<h2>Langlebige Fassadenbeschichtungen</h2><br /><p>Wir analysieren den Zustand der Fassade, führen <em>Reinigung</em>, <strong>Putzreparaturen</strong> und geeignete Beschichtungen durch.</p><br /><ul><li>Zustandsanalyse</li><li>Hochdruckreinigung</li><li>Armierung und Beschichtung</li></ul>",
+      "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=800&fit=crop&auto=format",
+      "measures": [
         "Zustandsanalyse inkl. Riss- und Feuchtebewertung",
         "Reinigung (Hochdruck) und Algen-/Pilzbehandlung",
         "Putzreparaturen und Armierung wo nötig",

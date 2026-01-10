@@ -1,8 +1,8 @@
-import { createClient } from "next-sanity";
+import { createClient } from 'next-sanity';
 
-import { apiVersion, dataset, projectId } from "../env";
+import { apiVersion, dataset, projectId } from '../env';
 
-export const getClient = (dataset: string, useCdn = true) =>
+export const getClient = (dataset: string, _useCdn = true) =>
   createClient({
     projectId,
     dataset,

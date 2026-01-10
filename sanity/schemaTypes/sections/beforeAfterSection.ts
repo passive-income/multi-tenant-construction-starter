@@ -1,51 +1,51 @@
-import { defineType } from "sanity";
+import { defineType } from 'sanity';
 
 export default defineType({
-  name: "beforeAfterSection",
-  title: "Before/After Section",
-  type: "object",
+  name: 'beforeAfterSection',
+  title: 'Before/After Section',
+  type: 'object',
   fields: [
     {
-      name: "title",
-      title: "Section Title",
-      type: "string",
+      name: 'title',
+      title: 'Section Title',
+      type: 'string',
       validation: (Rule) => Rule.required(),
     },
     {
-      name: "description",
-      title: "Section Description",
-      type: "text",
+      name: 'description',
+      title: 'Section Description',
+      type: 'text',
     },
     {
-      name: "pairs",
-      title: "Before/After Pairs",
-      type: "array",
-      of: [{ type: "beforeAfter" }],
+      name: 'pairs',
+      title: 'Before/After Pairs',
+      type: 'array',
+      of: [{ type: 'beforeAfter' }],
       validation: (Rule) => Rule.required().min(1),
     },
     {
-      name: "columns",
-      title: "Number of Columns",
-      type: "number",
+      name: 'columns',
+      title: 'Number of Columns',
+      type: 'number',
       options: {
         list: [1, 2, 3],
       },
       initialValue: 2,
     },
     {
-      name: "gap",
-      title: "Gap between items",
-      type: "string",
+      name: 'gap',
+      title: 'Gap between items',
+      type: 'string',
       options: {
-        list: ["0.5rem", "1rem", "1.5rem", "2rem"],
+        list: ['0.5rem', '1rem', '1.5rem', '2rem'],
       },
-      initialValue: "1rem",
+      initialValue: '1rem',
     },
   ],
   preview: {
     select: {
-      title: "title",
-      pairCount: "pairs.length",
+      title: 'title',
+      pairCount: 'pairs.length',
     },
     prepare(selection: any) {
       return {

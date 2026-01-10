@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React from "react";
-import { BeforeAfterSlider } from "@/components/before-after/BeforeAfterSlider";
+import type React from 'react';
+import { BeforeAfterSlider } from '@/components/before-after/BeforeAfterSlider';
 
 export interface BeforeAfterItem {
   beforeSrc: string;
@@ -25,22 +25,19 @@ interface BeforeAfterGridProps {
 export default function BeforeAfterGrid({
   items,
   columns,
-  gap = "1rem",
-  className = "",
+  gap = '1rem',
+  className = '',
 }: BeforeAfterGridProps) {
   // Clamp columns to maximum 2 per row. Mobile will always show 1 per row via Tailwind classes.
   const cols = Math.min(Math.max(1, columns ?? 2), 2);
-  const smClass = cols === 2 ? "sm:grid-cols-2" : "sm:grid-cols-1";
+  const smClass = cols === 2 ? 'sm:grid-cols-2' : 'sm:grid-cols-1';
   const style: React.CSSProperties = { gap };
 
   // Use CSS-based clamping and wrapping to avoid JS measurement and large whitespace.
   // We'll clamp titles/subtitles to two lines and enable word-break + hyphens so long words wrap.
   const labelScale = cols === 1 ? 1 : 0.85;
   return (
-    <div
-      className={`grid grid-cols-1 ${smClass} gap-4 ${className}`}
-      style={style}
-    >
+    <div className={`grid grid-cols-1 ${smClass} gap-4 ${className}`} style={style}>
       {items.map((it, index) => (
         <div key={index} className="flex flex-col">
           {(it.title || it.subtitle) && (

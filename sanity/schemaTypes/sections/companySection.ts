@@ -1,56 +1,56 @@
-import { defineType } from "sanity";
+import { defineType } from 'sanity';
 
 export default defineType({
-  name: "companySection",
-  title: "Company Section",
-  type: "object",
+  name: 'companySection',
+  title: 'Company Section',
+  type: 'object',
   fields: [
     {
-      name: "title",
-      title: "Section Title",
-      type: "string",
+      name: 'title',
+      title: 'Section Title',
+      type: 'string',
       validation: (Rule) => Rule.required(),
     },
     {
-      name: "subtitle",
-      title: "Subtitle",
-      type: "string",
+      name: 'subtitle',
+      title: 'Subtitle',
+      type: 'string',
     },
     {
-      name: "description",
-      title: "Description",
-      type: "text",
+      name: 'description',
+      title: 'Description',
+      type: 'text',
     },
     {
-      name: "image",
-      title: "Company Image",
-      type: "image",
+      name: 'image',
+      title: 'Company Image',
+      type: 'image',
       options: { hotspot: true },
     },
     {
-      name: "subsections",
-      title: "Company Subsections",
-      type: "array",
+      name: 'subsections',
+      title: 'Company Subsections',
+      type: 'array',
       of: [
         {
-          type: "object",
+          type: 'object',
           fields: [
             {
-              name: "title",
-              title: "Subsection Title",
-              type: "string",
+              name: 'title',
+              title: 'Subsection Title',
+              type: 'string',
               validation: (Rule) => Rule.required(),
             },
             {
-              name: "description",
-              title: "Description",
-              type: "text",
+              name: 'description',
+              title: 'Description',
+              type: 'text',
             },
             {
-              name: "icon",
-              title: "Icon Name",
-              type: "string",
-              description: "Icon identifier for styling",
+              name: 'icon',
+              title: 'Icon Name',
+              type: 'string',
+              description: 'Icon identifier for styling',
             },
           ],
         },
@@ -59,8 +59,8 @@ export default defineType({
   ],
   preview: {
     select: {
-      title: "title",
-      subtitle: "subtitle",
+      title: 'title',
+      subtitle: 'subtitle',
     },
     prepare(selection: any) {
       return {

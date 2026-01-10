@@ -1,10 +1,10 @@
-"use client";
-import { ReactNode } from "react";
-import { motion } from "framer-motion";
+'use client';
+import { motion } from 'framer-motion';
+import type { ReactNode } from 'react';
 
 export const AnimatedSection = ({
   children,
-  className = "",
+  className = '',
 }: {
   children: ReactNode;
   className?: string;
