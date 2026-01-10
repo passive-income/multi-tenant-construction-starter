@@ -103,7 +103,7 @@ export default function Footer({ clientId, footer }: FooterProps) {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-gray-700" style={{gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))'}}>
           {/* Column 1: Map / Anfahrt */}
-          <div className="min-h-50">
+          <div className="min-h-[200px]">
             <h3 className="text-sm font-semibold tracking-wider mb-4">
               ANFAHRT
             </h3>
@@ -124,7 +124,7 @@ export default function Footer({ clientId, footer }: FooterProps) {
           </div>
 
           {/* Column 2: Kontakt NRW (use first location) */}
-          <div className="min-h-50">
+          <div className="min-h-[200px]">
             <h3 className="text-sm font-semibold tracking-wider mb-4">
               KONTAKT NRW
             </h3>

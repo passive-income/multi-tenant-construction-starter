@@ -20,7 +20,7 @@ export default async function HomePage() {
     if (clientId) {
       const homePage = await client.fetch(
         '*[_type == "page" && slug.current == "home" && clientId == $clientId][0]',
-        { clientId }
+        { clientId: clientId ?? null }
       );
       if (homePage?.sections) {
         return (
@@ -41,7 +41,9 @@ export default async function HomePage() {
   return (
     <>
       {firstSlideImage && <PreloadLCPImage src={firstSlideImage} />}
-      <MainSection data={siteData} />
+      <main>
+        <MainSection data={siteData} />
+      </main>
     </>
   );
 }

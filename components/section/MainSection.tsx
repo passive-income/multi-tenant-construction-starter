@@ -14,6 +14,16 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import ServicesSection from "./ServicesSection";
+import type { Testimonial } from "@/lib/types/testimonial";
+import type { FAQ } from "@/lib/types/faq";
+import type { TeamMember } from "@/lib/types/teamMember";
+import type { Certification } from "@/lib/types/certification";
+import { TestimonialCard } from "@/components/testimonial/TestimonialCard";
+import { FAQAccordion } from "@/components/faq/FAQAccordion";
+import { TeamMemberCard } from "@/components/team/TeamMemberCard";
+import { Card as CertCard } from "@/components/ui/card";
+import { Calendar, Award } from "lucide-react";
+import Image from "next/image";
 
 interface MainSectionProps {
   data: any;
@@ -44,7 +54,7 @@ export function MainSection({ data }: MainSectionProps) {
   }
 
   return (
-    <main>
+    <>
       {/* Image Slider - First Component */}
       <ImageSlider slides={sliderSlides} />
 
@@ -163,6 +173,134 @@ export function MainSection({ data }: MainSectionProps) {
         </div>
       </AnimatedSection>
 
+      {/* Testimonials Section */}
+      {data.testimonials && data.testimonials.length > 0 && (
+        <AnimatedSection className="py-16 bg-muted/30">
+          <div className="container">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Was unsere Kunden sagen
+              </h2>
+              <p className="text-muted-foreground">
+                Erfahrungen und Bewertungen zufriedener Kunden
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {data.testimonials
+                .filter((t: Testimonial) => t.featured)
+                .slice(0, 3)
+                .map((testimonial: Testimonial, idx: number) => (
+                  <TestimonialCard key={idx} testimonial={testimonial} />
+                ))}
+            </div>
+          </div>
+        </AnimatedSection>
+      )}
+
+      {/* Team Section */}
+      {data.teamMembers && data.teamMembers.length > 0 && (
+        <AnimatedSection className="py-16 bg-white">
+          <div className="container">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Unser Team</h2>
+              <p className="text-muted-foreground">
+                Lernen Sie die Experten kennen, die Ihr Projekt zum Erfolg führen
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {data.teamMembers.map((member: TeamMember, idx: number) => (
+                <TeamMemberCard key={idx} member={member} />
+              ))}
+            </div>
+          </div>
+        </AnimatedSection>
+      )}
+
+      {/* Certifications Section */}
+      {data.certifications && data.certifications.length > 0 && (
+        <AnimatedSection className="py-16 bg-muted/30">
+          <div className="container">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Zertifizierungen & Qualifikationen
+              </h2>
+              <p className="text-muted-foreground">
+                Unsere Zertifikate bestätigen unsere hohen Qualitätsstandards
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {data.certifications.map((cert: Certification, idx: number) => {
+                const isExpired = cert.validUntil && new Date(cert.validUntil) < new Date();
+                return (
+                  <CertCard key={idx} className="p-6 flex flex-col">
+                    <div className="flex-1">
+                      <div className="flex items-start justify-between mb-2">
+                        <h3 className="text-lg font-semibold">{cert.name}</h3>
+                        {isExpired && (
+                          <span className="px-2 py-1 bg-red-100 text-red-700 text-xs rounded">
+                            Abgelaufen
+                          </span>
+                        )}
+                        {!isExpired && cert.validUntil && (
+                          <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded">
+                            Gültig
+                          </span>
+                        )}
+                      </div>
+                      {cert.issuer && (
+                        <div className="flex items-center text-sm text-muted-foreground mb-3">
+                          <Award className="h-4 w-4 mr-2" />
+                          <span>{cert.issuer}</span>
+                        </div>
+                      )}
+                      {cert.description && (
+                        <p className="text-sm text-muted-foreground mb-4">{cert.description}</p>
+                      )}
+                      {cert.certificateNumber && (
+                        <p className="text-xs text-muted-foreground mb-3">
+                          Zertifikat-Nr.: {cert.certificateNumber}
+                        </p>
+                      )}
+                      <div className="space-y-1 text-xs text-muted-foreground">
+                        {cert.validFrom && (
+                          <div className="flex items-center">
+                            <Calendar className="h-3 w-3 mr-2" />
+                            <span>Gültig ab: {new Date(cert.validFrom).toLocaleDateString("de-DE")}</span>
+                          </div>
+                        )}
+                        {cert.validUntil && (
+                          <div className="flex items-center">
+                            <Calendar className="h-3 w-3 mr-2" />
+                            <span>Gültig bis: {new Date(cert.validUntil).toLocaleDateString("de-DE")}</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </CertCard>
+                );
+              })}
+            </div>
+          </div>
+        </AnimatedSection>
+      )}
+
+      {/* FAQ Section */}
+      {data.faqs && data.faqs.length > 0 && (
+        <AnimatedSection className="py-16 bg-white">
+          <div className="container max-w-4xl">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Häufig gestellte Fragen
+              </h2>
+              <p className="text-muted-foreground">
+                Antworten auf die wichtigsten Fragen
+              </p>
+            </div>
+            <FAQAccordion faqs={data.faqs} showSearch={false} />
+          </div>
+        </AnimatedSection>
+      )}
+
       {/* Contact CTA Section */}
       {data.contact && (
         <AnimatedSection className="py-16 bg-primary text-primary-foreground">
@@ -199,6 +337,6 @@ export function MainSection({ data }: MainSectionProps) {
           </div>
         </AnimatedSection>
       )}
-    </main>
+    </>
   );
 }

@@ -339,6 +339,178 @@
       ]
     }
   ],
+  "testimonials": [
+    {
+      "name": "Klaus Hoffmann",
+      "company": "Hoffmann Immobilien GmbH",
+      "position": "Geschäftsführer",
+      "text": "Müller Bau hat unsere Büroetage komplett renoviert. Die Arbeit war pünktlich, sauber und absolut professionell. Besonders beeindruckt hat uns die transparente Kommunikation und die hohe Qualität der Malerarbeiten.",
+      "rating": 5,
+      "date": "2024-11-20",
+      "location": "Berlin",
+      "featured": true
+    },
+    {
+      "name": "Maria Schneider",
+      "company": "Eigenheim",
+      "text": "Wir haben Müller Bau mit der Renovierung unserer Altbauwohnung beauftragt. Das Team war freundlich, pünktlich und hat hervorragende Arbeit geleistet. Die Fassadenarbeiten sind besonders gelungen!",
+      "rating": 5,
+      "date": "2024-10-15",
+      "location": "Berlin",
+      "featured": true
+    },
+    {
+      "name": "Stefan Weber",
+      "company": "Weber GmbH & Co. KG",
+      "position": "Technischer Leiter",
+      "text": "Professionelle Ausführung der Bodenbelagsarbeiten in unserem Produktionsgebäude. Termingerecht, im Budget und mit hervorragender Qualität. Absolut empfehlenswert!",
+      "rating": 5,
+      "date": "2024-09-10",
+      "location": "Berlin",
+      "featured": false
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Wie lange dauert eine typische Renovierung?",
+      "answer": "Die Dauer hängt vom Umfang der Arbeiten ab. Eine Wohnungsrenovierung dauert in der Regel 2-4 Wochen, größere Projekte können mehrere Monate in Anspruch nehmen. Nach einer kostenlosen Besichtigung erstellen wir einen detaillierten Zeitplan.",
+      "category": "zeitplan",
+      "order": 1
+    },
+    {
+      "question": "Bieten Sie kostenlose Besichtigungen an?",
+      "answer": "Ja, wir bieten kostenlose Erstbesichtigungen und unverbindliche Kostenvoranschläge an. Kontaktieren Sie uns einfach telefonisch unter +49 30 123456 oder per E-Mail, um einen Termin zu vereinbaren.",
+      "category": "allgemein",
+      "order": 1
+    },
+    {
+      "question": "Welche Garantien bieten Sie auf Ihre Arbeiten?",
+      "answer": "Wir gewähren 5 Jahre Gewährleistung auf alle Handwerksarbeiten gemäß BGB. Zusätzlich bieten wir auf viele Materialien Herstellergarantien von bis zu 10 Jahren.",
+      "category": "garantie",
+      "order": 1
+    },
+    {
+      "question": "Wie erstellen Sie die Kostenvoranschläge?",
+      "answer": "Nach der Besichtigung erstellen wir einen detaillierten Kostenvoranschlag mit Einzelpositionen. So haben Sie volle Transparenz über alle anfallenden Kosten. Änderungswünsche können jederzeit besprochen werden.",
+      "category": "kosten",
+      "order": 1
+    },
+    {
+      "question": "Welche Leistungen umfasst Ihr Angebot?",
+      "answer": "Wir bieten ein Komplettangebot von Malerarbeiten über Bodenverlegung bis hin zu Fassadenarbeiten und Raumausstattung. Auch Komplettsanierungen führen wir durch. Alle Leistungen finden Sie auf unserer Leistungsseite.",
+      "category": "leistungen",
+      "order": 1
+    },
+    {
+      "question": "Arbeiten Sie auch an Wochenenden?",
+      "answer": "Nach Absprache können wir auch Wochenendtermine anbieten, insbesondere bei dringenden Projekten oder wenn dies für unsere Kunden praktischer ist.",
+      "category": "allgemein",
+      "order": 2
+    }
+  ],
+  "contactSettings": {
+    "email": "info@muellerbau.de",
+    "phone": "+49 30 123456",
+    "whatsappNumber": "+49 170 1234567",
+    "mapAddress": "Kurfürstendamm 90, 10709 Berlin, Germany",
+    "showMap": true,
+    "openingHours": "Montag - Donnerstag: 07:00 - 17:00 Uhr\nFreitag: 07:00 - 16:00 Uhr",
+    "formFields": [
+      {
+        "name": "name",
+        "label": "Name",
+        "type": "text",
+        "required": true,
+        "placeholder": "Ihr Name"
+      },
+      {
+        "name": "email",
+        "label": "E-Mail",
+        "type": "email",
+        "required": true,
+        "placeholder": "ihre@email.de"
+      },
+      {
+        "name": "phone",
+        "label": "Telefon",
+        "type": "tel",
+        "required": false,
+        "placeholder": "+49 ..."
+      },
+      {
+        "name": "company",
+        "label": "Firma (optional)",
+        "type": "text",
+        "required": false,
+        "placeholder": "Ihre Firma"
+      },
+      {
+        "name": "subject",
+        "label": "Betreff",
+        "type": "text",
+        "required": false,
+        "placeholder": "Worum geht es?"
+      },
+      {
+        "name": "message",
+        "label": "Nachricht",
+        "type": "textarea",
+        "required": true,
+        "placeholder": "Ihre Nachricht an uns..."
+      }
+    ]
+  },
+  "teamMembers": [
+    {
+      "name": "Werner Müller",
+      "position": "Geschäftsführer & Malermeister",
+      "bio": "Mit über 30 Jahren Erfahrung im Malerhandwerk leitet Werner Müller unser Unternehmen mit Leidenschaft und Expertise. Seine Vision: Höchste Qualität und 100% Kundenzufriedenheit.",
+      "phone": "+49 30 123456",
+      "email": "w.mueller@muellerbau.de",
+      "specializations": ["Malerarbeiten", "Projektleitung", "Denkmalpflege"],
+      "order": 1
+    },
+    {
+      "name": "Sandra Becker",
+      "position": "Projektleiterin & Raumausstatterin",
+      "bio": "Sandra Becker verbindet kreatives Design mit technischer Präzision. Sie betreut unsere Kunden von der Planung bis zur Fertigstellung und sorgt für reibungslose Abläufe.",
+      "email": "s.becker@muellerbau.de",
+      "specializations": ["Raumausstattung", "Farbberatung", "Projektmanagement"],
+      "order": 2
+    },
+    {
+      "name": "Thomas Krause",
+      "position": "Meister für Bodenlegerhandwerk",
+      "bio": "Thomas Krause ist unser Experte für Bodenbelagsarbeiten aller Art. Mit seinem Team realisiert er anspruchsvolle Projekte vom Parkett bis zu industriellen Böden.",
+      "phone": "+49 30 123457",
+      "email": "t.krause@muellerbau.de",
+      "specializations": ["Bodenbeläge", "Parkett", "Industrieböden"],
+      "order": 3
+    }
+  ],
+  "certifications": [
+    {
+      "name": "ISO 9001:2015 Qualitätsmanagement",
+      "issuer": "TÜV Rheinland",
+      "certificateNumber": "ISO-9001-2024-12345",
+      "description": "Zertifiziertes Qualitätsmanagementsystem nach internationalen Standards für höchste Qualität in allen Prozessen.",
+      "validFrom": "2024-01-01",
+      "validUntil": "2027-01-01"
+    },
+    {
+      "name": "Meisterbetrieb im Maler- und Lackiererhandwerk",
+      "issuer": "Handwerkskammer Berlin",
+      "description": "Eingetragener Meisterbetrieb mit höchsten handwerklichen Standards und Ausbildungsberechtigung.",
+      "validFrom": "1995-03-15"
+    },
+    {
+      "name": "JAB Anstoetz Fachpartner",
+      "issuer": "JAB Anstoetz Gruppe",
+      "description": "Autorisierter Fachpartner für hochwertige Raumausstattung und Textilien.",
+      "validFrom": "2020-06-01",
+      "validUntil": "2026-06-01"
+    }
+  ],
   "contact": {
     "ctaTitle": "ERHALTEN SIE IHR ANGEBOT",
     "ctaDescription": "Haben Sie eine Idee, einen Wunsch? Wir können Ihnen helfen diesen umzusetzen! Nehmen Sie Kontakt zu uns auf und wir helfen und beraten Sie gerne!",

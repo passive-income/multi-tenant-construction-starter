@@ -7,9 +7,10 @@ interface FooterMapProps {
   clientId?: string;
   address: string | undefined;
   href?: string;
+  className?: string;
 }
 
-export function FooterMap({ clientId, address, href }: FooterMapProps) {
+export function FooterMap({ clientId, address, href, className }: FooterMapProps) {
   const [generatedMapUrl, setGeneratedMapUrl] = useState<string | undefined>(
     undefined,
   );
@@ -51,8 +52,11 @@ export function FooterMap({ clientId, address, href }: FooterMapProps) {
   // Always render container with fixed dimensions to prevent CLS
   if (!src && !isLoading) {
     return (
-      <div style={{minHeight: '200px'}}>
-        <div style={{display: 'block', width: '100%', maxWidth: '400px', height: '200px', margin: '0 auto'}} className="sm:mx-0">
+      <div style={{ minHeight: "200px" }} className={className}>
+        <div
+          style={{ display: "block", width: "100%", maxWidth: "400px", height: "200px", margin: "0 auto" }}
+          className="sm:mx-0"
+        >
           <p className="text-sm text-muted flex items-center justify-center h-full">Adresse nicht verfügbar</p>
         </div>
       </div>
@@ -65,13 +69,13 @@ export function FooterMap({ clientId, address, href }: FooterMapProps) {
 
   if (imgError) {
     return (
-      <div style={{minHeight: '200px'}}>
+      <div style={{ minHeight: "200px" }} className={className}>
         <a
           href={href}
           target="_blank"
           rel="noreferrer noopener"
           className="block mb-2 mx-auto sm:mx-0"
-          style={{display: 'block', width: '100%', maxWidth: '400px', height: '200px'}}
+          style={{ display: "block", width: "100%", maxWidth: "400px", height: "200px" }}
         >
           <Image
             src="/static-map-placeholder.svg"
@@ -87,7 +91,7 @@ export function FooterMap({ clientId, address, href }: FooterMapProps) {
   }
 
   return (
-    <div style={{minHeight: '200px'}}>
+    <div style={{ minHeight: "200px" }} className={className}>
       <a
         href={href}
         target="_blank"

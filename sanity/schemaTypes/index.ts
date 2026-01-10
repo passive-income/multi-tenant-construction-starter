@@ -7,6 +7,11 @@ import navigation from "./navigation";
 import beforeAfter from "./beforeAfter";
 import link from "./link";
 import page from "./page";
+import testimonial from "./testimonial";
+import faq from "./faq";
+import contactSettings from "./contactSettings";
+import teamMember from "./teamMember";
+import certification from "./certification";
 
 // Section schemas
 import heroSection from "./sections/heroSection";
@@ -28,6 +33,11 @@ export const schema = {
     beforeAfter,
     link,
     page,
+    testimonial,
+    faq,
+    contactSettings,
+    teamMember,
+    certification,
     // Section types
     heroSection,
     servicesSection,

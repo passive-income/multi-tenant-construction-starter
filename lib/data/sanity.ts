@@ -191,11 +191,11 @@ export async function getSanityData(
 
     let services = await client.fetch(
       '*[_type == "service" && clientId == $clientId] | order(title asc)',
-      { clientId },
+      { clientId: clientId ?? null },
     );
     let projects = await client.fetch(
       '*[_type == "project" && clientId == $clientId] | order(year desc)',
-      { clientId },
+      { clientId: clientId ?? null },
     );
 
     // Map common Sanity image objects to optimized URL strings using urlFor

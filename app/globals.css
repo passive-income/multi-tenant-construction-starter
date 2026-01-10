@@ -330,3 +330,12 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
+
+/* Progressive enhancement: hide client-enhanced elements when JS is disabled */
+.js-only {
+  display: block;
+}
+
+html.no-js .js-only {
+  display: none;
+}
