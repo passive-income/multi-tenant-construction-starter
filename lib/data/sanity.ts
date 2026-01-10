@@ -33,14 +33,16 @@ const footerSchema = z
 
 // Navigation coming from Sanity may contain `link` objects without concrete hrefs.
 // Be permissive here; we normalize to concrete hrefs separately at top-level `menuItems`.
-const _navItem = z
-  .object({
-    label: z.string(),
-    href: z.string().optional(),
-    link: z.any().optional(),
-    subItems: z.array(z.any()).optional(),
-  })
-  .passthrough();
+// Example schema (commented out as unused):
+// const navItem = z
+//   .object({
+//     label: z.string(),
+//     href: z.string().optional(),
+//     link: z.any().optional(),
+//     subItems: z.array(z.any()).optional(),
+//   })
+//   .passthrough();
+
 const navigationSchema = z.object({ menuItems: z.array(z.any()).optional() }).passthrough();
 
 const serviceSchema = z

@@ -46,11 +46,6 @@ export function BeforeAfterSlider({
     return () => window.removeEventListener('resize', calc);
   }, []);
 
-  const overlayVisibleBefore = isMobile
-    ? !isDragging && !isOnButton
-    : isHoveringImages && !isOnButton && !isDragging;
-  const _overlayVisibleAfter = overlayVisibleBefore;
-
   const clamp = (v: number) => Math.min(100, Math.max(0, v));
 
   const updateFromClientX = useCallback(

@@ -10,15 +10,26 @@ import { normalizeImageSrc } from './image';
 
 // Mock the Sanity image builder
 vi.mock('@/sanity/lib/image', () => ({
-  urlFor: vi.fn((_src: any) => ({
-    width: vi.fn(function () {
-      return this;
-    }),
-    auto: vi.fn(function () {
-      return this;
-    }),
-    url: vi.fn(() => 'https://cdn.sanity.io/images/mocked.jpg'),
-  })),
+  urlFor: vi.fn((src: any) => {
+    // Simulate validation - throw for invalid inputs
+    if (typeof src === 'number' || typeof src === 'boolean') {
+      throw new Error('Invalid image source');
+    }
+    // Empty objects or invalid structures should also throw
+    if (typeof src === 'object' && (!src._type || !src.asset)) {
+      throw new Error('Invalid Sanity image object');
+    }
+
+    return {
+      width: vi.fn(function (this: any) {
+        return this;
+      }),
+      auto: vi.fn(function (this: any) {
+        return this;
+      }),
+      url: vi.fn(() => 'https://cdn.sanity.io/images/mocked.jpg'),
+    };
+  }),
 }));
 
 describe('normalizeImageSrc', () => {

@@ -49,12 +49,11 @@ export async function FAQSection({ clientId, dataset = 'production' }: FAQSectio
     faqs = [];
   }
 
-  let _sourceNote: string | null = null;
   if ((!faqs || faqs.length === 0) && intendedStatic) {
     try {
       const json = await getJsonData(staticFile);
       faqs = (json as any)?.faqs || [];
-      _sourceNote = `Using static data (${staticFile})`;
+      // Using static data fallback
     } catch (_e) {
       faqs = [];
     }
@@ -64,7 +63,7 @@ export async function FAQSection({ clientId, dataset = 'production' }: FAQSectio
     try {
       const json = await getJsonData('static-mueller.json');
       faqs = (json as any)?.faqs || [];
-      if (faqs && faqs.length > 0) _sourceNote = 'Using static JSON fallback (Sanity missing)';
+      // Using static JSON fallback (Sanity missing)
     } catch (_e) {
       faqs = [];
     }

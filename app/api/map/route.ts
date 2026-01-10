@@ -11,41 +11,43 @@ async function ensureDir(dir: string) {
   await fs.mkdir(dir, { recursive: true });
 }
 
-function _slugifyName(name: string) {
-  return (
-    name
-      .toLowerCase()
-      .normalize('NFKD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/(^-|-$)/g, '') || 'location'
-  );
-}
+// Helper functions for potential future use
+// Commented out to avoid unused variable warnings
+// function slugifyName(name: string) {
+//   return (
+//     name
+//       .toLowerCase()
+//       .normalize('NFKD')
+//       .replace(/[\u0300-\u036f]/g, '')
+//       .replace(/[^a-z0-9]+/g, '-')
+//       .replace(/(^-|-$)/g, '') || 'location'
+//   );
+// }
 
-function _pickLatLonFromLocation(loc: any) {
-  if (!loc) return null;
-  if (typeof loc.lat === 'number' && typeof loc.lon === 'number')
-    return { lat: loc.lat, lon: loc.lon };
-  if (loc.coordinates && Array.isArray(loc.coordinates) && loc.coordinates.length >= 2)
-    return { lon: loc.coordinates[0], lat: loc.coordinates[1] };
-  if (loc.address && typeof loc.address.lat === 'number' && typeof loc.address.lon === 'number')
-    return { lat: loc.address.lat, lon: loc.address.lon };
-  return null;
-}
+// function pickLatLonFromLocation(loc: any) {
+//   if (!loc) return null;
+//   if (typeof loc.lat === 'number' && typeof loc.lon === 'number')
+//     return { lat: loc.lat, lon: loc.lon };
+//   if (loc.coordinates && Array.isArray(loc.coordinates) && loc.coordinates.length >= 2)
+//     return { lon: loc.coordinates[0], lat: loc.coordinates[1] };
+//   if (loc.address && typeof loc.address.lat === 'number' && typeof loc.address.lon === 'number')
+//     return { lat: loc.address.lat, lon: loc.address.lon };
+//   return null;
+// }
 
-function _buildQueryFromLocation(loc: any) {
-  if (!loc) return '';
-  const addr = loc.address || {};
-  const parts: string[] = [];
-  if (addr.housenumber) parts.push(addr.housenumber);
-  if (addr.street) parts.push(addr.street);
-  if (addr.postcode) parts.push(addr.postcode);
-  if (addr.city) parts.push(addr.city);
-  if (addr.country) parts.push(addr.country);
-  if (loc.title && parts.length === 0) parts.push(loc.title);
-  if (parts.length === 0 && typeof loc === 'string') parts.push(loc);
-  return parts.join(', ');
-}
+// function buildQueryFromLocation(loc: any) {
+//   if (!loc) return '';
+//   const addr = loc.address || {};
+//   const parts: string[] = [];
+//   if (addr.housenumber) parts.push(addr.housenumber);
+//   if (addr.street) parts.push(addr.street);
+//   if (addr.postcode) parts.push(addr.postcode);
+//   if (addr.city) parts.push(addr.city);
+//   if (addr.country) parts.push(addr.country);
+//   if (loc.title && parts.length === 0) parts.push(loc.title);
+//   if (parts.length === 0 && typeof loc === 'string') parts.push(loc);
+//   return parts.join(', ');
+// }
 
 async function geocode(query: string, apiKey: string) {
   const url = `https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(query)}&format=json&limit=1&apiKey=${apiKey}`;

@@ -9,7 +9,7 @@ import { getHost } from '@/lib/utils/host';
 // Individual service card as async component (can fetch individually if needed)
 async function ServiceCard({ service }: { service: any }) {
   const slug = typeof service.slug === 'string' ? service.slug : service?.slug?.current;
-  const href = slug ? `/services/${slug}` : undefined;
+  const href = slug ? `/services/${slug as string}` : undefined;
 
   return (
     <div className="p-4 border rounded-lg bg-white shadow-sm hover:shadow-md transition-shadow">
@@ -40,6 +40,15 @@ async function ServiceCard({ service }: { service: any }) {
 // Main services grid - async component
 async function ServicesGrid() {
   const host = await getHost();
+
+  if (!host) {
+    return (
+      <div className="text-center py-12">
+        <p className="text-muted-foreground">Kein Tenant konfiguriert</p>
+      </div>
+    );
+  }
+
   const services = await getServices(host);
 
   if (!services || services.length === 0) {

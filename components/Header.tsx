@@ -81,7 +81,7 @@ export async function Header() {
   const activeClass = 'bg-accent text-accent-foreground';
   const hoverClass = 'hover:bg-accent hover:text-accent-foreground';
 
-  const _isActive = (href: string) => pathname === href;
+  // const isActive = (href: string) => pathname === href;
 
   return (
     <header className="w-full h-16 shrink-0 bg-white border-b border-border">
