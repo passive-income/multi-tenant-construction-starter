@@ -1,0 +1,8 @@
+{
+  "address": "Kurfürstendamm 90, 10709 Berlin",
+  "lat": 52.4991678,
+  "lon": 13.3014078,
+  "generatedAt": "2026-01-01T18:33:49.567Z",
+  "staticMapUrl": "https://maps.geoapify.com/v1/staticmap?style=osm-bright&width=600&height=300&center=lonlat%3A13.3014078%2C52.4991678&zoom=16&format=png&apiKey=6ec7537251fd4d73b5262ea253b00d2c&marker=lonlat%3A13.3014078%2C52.4991678%3Btype%3Amaterial%3Bcolor%3A%23ff0000%3Bsize%3A48",
+  "clientId": "default"
+}
