@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-  // @ts-expect-error - vite version mismatch between dependencies
+  // @ts-expect-error - vite version mismatch between vitest (vite 5) and next.js (vite 7)
   plugins: [react()],
   test: {
     environment: 'jsdom',
