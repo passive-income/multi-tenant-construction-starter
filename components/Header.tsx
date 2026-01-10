@@ -1,14 +1,7 @@
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { getHost, getHeader } from "@/lib/utils/host";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
+import HoverNavigationMenu from "./HoverNavigationMenu";
 import { getJsonData } from "@/lib/data/json";
 import { getSanityData } from "@/lib/data/sanity";
 import MobileNavigation from "./MobileNavigation";
@@ -69,7 +62,19 @@ export async function Header() {
       ...item,
       href: item.href || "/",
       subItems: item.subItems
-        ?.map((sub) => ({ ...sub, href: sub.href || item.href || "/" }))
+        ?.map((sub) => {
+          // Convert link object to href
+          let href = sub.href;
+          if (!href && (sub as any).link) {
+            const link = (sub as any).link;
+            if (link.type === 'service' && link.slug) {
+              href = `/services/${link.slug}`;
+            } else if (link.slug) {
+              href = `/${link.slug}`;
+            }
+          }
+          return { ...sub, href: href || item.href || "/" };
+        })
         .filter((sub) => !!sub.href),
     }))
     .filter((item) => !!item.href);
@@ -93,59 +98,13 @@ export async function Header() {
         </Link>
 
         {/* Desktop Navigation - hidden on tablet and smaller */}
-        <NavigationMenu className="hidden md:flex" aria-label="Main Navigation" viewport={false}>
-          <NavigationMenuList>
-            {navItems.map((item: any) => (
-              <NavigationMenuItem key={item.label || item.href}>
-                {item.subItems ? (
-                  <>
-                    <NavigationMenuTrigger
-                      className={`${isActive(item.href) ? activeClass : ""}`}
-                    >
-                      {item.href ? (
-                        <Link href={item.href}>{item.label}</Link>
-                      ) : (
-                        <span>{item.label}</span>
-                      )}
-                    </NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                      <ul className="grid w-100 gap-3 p-4 md:w-125 md:grid-cols-2 lg:w-150">
-                        {item.subItems.map((sub: any) => (
-                          <li key={sub.title || sub.href}>
-                            <NavigationMenuLink asChild>
-                              <Link
-                                href={sub.href || item.href}
-                                className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground"
-                              >
-                                <div className="text-sm font-medium leading-none">
-                                  {sub.title}
-                                </div>
-                                {sub.description && (
-                                  <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                                    {sub.description}
-                                  </p>
-                                )}
-                              </Link>
-                            </NavigationMenuLink>
-                          </li>
-                        ))}
-                      </ul>
-                    </NavigationMenuContent>
-                  </>
-                ) : (
-                  <NavigationMenuLink asChild>
-                    <Link
-                      href={item.href}
-                      className={`${navBase} ${isActive(item.href) ? activeClass : hoverClass}`}
-                    >
-                      {item.label}
-                    </Link>
-                  </NavigationMenuLink>
-                )}
-              </NavigationMenuItem>
-            ))}
-          </NavigationMenuList>
-        </NavigationMenu>
+        <HoverNavigationMenu
+          items={navItems}
+          pathname={pathname}
+          navBase={navBase}
+          activeClass={activeClass}
+          hoverClass={hoverClass}
+        />
 
         <MobileNavigation logoText={logoText} />
       </div>

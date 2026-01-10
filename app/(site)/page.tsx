@@ -23,11 +23,7 @@ export default async function HomePage() {
         { clientId: clientId ?? null }
       );
       if (homePage?.sections) {
-        return (
-          <main>
-            <SectionRenderer sections={homePage.sections} />
-          </main>
-        );
+        return <SectionRenderer sections={homePage.sections} />;
       }
     }
   } catch (error) {
@@ -41,9 +37,7 @@ export default async function HomePage() {
   return (
     <>
       {firstSlideImage && <PreloadLCPImage src={firstSlideImage} />}
-      <main>
-        <MainSection data={siteData} />
-      </main>
+      <MainSection data={siteData} />
     </>
   );
 }

@@ -1,6 +1,7 @@
 import { AnalyticsWrapper } from "@/components/AnalyticsWrapper";
 import { Header } from "@/components/Header";
 import Footer from "@/components/footer/Footer";
+import { ScrollRestoration } from "@/components/ScrollRestoration";
 import { getHost } from "@/lib/utils/host";
 import { getSanityData } from "@/lib/data/sanity";
 import { getJsonData } from "@/lib/data/json";
@@ -30,10 +31,11 @@ export default async function SiteLayout({
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col" id="main-content" role="main">
+      <ScrollRestoration />
       <AnalyticsWrapper />
       <Header />
-      <main className="flex-1">{children}</main>
+      <div className="flex-1 relative z-0">{children}</div>
       <Footer clientId={data.clientId} footer={data.footer} />
     </div>
   );

@@ -52,12 +52,8 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           Skip to content
         </a>
-        <div className="min-h-screen flex flex-col">
-          <main id="main-content" className="flex-1" role="main">
-            {children}
-          </main>
-          {process.env.NEXT_PUBLIC_LOG_CLS === "1" && <ClsLogger />}
-        </div>
+        {children}
+        {process.env.NEXT_PUBLIC_LOG_CLS === "1" && <ClsLogger />}
       </body>
     </html>
   );
