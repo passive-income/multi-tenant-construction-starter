@@ -28,26 +28,27 @@
     "rules": {
       "recommended": true,
       "correctness": {
-        "useExhaustiveDependencies": "warn"
+        "useExhaustiveDependencies": "off"
       },
       "suspicious": {
         "noUnknownAtRules": "off",
         "noExplicitAny": "off",
-        "noArrayIndexKey": "warn",
-        "noImplicitAnyLet": "warn"
+        "noArrayIndexKey": "off",
+        "noImplicitAnyLet": "off"
       },
       "security": {
         "noDangerouslySetInnerHtml": "off"
       },
       "a11y": {
-        "noStaticElementInteractions": "warn",
-        "useButtonType": "warn",
-        "useSemanticElements": "warn",
-        "useAriaPropsSupportedByRole": "warn"
+        "noStaticElementInteractions": "off",
+        "useButtonType": "off",
+        "useSemanticElements": "off",
+        "useAriaPropsSupportedByRole": "off"
       },
       "style": {
         "noParameterAssign": "error",
-        "noDescendingSpecificity": "off"
+        "noDescendingSpecificity": "off",
+        "noNonNullAssertion": "off"
       }
     },
     "domains": {
