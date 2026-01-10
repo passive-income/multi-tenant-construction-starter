@@ -6,13 +6,11 @@
 
 import { visionTool } from '@sanity/vision';
 import { defineConfig } from 'sanity';
-// @ts-expect-error - structureTool exists at runtime in sanity v4
 import { structureTool } from 'sanity/structure';
-
+import { structure } from './sanity/deskStructure';
 // Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works
 import { apiVersion, dataset, projectId } from './sanity/env';
 import { schema } from './sanity/schemaTypes';
-import { structure } from './sanity/structure';
 
 export default defineConfig({
   basePath: '/studio',
