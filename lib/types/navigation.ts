@@ -1,5 +1,5 @@
 export interface SubItem {
-  title?: string;
+  title: string;
   description?: string;
   href: string;
 }

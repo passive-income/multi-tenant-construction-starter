@@ -1,10 +1,10 @@
-import { getClient } from "@/sanity/lib/client";
-import { faqQuery } from "@/sanity/queries";
-import type { FAQ, FAQCategory } from "@/lib/types/faq";
-import { FAQAccordion } from "@/components/faq/FAQAccordion";
-import { getHost } from "@/lib/utils/host";
-import { getJsonData } from "@/lib/data/json";
-import { Card } from "@/components/ui/card";
+import { FAQAccordion } from '@/components/faq/FAQAccordion';
+import { Card } from '@/components/ui/card';
+import { getJsonData } from '@/lib/data/json';
+import type { FAQ, FAQCategory } from '@/lib/types/faq';
+import { getHost } from '@/lib/utils/host';
+import { getClient } from '@/sanity/lib/client';
+import { faqQuery } from '@/sanity/queries';
 
 interface FAQSectionProps {
   clientId: string;
@@ -12,28 +12,28 @@ interface FAQSectionProps {
 }
 
 const categoryLabels: Record<string, string> = {
-  allgemein: "Allgemein",
-  leistungen: "Leistungen",
-  kosten: "Kosten",
-  zeitplan: "Zeitplan",
-  garantie: "Garantie",
+  allgemein: 'Allgemein',
+  leistungen: 'Leistungen',
+  kosten: 'Kosten',
+  zeitplan: 'Zeitplan',
+  garantie: 'Garantie',
 };
 
-export async function FAQSection({ clientId, dataset = "production" }: FAQSectionProps) {
+export async function FAQSection({ clientId, dataset = 'production' }: FAQSectionProps) {
   const client = getClient(dataset);
   const host = await getHost();
 
   let intendedStatic = false;
-  let staticFile = "static-mueller.json";
+  let staticFile = 'static-mueller.json';
   if (host) {
     try {
       const clientDoc = await client.fetch('*[_type == "client" && $host in domains][0]', { host });
       const ds = clientDoc?.dataSource || clientDoc?.type || null;
-      if (ds === "json" || ds === "static") {
+      if (ds === 'json' || ds === 'static') {
         intendedStatic = true;
         staticFile = clientDoc?.staticFileName || staticFile;
       }
-    } catch (e) {}
+    } catch (_e) {}
   }
 
   let faqs: FAQ[] = [];
@@ -45,27 +45,26 @@ export async function FAQSection({ clientId, dataset = "production" }: FAQSectio
         faqs = await client.fetch(`*[_type == "faq"] | order(order asc)`);
       }
     }
-  } catch (e) {
+  } catch (_e) {
     faqs = [];
   }
 
-  let sourceNote: string | null = null;
   if ((!faqs || faqs.length === 0) && intendedStatic) {
     try {
       const json = await getJsonData(staticFile);
       faqs = (json as any)?.faqs || [];
-      sourceNote = `Using static data (${staticFile})`;
-    } catch (e) {
+      // Using static data fallback
+    } catch (_e) {
       faqs = [];
     }
   }
 
   if ((!faqs || faqs.length === 0) && !intendedStatic) {
     try {
-      const json = await getJsonData("static-mueller.json");
+      const json = await getJsonData('static-mueller.json');
       faqs = (json as any)?.faqs || [];
-      if (faqs && faqs.length > 0) sourceNote = "Using static JSON fallback (Sanity missing)";
-    } catch (e) {
+      // Using static JSON fallback (Sanity missing)
+    } catch (_e) {
       faqs = [];
     }
   }
@@ -81,17 +80,15 @@ export async function FAQSection({ clientId, dataset = "production" }: FAQSectio
   // Group FAQs by category
   const grouped: Record<string, FAQ[]> = {};
   faqs.forEach((faq) => {
-    const cat = faq.category || "allgemein";
+    const cat = faq.category || 'allgemein';
     if (!grouped[cat]) grouped[cat] = [];
     grouped[cat].push(faq);
   });
 
-  const categories: FAQCategory[] = Object.entries(grouped).map(
-    ([category, faqs]) => ({
-      category,
-      faqs,
-    })
-  );
+  const categories: FAQCategory[] = Object.entries(grouped).map(([category, faqs]) => ({
+    category,
+    faqs,
+  }));
 
   return (
     <section className="py-16">

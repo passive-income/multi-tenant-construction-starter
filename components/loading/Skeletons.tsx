@@ -15,11 +15,12 @@ export function CardSkeleton() {
 }
 
 export function GridSkeleton({ items = 6, cols = 3 }: { items?: number; cols?: number }) {
-  const gridCols = {
-    2: "grid-cols-1 sm:grid-cols-2",
-    3: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
-    4: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4",
-  }[cols] || "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3";
+  const gridCols =
+    {
+      2: 'grid-cols-1 sm:grid-cols-2',
+      3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
+      4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4',
+    }[cols] || 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3';
 
   return (
     <div className={`grid ${gridCols} gap-6`}>
@@ -69,9 +70,9 @@ export function DetailPageSkeleton() {
     <article className="container py-16 max-w-4xl">
       <div className="h-12 w-3/4 bg-muted animate-pulse rounded mb-4"></div>
       <div className="h-6 w-1/2 bg-muted animate-pulse rounded mb-8"></div>
-      
+
       <div className="h-96 bg-muted animate-pulse rounded mb-8"></div>
-      
+
       <div className="space-y-4">
         <div className="h-4 bg-muted animate-pulse rounded"></div>
         <div className="h-4 bg-muted animate-pulse rounded"></div>

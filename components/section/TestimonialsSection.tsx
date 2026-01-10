@@ -1,47 +1,47 @@
-import { getClient } from "@/sanity/lib/client";
-import { testimonialsQuery } from "@/sanity/queries";
-import type { Testimonial } from "@/lib/types/testimonial";
-import { TestimonialCard } from "@/components/testimonial/TestimonialCard";
-import { getHost } from "@/lib/utils/host";
-import { getJsonData } from "@/lib/data/json";
-import { Card } from "@/components/ui/card";
+import { TestimonialCard } from '@/components/testimonial/TestimonialCard';
+import { Card } from '@/components/ui/card';
+import { getJsonData } from '@/lib/data/json';
+import type { Testimonial } from '@/lib/types/testimonial';
+import { getHost } from '@/lib/utils/host';
+import { getClient } from '@/sanity/lib/client';
+import { testimonialsQuery } from '@/sanity/queries';
 
 interface TestimonialsSectionProps {
   clientId: string;
   dataset?: string;
 }
 
-export async function TestimonialsSection({ 
-  clientId, 
-  dataset = "production" 
+export async function TestimonialsSection({
+  clientId,
+  dataset = 'production',
 }: TestimonialsSectionProps) {
   const client = getClient(dataset);
   const host = await getHost();
 
   // detect if client is configured to use static JSON
   let intendedStatic = false;
-  let staticFile = "static-mueller.json";
+  let staticFile = 'static-mueller.json';
   if (host) {
     try {
       const clientDoc = await client.fetch('*[_type == "client" && $host in domains][0]', { host });
       const ds = clientDoc?.dataSource || clientDoc?.type || null;
-      if (ds === "json" || ds === "static") {
+      if (ds === 'json' || ds === 'static') {
         intendedStatic = true;
         staticFile = clientDoc?.staticFileName || staticFile;
       }
-    } catch (e) {
+    } catch (_e) {
       // ignore
     }
   }
 
   let testimonials: Testimonial[] = [];
-    try {
-      if (!intendedStatic) {
-        testimonials = await client.fetch(testimonialsQuery, { clientId: clientId ?? null });
-      }
-    } catch (e) {
-      testimonials = [];
+  try {
+    if (!intendedStatic) {
+      testimonials = await client.fetch(testimonialsQuery, { clientId: clientId ?? null });
     }
+  } catch (_e) {
+    testimonials = [];
+  }
 
   let sourceNote: string | null = null;
 
@@ -51,7 +51,7 @@ export async function TestimonialsSection({
       const json = await getJsonData(staticFile);
       testimonials = (json as any)?.testimonials || [];
       sourceNote = `Using static data (${staticFile})`;
-    } catch (e) {
+    } catch (_e) {
       testimonials = [];
     }
   }
@@ -59,12 +59,12 @@ export async function TestimonialsSection({
   if ((!testimonials || testimonials.length === 0) && !intendedStatic) {
     // fallback to repo static JSON
     try {
-      const json = await getJsonData("static-mueller.json");
+      const json = await getJsonData('static-mueller.json');
       testimonials = (json as any)?.testimonials || [];
       if (testimonials && testimonials.length > 0) {
-        sourceNote = "Using static JSON fallback (Sanity missing)";
+        sourceNote = 'Using static JSON fallback (Sanity missing)';
       }
-    } catch (e) {
+    } catch (_e) {
       testimonials = [];
     }
   }

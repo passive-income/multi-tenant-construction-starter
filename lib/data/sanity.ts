@@ -1,13 +1,9 @@
-import { getClient } from "@/sanity/lib/client";
-import {
-  siteSettingsQuery,
-  servicesQuery,
-  projectsQuery,
-} from "@/sanity/queries";
-import type { SiteData } from "@/lib/types/site";
-import { z } from "zod";
-import { urlFor } from '@/sanity/lib/image'
-import { resolveLink } from '@/lib/utils/links'
+import { z } from 'zod';
+import type { SiteData } from '@/lib/types/site';
+import { resolveLink } from '@/lib/utils/links';
+import { getClient } from '@/sanity/lib/client';
+import { urlFor } from '@/sanity/lib/image';
+import { projectsQuery, servicesQuery, siteSettingsQuery } from '@/sanity/queries';
 
 // Zod schemas for runtime validation
 const companySchema = z
@@ -20,8 +16,8 @@ const companySchema = z
   .passthrough();
 
 const footerLink = z
-  .object({ 
-    text: z.string(), 
+  .object({
+    text: z.string(),
     href: z.string().optional(),
     pageRef: z.any().optional(),
   })
@@ -37,17 +33,17 @@ const footerSchema = z
 
 // Navigation coming from Sanity may contain `link` objects without concrete hrefs.
 // Be permissive here; we normalize to concrete hrefs separately at top-level `menuItems`.
-const navItem = z
-  .object({
-    label: z.string(),
-    href: z.string().optional(),
-    link: z.any().optional(),
-    subItems: z.array(z.any()).optional(),
-  })
-  .passthrough();
-const navigationSchema = z
-  .object({ menuItems: z.array(z.any()).optional() })
-  .passthrough();
+// Example schema (commented out as unused):
+// const navItem = z
+//   .object({
+//     label: z.string(),
+//     href: z.string().optional(),
+//     link: z.any().optional(),
+//     subItems: z.array(z.any()).optional(),
+//   })
+//   .passthrough();
+
+const navigationSchema = z.object({ menuItems: z.array(z.any()).optional() }).passthrough();
 
 const serviceSchema = z
   .object({
@@ -92,10 +88,7 @@ async function resolveClientByHost(client: any, host?: string) {
  * Fetch site data scoped to a client resolved by hostname.
  * If no host is provided or no client is found, falls back to the generic site settings queries.
  */
-export async function getSanityData(
-  dataset: string,
-  host?: string,
-): Promise<SiteData> {
+export async function getSanityData(dataset: string, host?: string): Promise<SiteData> {
   const client = getClient(dataset);
 
   // Try to resolve client by host (e.g. "alpha.local" or "localhost:3010")
@@ -110,60 +103,62 @@ export async function getSanityData(
     // - optional `staticFileName`: e.g. 'static-mueller.json'
     try {
       const ds = clientDoc.dataSource || clientDoc.type || null;
-      if (ds === "json" || ds === "static") {
-        const staticFile = clientDoc.staticFileName || "static-mueller.json";
+      if (ds === 'json' || ds === 'static') {
+        const staticFile = clientDoc.staticFileName || 'static-mueller.json';
         // dynamic import to avoid adding fs at module top-level in browser bundles
-        const fs = await import("fs/promises");
-        const path = await import("path");
+        const fs = await import('node:fs/promises');
+        const path = await import('node:path');
         try {
-          const filePath = path.join(process.cwd(), "data", staticFile);
-          const file = await fs.readFile(filePath, "utf-8");
+          const filePath = path.join(process.cwd(), 'data', staticFile);
+          const file = await fs.readFile(filePath, 'utf-8');
           const parsed = JSON.parse(file) as SiteData;
           return parsed;
         } catch (err) {
           // eslint-disable-next-line no-console
-          console.warn(`Failed to load static JSON '${staticFile}' for client ${clientDoc._id}:`, err);
+          console.warn(
+            `Failed to load static JSON '${staticFile}' for client ${clientDoc._id}:`,
+            err,
+          );
           // fall through to attempt normal Sanity-based lookup below
         }
       }
-    } catch (e) {
+    } catch (_e) {
       // ignore and continue with sanity fetch
     }
     const clientId = clientDoc.clientId;
 
     // company and footer are stored as references on the client doc
     const company = clientDoc.companyRef
-      ? await client.fetch("*[_id == $id][0]", {
+      ? await client.fetch('*[_id == $id][0]', {
           id: clientDoc.companyRef._ref,
         })
       : null;
 
-      // Map company slider images if present
-      try {
-        if (company?.slider && Array.isArray(company.slider)) {
-          company.slider = company.slider.map((it: any) => ({
-            ...it,
-            image: it?.image ? urlFor(it.image).width(1600).auto('format').url() : it?.image,
-          }))
-        }
-        // Map company before/after pairs to URL strings when present
-        if (company?.beforeAfter && Array.isArray(company.beforeAfter)) {
-          company.beforeAfter = company.beforeAfter.map((it: any) => ({
-            ...it,
-            before: it?.before ? urlFor(it.before).width(1200).auto('format').url() : it?.before,
-            after: it?.after ? urlFor(it.after).width(1200).auto('format').url() : it?.after,
-          }))
-        }
-      } catch (e) {}
+    // Map company slider images if present
+    try {
+      if (company?.slider && Array.isArray(company.slider)) {
+        company.slider = company.slider.map((it: any) => ({
+          ...it,
+          image: it?.image ? urlFor(it.image).width(1600).auto('format').url() : it?.image,
+        }));
+      }
+      // Map company before/after pairs to URL strings when present
+      if (company?.beforeAfter && Array.isArray(company.beforeAfter)) {
+        company.beforeAfter = company.beforeAfter.map((it: any) => ({
+          ...it,
+          before: it?.before ? urlFor(it.before).width(1200).auto('format').url() : it?.before,
+          after: it?.after ? urlFor(it.after).width(1200).auto('format').url() : it?.after,
+        }));
+      }
+    } catch (_e) {}
 
     const footer = clientDoc.footerRef
-      ? await client.fetch("*[_id == $id][0]", { id: clientDoc.footerRef._ref })
+      ? await client.fetch('*[_id == $id][0]', { id: clientDoc.footerRef._ref })
       : null;
 
-    const navigation = await client.fetch(
-      '*[_type == "navigation" && _id == $id][0]',
-      { id: `navigation-${clientId}` },
-    );
+    const navigation = await client.fetch('*[_type == "navigation" && _id == $id][0]', {
+      id: `navigation-${clientId}`,
+    });
 
     // Resolve navigation links to concrete hrefs
     let menuItems: any[] = [];
@@ -178,11 +173,11 @@ export async function getSanityData(
                   title: sub.title,
                   description: sub.description,
                   href: await resolveLink(client, sub.link || { externalUrl: sub.href }),
-                }))
+                })),
               )
             : undefined;
           return { label: item.label, href, subItems };
-        })
+        }),
       );
     } catch (e) {
       // eslint-disable-next-line no-console
@@ -204,9 +199,9 @@ export async function getSanityData(
         ...s,
         image: s?.image
           ? urlFor(s.image).width(800).auto('format').url()
-          : s?.imageUrl ?? s?.image,
-      }))
-    } catch (e) {
+          : (s?.imageUrl ?? s?.image),
+      }));
+    } catch (_e) {
       // continue with un-mapped services
     }
 
@@ -217,8 +212,8 @@ export async function getSanityData(
         images: Array.isArray(p?.images)
           ? p.images.map((im: any) => (im ? urlFor(im).width(1200).auto('format').url() : im))
           : p.images,
-      }))
-    } catch (e) {
+      }));
+    } catch (_e) {
       // continue with un-mapped projects
     }
 
@@ -240,10 +235,7 @@ export async function getSanityData(
     if (!parsed.success) {
       // Log validation issues but return best-effort data to avoid breaking the site
       // eslint-disable-next-line no-console
-      console.warn(
-        "Sanity site data validation failed:",
-        parsed.error.format(),
-      );
+      console.warn('Sanity site data validation failed:', parsed.error.format());
       return { clientId, company, footer, navigation, services, projects } as SiteData;
     }
 
@@ -262,10 +254,7 @@ export async function getSanityData(
   });
   if (!parsed.success) {
     // eslint-disable-next-line no-console
-    console.warn(
-      "Sanity generic site data validation failed:",
-      parsed.error.format(),
-    );
+    console.warn('Sanity generic site data validation failed:', parsed.error.format());
     return { company: settings, services, projects } as SiteData;
   }
 

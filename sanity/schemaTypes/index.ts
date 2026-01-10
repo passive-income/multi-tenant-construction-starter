@@ -1,26 +1,26 @@
-import client from "./client";
-import company from "./company";
-import service from "./service";
-import project from "./project";
-import footer from "./footer";
-import navigation from "./navigation";
-import beforeAfter from "./beforeAfter";
-import link from "./link";
-import page from "./page";
-import testimonial from "./testimonial";
-import faq from "./faq";
-import contactSettings from "./contactSettings";
-import teamMember from "./teamMember";
-import certification from "./certification";
+import beforeAfter from './beforeAfter';
+import certification from './certification';
+import client from './client';
+import company from './company';
+import contactSettings from './contactSettings';
+import faq from './faq';
+import footer from './footer';
+import link from './link';
+import navigation from './navigation';
+import page from './page';
+import project from './project';
+import beforeAfterSection from './sections/beforeAfterSection';
+import companySection from './sections/companySection';
+import ctaSection from './sections/ctaSection';
 
 // Section schemas
-import heroSection from "./sections/heroSection";
-import servicesSection from "./sections/servicesSection";
-import beforeAfterSection from "./sections/beforeAfterSection";
-import companySection from "./sections/companySection";
-import projectsSection from "./sections/projectsSection";
-import ctaSection from "./sections/ctaSection";
-import imageSliderSection from "./sections/imageSliderSection";
+import heroSection from './sections/heroSection';
+import imageSliderSection from './sections/imageSliderSection';
+import projectsSection from './sections/projectsSection';
+import servicesSection from './sections/servicesSection';
+import service from './service';
+import teamMember from './teamMember';
+import testimonial from './testimonial';
 
 export const schema = {
   types: [

@@ -1,108 +1,110 @@
 /**
  * Unit tests for normalizeImageSrc utility.
- * 
+ *
  * To run these tests:
- * 1. Install vitest or jest: `npm install --save-dev vitest` or `npm install --save-dev jest @types/jest`
- * 2. Add test script to package.json: `"test": "vitest"` or `"test": "jest"`
- * 3. Run: `npm test`
- * 
- * Example with Vitest:
- * ```bash
- * npm install --save-dev vitest @vitest/ui
- * # Then update package.json scripts: "test": "vitest"
- * ```
+ * 1. Run: `pnpm test`
  */
 
-import { describe, it, expect, vi } from "vitest";
-import { normalizeImageSrc } from "./image";
+import { describe, expect, it, vi } from 'vitest';
+import { normalizeImageSrc } from './image';
 
 // Mock the Sanity image builder
-vi.mock("@/sanity/lib/image", () => ({
-  urlFor: vi.fn((src: any) => ({
-    width: vi.fn(function () {
-      return this;
-    }),
-    auto: vi.fn(function () {
-      return this;
-    }),
-    url: vi.fn(() => "https://cdn.sanity.io/images/mocked.jpg"),
-  })),
+vi.mock('@/sanity/lib/image', () => ({
+  urlFor: vi.fn((src: any) => {
+    // Simulate validation - throw for invalid inputs
+    if (typeof src === 'number' || typeof src === 'boolean') {
+      throw new Error('Invalid image source');
+    }
+    // Empty objects or invalid structures should also throw
+    if (typeof src === 'object' && (!src._type || !src.asset)) {
+      throw new Error('Invalid Sanity image object');
+    }
+
+    return {
+      width: vi.fn(function (this: any) {
+        return this;
+      }),
+      auto: vi.fn(function (this: any) {
+        return this;
+      }),
+      url: vi.fn(() => 'https://cdn.sanity.io/images/mocked.jpg'),
+    };
+  }),
 }));
 
-describe("normalizeImageSrc", () => {
-  it("should return null for empty string", () => {
-    expect(normalizeImageSrc("")).toBeNull();
+describe('normalizeImageSrc', () => {
+  it('should return null for empty string', () => {
+    expect(normalizeImageSrc('')).toBeNull();
   });
 
-  it("should return null for whitespace-only string", () => {
-    expect(normalizeImageSrc("   ")).toBeNull();
+  it('should return null for whitespace-only string', () => {
+    expect(normalizeImageSrc('   ')).toBeNull();
   });
 
-  it("should return null for null input", () => {
+  it('should return null for null input', () => {
     expect(normalizeImageSrc(null)).toBeNull();
   });
 
-  it("should return null for undefined input", () => {
+  it('should return null for undefined input', () => {
     expect(normalizeImageSrc(undefined)).toBeNull();
   });
 
-  it("should return trimmed string for valid URL", () => {
-    const url = "  https://example.com/image.jpg  ";
-    expect(normalizeImageSrc(url)).toBe("https://example.com/image.jpg");
+  it('should return trimmed string for valid URL', () => {
+    const url = '  https://example.com/image.jpg  ';
+    expect(normalizeImageSrc(url)).toBe('https://example.com/image.jpg');
   });
 
-  it("should return null for non-string, non-object input", () => {
+  it('should return null for non-string, non-object input', () => {
     expect(normalizeImageSrc(123 as any)).toBeNull();
     expect(normalizeImageSrc(true as any)).toBeNull();
   });
 
-  it("should handle Sanity image object with width option", () => {
+  it('should handle Sanity image object with width option', () => {
     const sanityImage = {
-      _type: "image",
+      _type: 'image',
       asset: {
-        _ref: "image-abc123",
+        _ref: 'image-abc123',
       },
     };
     const result = normalizeImageSrc(sanityImage, { width: 800 });
-    expect(result).toBe("https://cdn.sanity.io/images/mocked.jpg");
+    expect(result).toBe('https://cdn.sanity.io/images/mocked.jpg');
   });
 
-  it("should handle Sanity image object with autoFormat option", () => {
+  it('should handle Sanity image object with autoFormat option', () => {
     const sanityImage = {
-      _type: "image",
+      _type: 'image',
       asset: {
-        _ref: "image-abc123",
+        _ref: 'image-abc123',
       },
     };
     const result = normalizeImageSrc(sanityImage, { autoFormat: true });
-    expect(result).toBe("https://cdn.sanity.io/images/mocked.jpg");
+    expect(result).toBe('https://cdn.sanity.io/images/mocked.jpg');
   });
 
-  it("should return null for invalid Sanity object (non-object primitive)", () => {
-    const result = normalizeImageSrc({ invalid: "object" });
+  it('should return null for invalid Sanity object (non-object primitive)', () => {
+    const result = normalizeImageSrc({ invalid: 'object' });
     // This depends on urlFor's error handling; assume it throws or returns null
     expect(result).toBeNull();
   });
 
-  it("should handle options combination", () => {
+  it('should handle options combination', () => {
     const sanityImage = {
-      _type: "image",
+      _type: 'image',
       asset: {
-        _ref: "image-abc123",
+        _ref: 'image-abc123',
       },
     };
     const result = normalizeImageSrc(sanityImage, { width: 1200, autoFormat: true });
-    expect(result).toBe("https://cdn.sanity.io/images/mocked.jpg");
+    expect(result).toBe('https://cdn.sanity.io/images/mocked.jpg');
   });
 
-  it("should preserve string URL when no options provided", () => {
-    const url = "https://example.com/image.jpg";
+  it('should preserve string URL when no options provided', () => {
+    const url = 'https://example.com/image.jpg';
     expect(normalizeImageSrc(url)).toBe(url);
   });
 
-  it("should handle empty object", () => {
+  it('should handle empty object', () => {
     const result = normalizeImageSrc({});
     expect(result).toBeNull();
   });
 });
-

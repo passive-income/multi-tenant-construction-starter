@@ -1,4 +1,4 @@
-import { headers as nextHeaders } from "next/headers";
+import { headers as nextHeaders } from 'next/headers';
 
 /**
  * Return the Host header in a consistent way across Next versions.
@@ -7,11 +7,11 @@ import { headers as nextHeaders } from "next/headers";
 export async function getHost(): Promise<string | undefined> {
   try {
     const maybe = (nextHeaders as any)();
-    if (maybe && typeof maybe.then === "function") {
+    if (maybe && typeof maybe.then === 'function') {
       const resolved = await maybe;
-      return resolved?.get?.("host") ?? undefined;
+      return resolved?.get?.('host') ?? undefined;
     }
-    return maybe?.get?.("host") ?? undefined;
+    return maybe?.get?.('host') ?? undefined;
   } catch {
     return undefined;
   }
@@ -20,7 +20,7 @@ export async function getHost(): Promise<string | undefined> {
 export function getHostSync(): string | undefined {
   try {
     const h = (nextHeaders as any)();
-    return h?.get?.("host") ?? undefined;
+    return h?.get?.('host') ?? undefined;
   } catch {
     return undefined;
   }
@@ -29,7 +29,7 @@ export function getHostSync(): string | undefined {
 export async function getHeader(name: string): Promise<string | undefined> {
   try {
     const maybe = (nextHeaders as any)();
-    if (maybe && typeof maybe.then === "function") {
+    if (maybe && typeof maybe.then === 'function') {
       const resolved = await maybe;
       return resolved?.get?.(name) ?? undefined;
     }

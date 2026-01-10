@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { Star } from "lucide-react";
-import Image from "next/image";
-import { useState } from "react";
-import { Card } from "@/components/ui/card";
-import type { Testimonial } from "@/lib/types/testimonial";
-import { urlFor } from "@/sanity/lib/image";
+import { Star } from 'lucide-react';
+import Image from 'next/image';
+import { useState } from 'react';
+import { Card } from '@/components/ui/card';
+import type { Testimonial } from '@/lib/types/testimonial';
+import { urlFor } from '@/sanity/lib/image';
 
 interface TestimonialCardProps {
   testimonial: Testimonial;
@@ -14,16 +14,15 @@ interface TestimonialCardProps {
 export function TestimonialCard({ testimonial }: TestimonialCardProps) {
   const [expanded, setExpanded] = useState(false);
   const longText = testimonial.text.length > 200;
-  const displayText = expanded || !longText 
-    ? testimonial.text 
-    : `${testimonial.text.slice(0, 200)}...`;
+  const displayText =
+    expanded || !longText ? testimonial.text : `${testimonial.text.slice(0, 200)}...`;
 
-  const imageUrl = testimonial.image?.asset 
-    ? urlFor(testimonial.image).width(80).height(80).url() 
+  const imageUrl = testimonial.image?.asset
+    ? urlFor(testimonial.image).width(80).height(80).url()
     : null;
 
   return (
-    <Card className={`p-6 ${testimonial.featured ? "border-2 border-primary shadow-lg" : ""}`}>
+    <Card className={`p-6 ${testimonial.featured ? 'border-2 border-primary shadow-lg' : ''}`}>
       {testimonial.featured && (
         <div className="mb-3">
           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary text-primary-foreground">
@@ -31,7 +30,7 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
           </span>
         </div>
       )}
-      
+
       <div className="flex items-start gap-4 mb-4">
         {imageUrl ? (
           <Image
@@ -46,7 +45,7 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
             {testimonial.name.charAt(0)}
           </div>
         )}
-        
+
         <div className="flex-1">
           <h3 className="font-semibold text-lg">{testimonial.name}</h3>
           {testimonial.company && (
@@ -63,9 +62,7 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
           <Star
             key={i}
             className={`w-5 h-5 ${
-              i < testimonial.rating
-                ? "fill-yellow-400 text-yellow-400"
-                : "text-gray-300"
+              i < testimonial.rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'
             }`}
           />
         ))}
@@ -78,17 +75,13 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
           onClick={() => setExpanded(!expanded)}
           className="text-sm text-primary hover:underline"
         >
-          {expanded ? "Weniger anzeigen" : "Mehr anzeigen"}
+          {expanded ? 'Weniger anzeigen' : 'Mehr anzeigen'}
         </button>
       )}
 
       <div className="mt-4 pt-4 border-t text-xs text-muted-foreground">
-        {testimonial.date && (
-          <span>{new Date(testimonial.date).toLocaleDateString("de-DE")}</span>
-        )}
-        {testimonial.location && (
-          <span> • {testimonial.location}</span>
-        )}
+        {testimonial.date && <span>{new Date(testimonial.date).toLocaleDateString('de-DE')}</span>}
+        {testimonial.location && <span> • {testimonial.location}</span>}
       </div>
     </Card>
   );

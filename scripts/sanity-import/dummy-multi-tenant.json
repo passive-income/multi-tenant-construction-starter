@@ -74,7 +74,7 @@
   {
     "_id": "service-alpha-paint",
     "_type": "service",
-    "slug": {"_type":"slug","current":"malerarbeiten"},
+    "slug": { "_type": "slug", "current": "malerarbeiten" },
     "title": "Malerarbeiten",
     "description": "Fassaden- und Innenanstriche, dekorative Techniken.",
     "imageUrl": "https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=1200&h=800&fit=crop&auto=format",
@@ -91,7 +91,7 @@
   {
     "_id": "service-alpha-floor",
     "_type": "service",
-    "slug": {"_type":"slug","current":"bodenbelag"},
+    "slug": { "_type": "slug", "current": "bodenbelag" },
     "title": "Bodenbelag",
     "description": "Parkett, Laminat und industrietaugliche Bodenbeläge.",
     "imageUrl": "https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=1200&h=800&fit=crop&auto=format",
@@ -108,7 +108,7 @@
   {
     "_id": "project-alpha-townhouse",
     "_type": "project",
-    "slug": {"_type":"slug","current":"townhouse-renovation"},
+    "slug": { "_type": "slug", "current": "townhouse-renovation" },
     "title": "Stadthaus-Renovierung",
     "description": "Komplettrenovierung eines Stadthauses in Hamburg.",
     "clientId": "alpha",
@@ -118,7 +118,7 @@
     "_id": "page-alpha-impressum",
     "_type": "page",
     "title": "Impressum",
-    "slug": {"_type":"slug","current":"impressum"},
+    "slug": { "_type": "slug", "current": "impressum" },
     "description": "Rechtliche Angaben für Alpha Construction.",
     "clientId": "alpha"
   },
@@ -126,7 +126,7 @@
     "_id": "page-alpha-datenschutz",
     "_type": "page",
     "title": "Datenschutz",
-    "slug": {"_type":"slug","current":"datenschutz"},
+    "slug": { "_type": "slug", "current": "datenschutz" },
     "description": "Datenschutzhinweise für Alpha Construction.",
     "clientId": "alpha"
   },
@@ -205,7 +205,7 @@
   {
     "_id": "service-beta-excavation",
     "_type": "service",
-    "slug": {"_type":"slug","current":"aushub"},
+    "slug": { "_type": "slug", "current": "aushub" },
     "title": "Aushub",
     "description": "Erdaushub und Fundamentarbeiten.",
     "imageUrl": "https://images.unsplash.com/photo-1581094271901-8022df4466f9?w=1200&h=800&fit=crop&auto=format",
@@ -222,7 +222,7 @@
   {
     "_id": "service-beta-roof",
     "_type": "service",
-    "slug": {"_type":"slug","current":"dacharbeiten"},
+    "slug": { "_type": "slug", "current": "dacharbeiten" },
     "title": "Dacharbeiten",
     "description": "Dachsanierung und -abdichtung.",
     "imageUrl": "https://images.unsplash.com/photo-1632498815810-99f60080fef8?w=1200&h=800&fit=crop&auto=format",
@@ -239,7 +239,7 @@
   {
     "_id": "project-beta-apartment",
     "_type": "project",
-    "slug": {"_type":"slug","current":"museum-umbau"},
+    "slug": { "_type": "slug", "current": "museum-umbau" },
     "title": "Wohnanlage",
     "description": "Neubau eines Mehrfamilienhauses in Zürich.",
     "clientId": "beta",
@@ -249,7 +249,7 @@
     "_id": "page-beta-impressum",
     "_type": "page",
     "title": "Impressum",
-    "slug": {"_type":"slug","current":"impressum"},
+    "slug": { "_type": "slug", "current": "impressum" },
     "description": "Rechtliche Angaben für Beta Builders.",
     "clientId": "beta"
   },
@@ -257,7 +257,7 @@
     "_id": "page-beta-datenschutz",
     "_type": "page",
     "title": "Datenschutz",
-    "slug": {"_type":"slug","current":"datenschutz"},
+    "slug": { "_type": "slug", "current": "datenschutz" },
     "description": "Datenschutzhinweise für Beta Builders.",
     "clientId": "beta"
   },

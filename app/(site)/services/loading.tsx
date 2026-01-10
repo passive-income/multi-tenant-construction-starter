@@ -1,4 +1,4 @@
-import { ServicesLoading } from "@/components/loading/ServicesLoading";
+import { ServicesLoading } from '@/components/loading/ServicesLoading';
 
 export default function Loading() {
   return <ServicesLoading />;

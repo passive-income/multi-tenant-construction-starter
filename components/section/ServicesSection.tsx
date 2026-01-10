@@ -1,13 +1,7 @@
-import Link from "next/link";
-import { AnimatedSection } from "@/components/section/AnimatedSection";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import Link from 'next/link';
+import { AnimatedSection } from '@/components/section/AnimatedSection';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 interface ServicesSectionProps {
   services?: any[];
@@ -17,8 +11,8 @@ interface ServicesSectionProps {
 
 export default function ServicesSection({
   services = [],
-  title = "UNSERE LEISTUNGEN",
-  description = "Von der Idee bis zur Umsetzung an Ihrer Seite!",
+  title = 'UNSERE LEISTUNGEN',
+  description = 'Von der Idee bis zur Umsetzung an Ihrer Seite!',
 }: ServicesSectionProps) {
   if (!services || services.length === 0) return null;
 

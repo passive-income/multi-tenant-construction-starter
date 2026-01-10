@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 /**
  * ScrollRestoration component to handle proper scroll behavior during navigation
@@ -9,8 +9,8 @@ import { useEffect } from "react";
 export function ScrollRestoration() {
   useEffect(() => {
     // Disable automatic scroll restoration by the browser
-    if ("scrollRestoration" in window.history) {
-      window.history.scrollRestoration = "manual";
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
     }
 
     // Restore scroll position after hydration is complete
@@ -18,10 +18,10 @@ export function ScrollRestoration() {
       // Let React finish hydration before restoring
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          const scrollY = sessionStorage.getItem("scrollPosition");
+          const scrollY = sessionStorage.getItem('scrollPosition');
           if (scrollY) {
             window.scrollTo(0, parseInt(scrollY, 10));
-            sessionStorage.removeItem("scrollPosition");
+            sessionStorage.removeItem('scrollPosition');
           }
         });
       });
@@ -29,20 +29,20 @@ export function ScrollRestoration() {
 
     // Save scroll position before unload
     const handleBeforeUnload = () => {
-      sessionStorage.setItem("scrollPosition", window.scrollY.toString());
+      sessionStorage.setItem('scrollPosition', window.scrollY.toString());
     };
 
-    if (document.readyState === "complete") {
+    if (document.readyState === 'complete') {
       handleLoad();
     } else {
-      window.addEventListener("load", handleLoad);
+      window.addEventListener('load', handleLoad);
     }
 
-    window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener('beforeunload', handleBeforeUnload);
 
     return () => {
-      window.removeEventListener("load", handleLoad);
-      window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener('load', handleLoad);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, []);
 

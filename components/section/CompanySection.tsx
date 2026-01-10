@@ -1,32 +1,21 @@
-import Link from "next/link";
-import { AnimatedSection } from "@/components/section/AnimatedSection";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import Link from 'next/link';
+import { AnimatedSection } from '@/components/section/AnimatedSection';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 interface CompanySectionProps {
   company: any;
   companySections?: any[];
 }
 
-export default function CompanySection({
-  company,
-  companySections,
-}: CompanySectionProps) {
+export default function CompanySection({ company, companySections }: CompanySectionProps) {
   if (!company) return null;
 
   return (
     <AnimatedSection className="py-16 bg-muted/50">
       <div className="container">
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            {company.name}
-          </h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">{company.name}</h1>
           <p className="text-xl text-muted-foreground">{company.tagline}</p>
           {company.description && (
             <p className="text-lg text-muted-foreground mt-4 max-w-3xl mx-auto">
@@ -54,9 +43,7 @@ export default function CompanySection({
         {company?.callToAction && (
           <div className="text-center">
             <Button size="lg" asChild>
-              <Link href={company.callToAction.href}>
-                {company.callToAction.text}
-              </Link>
+              <Link href={company.callToAction.href}>{company.callToAction.text}</Link>
             </Button>
           </div>
         )}

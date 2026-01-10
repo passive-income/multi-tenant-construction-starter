@@ -1,12 +1,12 @@
-import { getClient } from "@/sanity/lib/client";
-import { certificationsQuery } from "@/sanity/queries";
-import type { Certification } from "@/lib/types/certification";
-import { Card } from "@/components/ui/card";
-import Image from "next/image";
-import { urlFor } from "@/sanity/lib/image";
-import { Calendar, Award } from "lucide-react";
-import { getHost } from "@/lib/utils/host";
-import { getJsonData } from "@/lib/data/json";
+import { Award, Calendar } from 'lucide-react';
+import Image from 'next/image';
+import { Card } from '@/components/ui/card';
+import { getJsonData } from '@/lib/data/json';
+import type { Certification } from '@/lib/types/certification';
+import { getHost } from '@/lib/utils/host';
+import { getClient } from '@/sanity/lib/client';
+import { urlFor } from '@/sanity/lib/image';
+import { certificationsQuery } from '@/sanity/queries';
 
 interface CertificationsSectionProps {
   clientId: string;
@@ -15,22 +15,22 @@ interface CertificationsSectionProps {
 
 export async function CertificationsSection({
   clientId,
-  dataset = "production",
+  dataset = 'production',
 }: CertificationsSectionProps) {
   const client = getClient(dataset);
   const host = await getHost();
 
   let intendedStatic = false;
-  let staticFile = "static-mueller.json";
+  let staticFile = 'static-mueller.json';
   if (host) {
     try {
       const clientDoc = await client.fetch('*[_type == "client" && $host in domains][0]', { host });
       const ds = clientDoc?.dataSource || clientDoc?.type || null;
-      if (ds === "json" || ds === "static") {
+      if (ds === 'json' || ds === 'static') {
         intendedStatic = true;
         staticFile = clientDoc?.staticFileName || staticFile;
       }
-    } catch (e) {}
+    } catch (_e) {}
   }
 
   let certifications: Certification[] = [];
@@ -42,7 +42,7 @@ export async function CertificationsSection({
         certifications = await client.fetch(`*[_type == "certification"] | order(validFrom desc)`);
       }
     }
-  } catch (e) {
+  } catch (_e) {
     certifications = [];
   }
 
@@ -52,17 +52,18 @@ export async function CertificationsSection({
       const json = await getJsonData(staticFile);
       certifications = (json as any)?.certifications || [];
       sourceNote = `Using static data (${staticFile})`;
-    } catch (e) {
+    } catch (_e) {
       certifications = [];
     }
   }
 
   if ((!certifications || certifications.length === 0) && !intendedStatic) {
     try {
-      const json = await getJsonData("static-mueller.json");
+      const json = await getJsonData('static-mueller.json');
       certifications = (json as any)?.certifications || [];
-      if (certifications && certifications.length > 0) sourceNote = "Using static JSON fallback (Sanity missing)";
-    } catch (e) {
+      if (certifications && certifications.length > 0)
+        sourceNote = 'Using static JSON fallback (Sanity missing)';
+    } catch (_e) {
       certifications = [];
     }
   }
@@ -88,9 +89,7 @@ export async function CertificationsSection({
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Unsere Zertifikate und Qualifikationen bestätigen unsere hohen Qualitätsstandards
           </p>
-          {sourceNote && (
-            <p className="text-sm text-muted-foreground mt-4">{sourceNote}</p>
-          )}
+          {sourceNote && <p className="text-sm text-muted-foreground mt-4">{sourceNote}</p>}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -145,16 +144,14 @@ export async function CertificationsSection({
                   {cert.validFrom && (
                     <div className="flex items-center">
                       <Calendar className="h-3 w-3 mr-2" />
-                      <span>
-                        Gültig ab: {new Date(cert.validFrom).toLocaleDateString("de-DE")}
-                      </span>
+                      <span>Gültig ab: {new Date(cert.validFrom).toLocaleDateString('de-DE')}</span>
                     </div>
                   )}
                   {cert.validUntil && (
                     <div className="flex items-center">
                       <Calendar className="h-3 w-3 mr-2" />
                       <span>
-                        Gültig bis: {new Date(cert.validUntil).toLocaleDateString("de-DE")}
+                        Gültig bis: {new Date(cert.validUntil).toLocaleDateString('de-DE')}
                       </span>
                     </div>
                   )}

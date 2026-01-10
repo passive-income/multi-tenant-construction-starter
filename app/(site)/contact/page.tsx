@@ -1,13 +1,13 @@
-import { getClient } from "@/sanity/lib/client";
-import { contactSettingsQuery } from "@/sanity/queries";
-import { getJsonData } from "@/lib/data/json";
-import type { ContactSettings } from "@/lib/types/contactSettings";
-import { getHost } from "@/lib/utils/host";
-import { ContactForm } from "@/components/contact/ContactForm";
-import { ServerContactForm } from "@/components/contact/ServerContactForm";
-import { FooterMap } from "@/components/footer/FooterMap";
-import { Phone, Mail, MapPin, Clock } from "lucide-react";
-import { Card } from "@/components/ui/card";
+import { Clock, Mail, MapPin, Phone } from 'lucide-react';
+import { ContactForm } from '@/components/contact/ContactForm';
+import { ServerContactForm } from '@/components/contact/ServerContactForm';
+import { FooterMap } from '@/components/footer/FooterMap';
+import { Card } from '@/components/ui/card';
+import { getJsonData } from '@/lib/data/json';
+import type { ContactSettings } from '@/lib/types/contactSettings';
+import { getHost } from '@/lib/utils/host';
+import { getClient } from '@/sanity/lib/client';
+import { contactSettingsQuery } from '@/sanity/queries';
 
 export default async function ContactPage({
   searchParams,
@@ -16,7 +16,7 @@ export default async function ContactPage({
 }) {
   const params = await searchParams;
   const host = await getHost();
-  const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production";
+  const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production';
   const client = getClient(dataset);
 
   let settings: ContactSettings | null = null;
@@ -27,8 +27,8 @@ export default async function ContactPage({
     const clientDoc = await client.fetch('*[_type == "client" && $host in domains][0]', { host });
     // If client explicitly uses a static JSON data source, load contact settings from that file
     const ds = clientDoc?.dataSource || clientDoc?.type || null;
-    if (ds === "json" || ds === "static") {
-      const staticFile = clientDoc?.staticFileName || "static-mueller.json";
+    if (ds === 'json' || ds === 'static') {
+      const staticFile = clientDoc?.staticFileName || 'static-mueller.json';
       try {
         const json = await getJsonData(staticFile);
         // json.contactSettings is expected to exist in the static file
@@ -39,13 +39,12 @@ export default async function ContactPage({
           // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
           settings = cs as ContactSettings;
         }
-      } catch (err) {
+      } catch (_err) {
         // ignore and fall back to Sanity below
       }
     }
     clientId = clientDoc?.clientId ?? clientId;
   }
-
 
   // If settings not provided by static JSON, try Sanity queries (guard clientId)
   if (!settings) {
@@ -58,7 +57,7 @@ export default async function ContactPage({
         // If no clientId we still call the param-free fallback query
         settings = await client.fetch(`*[_type == "contactSettings"][0]`);
       }
-    } catch (e) {
+    } catch (_e) {
       settings = null;
     }
   }
@@ -66,9 +65,9 @@ export default async function ContactPage({
   // Final fallback: load static JSON unconditionally if still missing
   if (!settings) {
     try {
-      const json = await getJsonData("static-mueller.json");
+      const json = await getJsonData('static-mueller.json');
       settings = (json as any)?.contactSettings ?? null;
-    } catch (err) {
+    } catch (_err) {
       settings = null;
     }
   }
@@ -88,7 +87,8 @@ export default async function ContactPage({
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4">Kontaktieren Sie uns</h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Haben Sie Fragen oder möchten Sie ein Angebot einholen? Wir freuen uns auf Ihre Nachricht.
+            Haben Sie Fragen oder möchten Sie ein Angebot einholen? Wir freuen uns auf Ihre
+            Nachricht.
           </p>
         </div>
 
@@ -97,13 +97,16 @@ export default async function ContactPage({
           <div className="space-y-6">
             <Card className="p-6">
               <h2 className="text-2xl font-semibold mb-6">Kontaktinformationen</h2>
-              
+
               {settings.phone && (
                 <div className="flex items-start mb-4">
                   <Phone className="h-5 w-5 text-primary mr-3 mt-1" />
                   <div>
                     <p className="font-medium">Telefon</p>
-                    <a href={`tel:${settings.phone}`} className="text-muted-foreground hover:text-primary">
+                    <a
+                      href={`tel:${settings.phone}`}
+                      className="text-muted-foreground hover:text-primary"
+                    >
                       {settings.phone}
                     </a>
                   </div>
@@ -115,7 +118,10 @@ export default async function ContactPage({
                   <Mail className="h-5 w-5 text-primary mr-3 mt-1" />
                   <div>
                     <p className="font-medium">E-Mail</p>
-                    <a href={`mailto:${settings.email}`} className="text-muted-foreground hover:text-primary">
+                    <a
+                      href={`mailto:${settings.email}`}
+                      className="text-muted-foreground hover:text-primary"
+                    >
                       {settings.email}
                     </a>
                   </div>
@@ -128,7 +134,7 @@ export default async function ContactPage({
                   <div>
                     <p className="font-medium">WhatsApp</p>
                     <a
-                      href={`https://wa.me/${settings.whatsappNumber.replace(/\s/g, "")}`}
+                      href={`https://wa.me/${settings.whatsappNumber.replace(/\s/g, '')}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-muted-foreground hover:text-primary"
@@ -154,7 +160,9 @@ export default async function ContactPage({
                   <Clock className="h-5 w-5 text-primary mr-3 mt-1" />
                   <div>
                     <p className="font-medium">Öffnungszeiten</p>
-                    <p className="text-muted-foreground whitespace-pre-line">{settings.openingHours}</p>
+                    <p className="text-muted-foreground whitespace-pre-line">
+                      {settings.openingHours}
+                    </p>
                   </div>
                 </div>
               )}

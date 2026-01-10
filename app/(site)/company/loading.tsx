@@ -1,4 +1,4 @@
-import { CompanySectionLoading } from "@/components/loading/CompanySectionLoading";
+import { CompanySectionLoading } from '@/components/loading/CompanySectionLoading';
 
 export default function Loading() {
   return (

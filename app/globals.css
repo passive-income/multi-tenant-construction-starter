@@ -117,13 +117,13 @@
   footer a.underline,
   footer .text-muted-foreground,
   footer .text-muted {
-    color: var(--foreground) !important;
+    color: var(--foreground);
   }
 
   /* Also override the secondary footer band which uses bg-muted/50 */
   footer > div.bg-muted\/50,
   footer .bg-muted\/50 {
-    background-color: #ffffff !important;
+    background-color: #ffffff;
   }
 
   /* Dark mode: ensure footer contrasts in dark theme */
@@ -133,7 +133,7 @@
   }
   .dark footer > div.bg-muted\/50,
   .dark footer .bg-muted\/50 {
-    background-color: oklch(0.12 0 0) !important;
+    background-color: oklch(0.12 0 0);
   }
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
@@ -229,7 +229,10 @@ footer .grid > div {
 .header-nav [role="button"],
 .mobile-navigation a,
 .mobile-navigation button,
-.mobile-navigation [role="button"] {
+.mobile-navigation [role="button"],
+footer a,
+footer button,
+footer [role="button"] {
   min-width: 44px;
   min-height: 44px;
   display: inline-flex;
