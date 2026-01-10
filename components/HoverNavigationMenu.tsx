@@ -79,9 +79,15 @@ function HoverNavItem({
 
   return (
     <DropdownMenu open={open} modal={false}>
-      <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="relative">
+      <div
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        className="relative"
+        role="group"
+      >
         <DropdownMenuTrigger asChild>
           <button
+            type="button"
             className={`${navBase} ${isActive ? activeClass : hoverClass} flex items-center gap-1`}
           >
             {item.label}
@@ -97,8 +103,8 @@ function HoverNavItem({
           onMouseLeave={handleMouseLeave}
         >
           <div className="grid gap-1 p-2">
-            {item.subItems.map((sub, key) => (
-              <DropdownMenuItem key={key} asChild>
+            {item.subItems.map((sub) => (
+              <DropdownMenuItem key={sub.href} asChild>
                 <Link
                   href={sub.href}
                   className="block cursor-pointer rounded-md p-3 transition-colors"

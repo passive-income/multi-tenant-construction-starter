@@ -39,7 +39,7 @@ export default function BeforeAfterGrid({
   return (
     <div className={`grid grid-cols-1 ${smClass} gap-4 ${className}`} style={style}>
       {items.map((it, index) => (
-        <div key={index} className="flex flex-col">
+        <div key={it.beforeSrc || `ba-${index}`} className="flex flex-col">
           {(it.title || it.subtitle) && (
             <div className="mb-2">
               {it.title ? (

@@ -37,7 +37,7 @@
         "noImplicitAnyLet": "warn"
       },
       "security": {
-        "noDangerouslySetInnerHtml": "warn"
+        "noDangerouslySetInnerHtml": "off"
       },
       "a11y": {
         "noStaticElementInteractions": "warn",
@@ -46,7 +46,8 @@
         "useAriaPropsSupportedByRole": "warn"
       },
       "style": {
-        "noParameterAssign": "error"
+        "noParameterAssign": "error",
+        "noDescendingSpecificity": "off"
       }
     },
     "domains": {

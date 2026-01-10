@@ -56,7 +56,7 @@ export default async function ServiceDetail({ params }: { params: Promise<{ slug
                 <h2 className="text-2xl font-semibold mb-2">So gehen wir vor</h2>
                 <ul className="list-disc pl-6 space-y-1">
                   {service.measures.map((m: string, idx: number) => (
-                    <li key={idx}>{m}</li>
+                    <li key={`${m.slice(0, 20)}-${idx}`}>{m}</li>
                   ))}
                 </ul>
               </section>
@@ -111,7 +111,7 @@ export default async function ServiceDetail({ params }: { params: Promise<{ slug
           <h2 className="text-2xl font-semibold mb-2">So gehen wir vor</h2>
           <ul className="list-disc pl-6 space-y-1">
             {service.measures.map((m: string, idx: number) => (
-              <li key={idx}>{m}</li>
+              <li key={`${m.slice(0, 20)}-${idx}`}>{m}</li>
             ))}
           </ul>
         </section>

@@ -23,12 +23,14 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
     <>
       {sections.map((section, index) => {
         if (!section._type) return null;
+        const sectionKey =
+          (section as any)._key || (section as any)._id || `section-${section._type}-${index}`;
 
         switch (section._type) {
           case 'imageSliderSection':
             return (
               <ImageSlider
-                key={index}
+                key={sectionKey}
                 slides={
                   section.slides?.map((slide: any) => ({
                     image: slide.image,
@@ -40,7 +42,7 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
 
           case 'heroSection':
             return (
-              <section key={index} className="container py-12 space-y-8">
+              <section key={sectionKey} className="container py-12 space-y-8">
                 <HeroSection
                   title={section.title}
                   subtitle={section.subtitle}
@@ -61,7 +63,7 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
 
           case 'beforeAfterSection':
             return (
-              <AnimatedSection key={index} className="py-16 bg-white">
+              <AnimatedSection key={sectionKey} className="py-16 bg-white">
                 <div className="container">
                   <div className="text-center mb-8">
                     <h2 className="text-3xl md:text-4xl font-bold">{section.title}</h2>
@@ -98,7 +100,7 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
 
             return (
               <CompanySection
-                key={index}
+                key={sectionKey}
                 company={{
                   name: section.title,
                   logoText: section.title,
@@ -112,7 +114,7 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
           case 'servicesSection':
             return (
               <ServicesSection
-                key={index}
+                key={sectionKey}
                 services={section.services || []}
                 title={section.title}
                 description={section.description}

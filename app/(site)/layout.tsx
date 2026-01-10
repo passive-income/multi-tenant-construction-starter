@@ -27,12 +27,12 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
   }
 
   return (
-    <div className="min-h-screen flex flex-col" id="main-content" role="main">
+    <main className="min-h-screen flex flex-col" id="main-content">
       <ScrollRestoration />
       <AnalyticsWrapper />
       <Header />
       <div className="flex-1 relative z-0">{children}</div>
       <Footer clientId={data.clientId} footer={data.footer} />
-    </div>
+    </main>
   );
 }

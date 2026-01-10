@@ -58,7 +58,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {gallery.map((src: any, idx: number) => (
             <Image
-              key={idx}
+              key={typeof src === 'string' ? src : `img-${idx}`}
               src={src as string}
               alt={`Bild ${idx + 1}`}
               width={600}
