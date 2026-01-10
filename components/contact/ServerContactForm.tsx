@@ -21,7 +21,6 @@ export function ServerContactForm({ settings, searchParams }: ServerContactFormP
         <input type="hidden" name="clientId" value={settings.clientId} />
         
         {settings.formFields?.map((field) => {
-          const visibleIf = (field as any).visibleIf;
           // Note: conditional visibility requires JS, so we render all fields for SSR fallback
           // Client component will handle hiding/showing dynamically
           

@@ -4,11 +4,56 @@ import type { SiteData } from "@/lib/types/site";
 import { ProjectGallery } from "@/components/ProjectGallery";
 import { ProjectsLoading } from "@/components/loading/ProjectsLoading";
 import { getSanityData } from "@/lib/data/sanity";
-import { getJsonData } from "@/lib/data/json";
+import { getJsonData, getJsonPageSections } from "@/lib/data/json";
+import { getClient } from "@/sanity/lib/client";
+import { SectionRenderer } from "@/components/SectionRenderer";
 
 async function ProjectsContent() {
-  let data: SiteData | null = null;
   const host = await getHost();
+
+  // Prefer a Sanity page with sections
+  try {
+    const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production";
+    const client = getClient(dataset);
+    const clientDoc = await client.fetch(
+      '*[_type == "client" && $host in domains][0]{clientId, enabledFeatures}',
+      { host },
+    );
+    const clientId = clientDoc?.clientId;
+    if (clientId) {
+      const page = await client.fetch(
+        '*[_type == "page" && slug.current == "projects" && clientId == $clientId][0]',
+        { clientId },
+      );
+      if (Array.isArray(page?.sections) && page.sections.length > 0) {
+        return (
+          <main>
+            <SectionRenderer
+              sections={page.sections}
+              enabledFeatures={clientDoc?.enabledFeatures}
+            />
+          </main>
+        );
+      }
+    }
+  } catch (_e) {
+    // ignore and fall back
+  }
+
+  // Prefer a JSON page with sections
+  const jsonPage = await getJsonPageSections("static-mueller.json", "projects");
+  if (jsonPage) {
+    return (
+      <main>
+        <SectionRenderer
+          sections={jsonPage.sections}
+          enabledFeatures={jsonPage.enabledFeatures}
+        />
+      </main>
+    );
+  }
+
+  let data: SiteData | null = null;
   try {
     data = await getSanityData(process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production", host);
   } catch (e) {

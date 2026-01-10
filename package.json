@@ -8,6 +8,7 @@
     "start": "next start -p 3010",
     "sanity:import-dummy": "npx sanity dataset import ./scripts/sanity-import/dummy-multi-tenant.json production --replace",
     "sanity:import-and-verify": "node ./scripts/sanity-import/import-and-verify.js ./scripts/sanity-import/dummy-multi-tenant.json",
+    "sanity:import-static-tenant": "ts-node --esm ./scripts/import-static-tenant-to-sanity.ts",
     "lint": "biome check",
     "format": "biome format --write"
   },

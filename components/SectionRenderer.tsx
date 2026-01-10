@@ -8,34 +8,38 @@ import CompanySection from "@/components/section/CompanySection";
 import ServicesSection from "@/components/section/ServicesSection";
 import { ProjectGallery } from "@/components/ProjectGallery";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import Link from "next/link";
 
 interface SectionRendererProps {
   sections: any[];
+  enabledFeatures?: string[];
 }
 
-export function SectionRenderer({ sections }: SectionRendererProps) {
+export function SectionRenderer({ sections, enabledFeatures }: SectionRendererProps) {
   if (!sections || sections.length === 0) {
     return null;
   }
+
+  const allowList = Array.isArray(enabledFeatures)
+    ? enabledFeatures.filter((v) => typeof v === "string" && v.trim().length > 0)
+    : [];
 
   return (
     <>
       {sections.map((section, index) => {
         if (!section._type) return null;
 
+        if (allowList.length > 0 && !allowList.includes(section._type)) {
+          return null;
+        }
+
+        const key = section?._key || section?._id || `${section._type}-${index}`;
+
         switch (section._type) {
           case "imageSliderSection":
             return (
               <ImageSlider
-                key={index}
+                key={key}
                 slides={
                   section.slides?.map((slide: any) => ({
                     image: slide.image,
@@ -47,7 +51,7 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
 
           case "heroSection":
             return (
-              <section key={index} className="container py-12 space-y-8">
+              <section key={key} className="container py-12 space-y-8">
                 <HeroSection
                   title={section.title}
                   subtitle={section.subtitle}
@@ -68,7 +72,7 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
 
           case "beforeAfterSection":
             return (
-              <AnimatedSection key={index} className="py-16 bg-white">
+              <AnimatedSection key={key} className="py-16 bg-white">
                 <div className="container">
                   <div className="text-center mb-8">
                     <h2 className="text-3xl md:text-4xl font-bold">
@@ -99,7 +103,7 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
               </AnimatedSection>
             );
 
-          case "companySection":
+          case "companySection": {
             const subsections =
               section.subsections?.map((sub: any) => ({
                 title: sub.title,
@@ -109,7 +113,7 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
 
             return (
               <CompanySection
-                key={index}
+                key={key}
                 company={{
                   name: section.title,
                   logoText: section.title,
@@ -118,25 +122,26 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
                 companySections={subsections}
               />
             );
+          }
 
           case "servicesSection":
             return (
               <ServicesSection
-                key={index}
+                key={key}
                 services={section.services || []}
                 title={section.title}
                 description={section.description}
               />
             );
 
-          case "projectsSection":
+          case "projectsSection": {
             const projects =
               section.projects?.map((ref: any) => ({
                 ...ref,
               })) || [];
 
             return (
-              <AnimatedSection key={index} className="py-16 bg-white">
+              <AnimatedSection key={key} className="py-16 bg-white">
                 <div className="container">
                   <div className="text-center mb-12">
                     <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -161,11 +166,7 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
 
                   {section.showViewAllButton && (
                     <div className="text-center">
-                      <Button
-                        size="lg"
-                        variant="outline"
-                        asChild
-                      >
+                      <Button size="lg" variant="outline" asChild>
                         <Link href={section.viewAllButtonLink || "/projects"}>
                           {section.viewAllButtonText ||
                             "Alle Referenzen anzeigen"}
@@ -176,11 +177,12 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
                 </div>
               </AnimatedSection>
             );
+          }
 
           case "ctaSection":
             return (
               <AnimatedSection
-                key={index}
+                key={key}
                 className={`py-16 ${section.backgroundColor || "bg-primary"} ${section.textColor || "text-primary-foreground"}`}
               >
                 <div className="container text-center">

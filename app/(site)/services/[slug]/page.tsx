@@ -45,8 +45,8 @@ export default async function ServiceDetail({ params }: { params: Promise<{ slug
               <section className="mt-4">
                 <h2 className="text-2xl font-semibold mb-2">So gehen wir vor</h2>
                 <ul className="list-disc pl-6 space-y-1">
-                  {service.measures.map((m: string, idx: number) => (
-                    <li key={idx}>{m}</li>
+                  {service.measures.map((m: string) => (
+                    <li key={m}>{m}</li>
                   ))}
                 </ul>
               </section>
@@ -55,7 +55,7 @@ export default async function ServiceDetail({ params }: { params: Promise<{ slug
         );
       }
     }
-  } catch (e) {
+  } catch {
     // Fallback to JSON
   }
 
@@ -94,8 +94,8 @@ export default async function ServiceDetail({ params }: { params: Promise<{ slug
         <section className="mt-4">
           <h2 className="text-2xl font-semibold mb-2">So gehen wir vor</h2>
           <ul className="list-disc pl-6 space-y-1">
-            {service.measures.map((m: string, idx: number) => (
-              <li key={idx}>{m}</li>
+            {service.measures.map((m: string) => (
+              <li key={m}>{m}</li>
             ))}
           </ul>
         </section>

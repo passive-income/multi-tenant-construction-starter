@@ -4,7 +4,7 @@ export function ImageSliderLoading() {
   
   return (
     <div
-      className="relative w-full bg-gradient-to-br from-muted/80 to-muted animate-pulse overflow-hidden"
+      className="relative w-full bg-linear-to-br from-muted/80 to-muted animate-pulse overflow-hidden"
       style={{
         height: `calc(100dvh - ${headerHeight})`,
         minHeight: `calc(100dvh - ${headerHeight})`,

@@ -17,9 +17,10 @@ export const ProjectGallery = ({ images }: { images: string[] }) => {
       {images.map((rawSrc, idx) => {
         const src = typeof rawSrc === "string" ? rawSrc.trim() : "";
         const validSrc = src.length > 0 ? src : null;
+        const key = validSrc ?? `missing-${idx}`;
         return (
         <Card
-          key={idx}
+          key={key}
           className="overflow-hidden p-0 hover:shadow-lg transition-shadow"
         >
           <div className="aspect-square bg-muted relative">

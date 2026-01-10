@@ -5,11 +5,57 @@ import { getSanityData } from "@/lib/data/sanity";
 import type { SiteData } from "@/lib/types/site";
 import { ServicesLoading } from "@/components/loading/ServicesLoading";
 import Image from 'next/image';
+import { getClient } from '@/sanity/lib/client';
+import { SectionRenderer } from '@/components/SectionRenderer';
+import { getJsonPageSections } from '@/lib/data/json';
 
 async function CompanyContent() {
+  const host = await getHost();
+
+  // Prefer a Sanity page with sections
+  try {
+    const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production';
+    const client = getClient(dataset);
+    const clientDoc = await client.fetch(
+      '*[_type == "client" && $host in domains][0]{clientId, enabledFeatures}',
+      { host },
+    );
+    const clientId = clientDoc?.clientId;
+    if (clientId) {
+      const page = await client.fetch(
+        '*[_type == "page" && slug.current == "company" && clientId == $clientId][0]',
+        { clientId },
+      );
+      if (Array.isArray(page?.sections) && page.sections.length > 0) {
+        return (
+          <main>
+            <SectionRenderer
+              sections={page.sections}
+              enabledFeatures={clientDoc?.enabledFeatures}
+            />
+          </main>
+        );
+      }
+    }
+  } catch (_e) {
+    // ignore and fall back
+  }
+
+  // Prefer a JSON page with sections
+  const jsonPage = await getJsonPageSections('static-mueller.json', 'company');
+  if (jsonPage) {
+    return (
+      <main>
+        <SectionRenderer
+          sections={jsonPage.sections}
+          enabledFeatures={jsonPage.enabledFeatures}
+        />
+      </main>
+    );
+  }
+
   // Resolve tenant via Sanity first; fall back to static JSON file
   let data: SiteData | null = null;
-  const host = await getHost();
   try {
     data = await getSanityData(process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production", host);
   } catch (e) {

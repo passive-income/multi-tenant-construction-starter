@@ -49,3 +49,40 @@ export async function getJsonData(fileName: string): Promise<SiteData> {
 
   return { ...parsed, menuItems } as SiteData;
 }
+
+export async function getJsonPageSections(
+  fileName: string,
+  slug: string,
+): Promise<{ sections: any[]; enabledFeatures?: string[] } | null> {
+  const data: any = await getJsonData(fileName);
+
+  const enabledFeatures: string[] | undefined = Array.isArray(data?.enabledFeatures)
+    ? data.enabledFeatures
+    : Array.isArray(data?.client?.enabledFeatures)
+      ? data.client.enabledFeatures
+      : undefined;
+
+  const pages = data?.pages;
+  if (!pages) return null;
+
+  // New format: pages as an object map, e.g. { home: { sections: [...] }, services: { sections: [...] } }
+  if (typeof pages === "object" && !Array.isArray(pages)) {
+    const page = pages?.[slug];
+    const sections = page?.sections;
+    if (Array.isArray(sections) && sections.length > 0) {
+      return { sections, enabledFeatures };
+    }
+    return null;
+  }
+
+  // Legacy format: pages as an array
+  if (Array.isArray(pages)) {
+    const page = pages.find((p: any) => p?.slug === slug);
+    const sections = page?.sections;
+    if (Array.isArray(sections) && sections.length > 0) {
+      return { sections, enabledFeatures };
+    }
+  }
+
+  return null;
+}

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { cookies } from "next/headers";
 import { getHost, getHeader } from "@/lib/utils/host";
 import HoverNavigationMenu from "./HoverNavigationMenu";
 import { getJsonData } from "@/lib/data/json";
@@ -40,14 +39,14 @@ export async function Header() {
     const host = await getHost();
     // Try Sanity first (uses client resolution by host internally)
     data = await getSanityData(process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production", host);
-  } catch (e) {
+  } catch {
     data = null;
   }
 
   if (!data) {
     try {
       data = await getJsonData("static-mueller.json");
-    } catch (e) {
+    } catch {
       return <MinimalHeader />;
     }
   }
@@ -65,12 +64,18 @@ export async function Header() {
         ?.map((sub) => {
           // Convert link object to href
           let href = sub.href;
-          if (!href && (sub as any).link) {
-            const link = (sub as any).link;
-            if (link.type === 'service' && link.slug) {
-              href = `/services/${link.slug}`;
-            } else if (link.slug) {
-              href = `/${link.slug}`;
+          if (!href) {
+            const maybeLink = (sub as { link?: unknown }).link;
+            if (maybeLink && typeof maybeLink === "object") {
+              const link = maybeLink as { type?: unknown; slug?: unknown };
+              const type = typeof link.type === "string" ? link.type : undefined;
+              const slug = typeof link.slug === "string" ? link.slug : undefined;
+
+              if (type === "service" && slug) {
+                href = `/services/${slug}`;
+              } else if (slug) {
+                href = `/${slug}`;
+              }
             }
           }
           return { ...sub, href: href || item.href || "/" };
@@ -83,8 +88,6 @@ export async function Header() {
     "group inline-flex min-h-[44px] min-w-[44px] h-10 items-center justify-center rounded-md px-3 py-2 text-sm font-medium transition-colors";
   const activeClass = "bg-accent text-accent-foreground";
   const hoverClass = "hover:bg-accent hover:text-accent-foreground";
-
-  const isActive = (href: string) => pathname === href;
 
   return (
     <header className="w-full h-16 shrink-0 bg-white border-b border-border">

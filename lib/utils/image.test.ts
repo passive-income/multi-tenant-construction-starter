@@ -15,18 +15,18 @@
 
 import { describe, it, expect, vi } from "vitest";
 import { normalizeImageSrc } from "./image";
+import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 
 // Mock the Sanity image builder
 vi.mock("@/sanity/lib/image", () => ({
-  urlFor: vi.fn((src: any) => ({
-    width: vi.fn(function () {
-      return this;
-    }),
-    auto: vi.fn(function () {
-      return this;
-    }),
-    url: vi.fn(() => "https://cdn.sanity.io/images/mocked.jpg"),
-  })),
+  urlFor: vi.fn(() => {
+    const builder = {
+      width: vi.fn(() => builder),
+      auto: vi.fn(() => builder),
+      url: vi.fn(() => "https://cdn.sanity.io/images/mocked.jpg"),
+    };
+    return builder;
+  }),
 }));
 
 describe("normalizeImageSrc", () => {
@@ -52,8 +52,8 @@ describe("normalizeImageSrc", () => {
   });
 
   it("should return null for non-string, non-object input", () => {
-    expect(normalizeImageSrc(123 as any)).toBeNull();
-    expect(normalizeImageSrc(true as any)).toBeNull();
+    expect(normalizeImageSrc(123 as unknown as SanityImageSource)).toBeNull();
+    expect(normalizeImageSrc(true as unknown as SanityImageSource)).toBeNull();
   });
 
   it("should handle Sanity image object with width option", () => {

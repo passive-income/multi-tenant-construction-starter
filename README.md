@@ -20,6 +20,25 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Import static tenant JSON into Sanity
+
+If you have a tenant configured via a static JSON file (e.g. `data/static-mueller.json`) and want to migrate it into Sanity, you can use the included importer.
+
+1) Set environment variables (requires a write token)
+
+- `SANITY_PROJECT_ID`
+- `SANITY_DATASET`
+- `SANITY_TOKEN`
+- Optional: `SANITY_API_VERSION`
+
+2) Run the importer
+
+```bash
+pnpm run sanity:import-static-tenant -- data/static-mueller.json
+```
+
+Details and the JSON format are documented in `docs/STATIC_TENANT_JSON.md`.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

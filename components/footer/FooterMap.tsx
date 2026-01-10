@@ -118,12 +118,12 @@ export function FooterMap({ clientId, address, href, className }: FooterMapProps
           </div>
         )}
       </a>
-      <Attribution loading={!imgLoaded || (isLoading && !generatedMapUrl)} />
+      <Attribution />
     </div>
   );
 }
 
-function Attribution({ loading }: { loading?: boolean }) {
+function Attribution() {
   return (
     <div className="text-xs">
       <span className="mt-1">

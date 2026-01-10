@@ -15,7 +15,10 @@ export default async function HomePage() {
   try {
     const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production";
     const client = getClient(dataset);
-    const clientDoc = await client.fetch('*[_type == "client" && $host in domains][0]', { host });
+    const clientDoc = await client.fetch(
+      '*[_type == "client" && $host in domains][0]{clientId, enabledFeatures}',
+      { host },
+    );
     const clientId = clientDoc?.clientId;
     if (clientId) {
       const homePage = await client.fetch(
@@ -23,10 +26,15 @@ export default async function HomePage() {
         { clientId: clientId ?? null }
       );
       if (homePage?.sections) {
-        return <SectionRenderer sections={homePage.sections} />;
+        return (
+          <SectionRenderer
+            sections={homePage.sections}
+            enabledFeatures={clientDoc?.enabledFeatures}
+          />
+        );
       }
     }
-  } catch (error) {
+  } catch {
     // ignore and fall back to JSON
   }
 

@@ -10,19 +10,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-interface SubItem {
-  title: string;
-  href: string;
-}
-
-interface NavItem {
-  label: string;
-  href: string;
-  subItems?: SubItem[];
-}
+import type { MenuItem } from "@/lib/types/navigation";
 
 interface HoverNavigationMenuProps {
-  items: NavItem[];
+  items: MenuItem[];
   pathname: string;
   navBase: string;
   activeClass: string;
@@ -36,7 +27,7 @@ function HoverNavItem({
   activeClass,
   hoverClass,
 }: {
-  item: NavItem;
+  item: MenuItem;
   pathname: string;
   navBase: string;
   activeClass: string;
@@ -82,13 +73,12 @@ function HoverNavItem({
 
   return (
     <DropdownMenu open={open} modal={false}>
-      <div
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        className="relative"
-      >
+      <div className="relative">
         <DropdownMenuTrigger asChild>
           <button
+            type="button"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
             className={`${navBase} ${isActive ? activeClass : hoverClass} flex items-center gap-1`}
           >
             {item.label}
@@ -99,18 +89,20 @@ function HoverNavItem({
         </DropdownMenuTrigger>
         <DropdownMenuContent
           align="start"
-          className="w-[400px] md:w-[500px]"
+          className="w-100 md:w-125"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
           <div className="grid gap-1 p-2">
-            {item.subItems.map((sub, key) => (
-              <DropdownMenuItem key={key} asChild>
+            {item.subItems.map((sub) => (
+              <DropdownMenuItem key={sub.href} asChild>
                 <Link
                   href={sub.href}
                   className="block cursor-pointer rounded-md p-3 transition-colors"
                 >
-                  <div className="font-medium text-sm">{sub.title}</div>
+                  <div className="font-medium text-sm">
+                    {sub.title ?? sub.href}
+                  </div>
                 </Link>
               </DropdownMenuItem>
             ))}

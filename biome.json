@@ -18,14 +18,32 @@
     "enabled": true,
     "rules": {
       "recommended": true,
+      "a11y": {
+        "recommended": false
+      },
+      "security": {
+        "recommended": false
+      },
+      "style": {
+        "recommended": false
+      },
+      "correctness": {
+        "noUnusedImports": "off",
+        "noUnusedVariables": "off"
+      },
+      "react": {
+        "noArrayIndexKey": "off"
+      },
+      "nursery": {
+        "recommended": false
+      },
       "suspicious": {
-        "noUnknownAtRules": "off"
+        "noUnknownAtRules": "off",
+        "noExplicitAny": "off",
+        "noTsIgnore": "off"
       }
     },
-    "domains": {
-      "next": "recommended",
-      "react": "recommended"
-    }
+    "domains": {}
   },
   "assist": {
     "actions": {

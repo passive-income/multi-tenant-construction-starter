@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import { getHost } from "@/lib/utils/host";
 import { getClient } from "@/sanity/lib/client";
 import Image from "next/image";
@@ -32,7 +31,9 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
 
   const coverUrl = normalizeImageSrc(project?.image, { width: 1600, autoFormat: true });
   const gallery = Array.isArray(project?.images)
-    ? project.images.map((im: any) => normalizeImageSrc(im, { width: 1200, autoFormat: true })).filter(Boolean)
+    ? project.images
+        .map((im: any) => normalizeImageSrc(im, { width: 1200, autoFormat: true }))
+        .filter((v: unknown): v is string => typeof v === "string" && v.length > 0)
     : [];
 
   return (
@@ -46,8 +47,8 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
       {project.description && <p className="text-lg text-muted-foreground mb-8">{project.description}</p>}
       {gallery.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {gallery.map((src: any, idx: number) => (
-            <Image key={idx} src={src as string} alt={`Bild ${idx + 1}`} width={600} height={338} className="w-full h-auto rounded" />
+          {gallery.map((src, idx: number) => (
+            <Image key={src} src={src} alt={`Bild ${idx + 1}`} width={600} height={338} className="w-full h-auto rounded" />
           ))}
         </div>
       )}

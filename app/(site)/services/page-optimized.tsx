@@ -6,8 +6,16 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
+type ServiceLike = {
+  _id?: string;
+  slug?: string | { current?: string };
+  image?: string;
+  title?: string;
+  description?: string;
+};
+
 // Individual service card as async component (can fetch individually if needed)
-async function ServiceCard({ service }: { service: any }) {
+async function ServiceCard({ service }: { service: ServiceLike }) {
   const slug = typeof service.slug === "string" ? service.slug : service?.slug?.current;
   const href = slug ? `/services/${slug}` : undefined;
   
@@ -39,8 +47,8 @@ async function ServiceCard({ service }: { service: any }) {
 
 // Main services grid - async component
 async function ServicesGrid() {
-  const host = await getHost();
-  const services = await getServices(host);
+  const host = (await getHost()) ?? "";
+  const services = (await getServices(host)) as ServiceLike[];
   
   if (!services || services.length === 0) {
     return (
@@ -52,7 +60,7 @@ async function ServicesGrid() {
   
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {services.map((service: any, index: number) => (
+      {services.map((service, index: number) => (
         <Suspense
           key={service._id || service.slug || index}
           fallback={

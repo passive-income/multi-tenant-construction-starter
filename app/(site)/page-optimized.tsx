@@ -17,7 +17,7 @@ async function SanityHomeContent() {
   const client = getClient(dataset);
   
   const clientDoc = await client.fetch(
-    '*[_type == "client" && $host in domains][0]',
+    '*[_type == "client" && $host in domains][0]{clientId, enabledFeatures}',
     { host }
   );
   const clientId = clientDoc?.clientId;
@@ -31,7 +31,12 @@ async function SanityHomeContent() {
   
   if (!homePage?.sections) return null;
   
-  return <SectionRenderer sections={homePage.sections} />;
+  return (
+    <SectionRenderer
+      sections={homePage.sections}
+      enabledFeatures={clientDoc?.enabledFeatures}
+    />
+  );
 }
 
 // Separate async component for JSON fallback
@@ -55,7 +60,7 @@ async function HomeContent() {
     const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production";
     const client = getClient(dataset);
     const clientDoc = await client.fetch(
-      '*[_type == "client" && $host in domains][0]',
+      '*[_type == "client" && $host in domains][0]{clientId}',
       { host }
     );
     

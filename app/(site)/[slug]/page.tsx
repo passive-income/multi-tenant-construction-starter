@@ -2,7 +2,7 @@ import { getHost } from "@/lib/utils/host";
 import { getClient } from "@/sanity/lib/client";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
-import { getJsonData } from "@/lib/data/json";
+import { getJsonData, getJsonPageSections } from "@/lib/data/json";
 import { SectionRenderer } from "@/components/SectionRenderer";
 
 export const dynamic = "force-dynamic";
@@ -16,7 +16,10 @@ export default async function GenericPage({ params }: { params: Promise<{ slug: 
   try {
     const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production";
     const client = getClient(dataset);
-    const clientDoc = await client.fetch('*[_type == "client" && $host in domains][0]', { host });
+    const clientDoc = await client.fetch(
+      '*[_type == "client" && $host in domains][0]{clientId, enabledFeatures}',
+      { host },
+    );
     const clientId = clientDoc?.clientId;
 
     if (clientId) {
@@ -29,7 +32,10 @@ export default async function GenericPage({ params }: { params: Promise<{ slug: 
         if (page.sections && page.sections.length > 0) {
           return (
             <main>
-              <SectionRenderer sections={page.sections} />
+              <SectionRenderer
+                sections={page.sections}
+                enabledFeatures={clientDoc?.enabledFeatures}
+              />
             </main>
           );
         }
@@ -51,9 +57,27 @@ export default async function GenericPage({ params }: { params: Promise<{ slug: 
     // ignore and fallback to JSON
   }
 
+  // JSON sections (Sanity-like) fallback
+  const jsonSections = await getJsonPageSections("static-mueller.json", slug);
+  if (jsonSections) {
+    return (
+      <main>
+        <SectionRenderer
+          sections={jsonSections.sections}
+          enabledFeatures={jsonSections.enabledFeatures}
+        />
+      </main>
+    );
+  }
+
   // JSON fallback
   const data = await getJsonData("static-mueller.json");
-  const pages: any[] = (data as any)?.pages || [];
+  const rawPages: any = (data as any)?.pages || [];
+  const pages: any[] = Array.isArray(rawPages)
+    ? rawPages
+    : typeof rawPages === "object" && rawPages
+      ? Object.entries(rawPages).map(([k, v]: any) => ({ slug: k, ...(v || {}) }))
+      : [];
   const page = pages.find((p: any) => p?.slug === slug);
 
   if (!page) {

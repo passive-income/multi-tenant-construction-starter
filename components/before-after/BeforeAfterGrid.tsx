@@ -41,8 +41,10 @@ export default function BeforeAfterGrid({
       className={`grid grid-cols-1 ${smClass} gap-4 ${className}`}
       style={style}
     >
-      {items.map((it, index) => (
-        <div key={index} className="flex flex-col">
+      {items.map((it, index) => {
+        const key = `${it.beforeSrc}-${it.afterSrc}-${it.title ?? ""}-${it.subtitle ?? ""}-${index}`;
+        return (
+        <div key={key} className="flex flex-col">
           {(it.title || it.subtitle) && (
             <div className="mb-2">
               {it.title ? (
@@ -66,7 +68,8 @@ export default function BeforeAfterGrid({
             labelScale={labelScale}
           />
         </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
