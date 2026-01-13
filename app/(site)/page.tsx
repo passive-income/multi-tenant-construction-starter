@@ -18,13 +18,16 @@ export default async function HomePage() {
     const client = getClient(dataset);
     const clientDoc = await client.fetch('*[_type == "client" && $host in domains][0]', { host });
     const clientId = clientDoc?.clientId;
+    const enabledFeatures = Array.isArray(clientDoc?.enabledFeatures)
+      ? clientDoc.enabledFeatures.filter((f: unknown): f is string => typeof f === 'string')
+      : undefined;
     if (clientId) {
       const homePage = await client.fetch(
         '*[_type == "page" && slug.current == "home" && clientId == $clientId][0]',
         { clientId: clientId ?? null },
       );
       if (homePage?.sections) {
-        return <SectionRenderer sections={homePage.sections} />;
+        return <SectionRenderer sections={homePage.sections} enabledFeatures={enabledFeatures} />;
       }
     }
   } catch (_error) {

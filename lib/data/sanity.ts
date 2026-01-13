@@ -126,6 +126,9 @@ export async function getSanityData(dataset: string, host?: string): Promise<Sit
       // ignore and continue with sanity fetch
     }
     const clientId = clientDoc.clientId;
+    const enabledFeatures = Array.isArray(clientDoc.enabledFeatures)
+      ? clientDoc.enabledFeatures.filter((f: unknown): f is string => typeof f === 'string')
+      : undefined;
 
     // company and footer are stored as references on the client doc
     const company = clientDoc.companyRef
@@ -231,6 +234,7 @@ export async function getSanityData(dataset: string, host?: string): Promise<Sit
       menuItems,
       services,
       projects,
+      enabledFeatures,
     });
     if (!parsed.success) {
       // Log validation issues but return best-effort data to avoid breaking the site

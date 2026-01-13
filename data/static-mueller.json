@@ -1,4 +1,151 @@
 {
+  "clientId": "mueller",
+  "name": "Müller Bau GmbH",
+  "domains": ["muellerbau.de", "muellerbau-berlin.de"],
+  "enabledFeatures": [
+    "heroSection",
+    "imageSliderSection",
+    "beforeAfterSection",
+    "companySection",
+    "servicesSection",
+    "projectsSection",
+    "ctaSection",
+    "testSection"
+  ],
+  "pages": {
+    "home": {
+      "title": "Home",
+      "slug": "home",
+      "sections": [
+        {
+          "_type": "heroSection",
+          "title": "Müller Bau GmbH",
+          "subtitle": "HANDWERKSBETRIEB AUS BERLIN",
+          "description": "Qualität ist unsere Verpflichtung! Mit unseren 50 Mitarbeitern führen wir sämtliche Maler- und Renovierungsarbeiten durch. Der Kreativität sind keine Grenzen gesetzt vom Boden bis zur Decke.",
+          "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&h=1080&fit=crop&auto=format",
+          "linkText": "Unsere Leistungen",
+          "linkHref": "/services"
+        },
+        {
+          "_type": "imageSliderSection",
+          "title": "Projektgalerie",
+          "slides": [
+            {
+              "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&h=1080&fit=crop&auto=format",
+              "title": "Müller Bau GmbH",
+              "description": "Reliable construction & renovation",
+              "linkText": "Unsere Leistungen",
+              "linkHref": "/services"
+            },
+            {
+              "image": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1920&h=1080&fit=crop&auto=format",
+              "title": "Qualität ist unsere Verpflichtung",
+              "description": "Von der Idee bis zur Umsetzung an Ihrer Seite!",
+              "linkText": "Referenzen ansehen",
+              "linkHref": "/projects"
+            },
+            {
+              "image": "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=1920&h=1080&fit=crop&auto=format",
+              "title": "Fachmarkt für Innenraumgestaltung",
+              "description": "Große Auswahl an Tapeten, Wandbelägen, Farben und mehr",
+              "linkText": "Zum Fachmarkt",
+              "linkHref": "/fachmarkt"
+            },
+            {
+              "image": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1920&h=1080&fit=crop&auto=format",
+              "title": "Professionelle Malerarbeiten",
+              "description": "Von exklusiven Gestaltungen bis zu Industrieanstrichen",
+              "linkText": "Mehr erfahren",
+              "linkHref": "/services"
+            }
+          ]
+        },
+        {
+          "_type": "beforeAfterSection",
+          "title": "Vorher & Nachher Projekte",
+          "subtitle": "Sehen Sie unsere transformativen Arbeiten",
+          "items": [
+            {
+              "before": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&h=1080&fit=crop&auto=format",
+              "after": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1920&h=1080&fit=crop&auto=format",
+              "title": "Wohnungsrenovierung",
+              "subtitle": "Vorher/Nachher Beispiel"
+            },
+            {
+              "before": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1920&h=1080&fit=crop&auto=format",
+              "after": "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=1920&h=1080&fit=crop&auto=format",
+              "title": "Bodenbelag erneuert",
+              "subtitle": "Vorher/Nachher Beispiel"
+            },
+            {
+              "before": "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=1920&h=1080&fit=crop&auto=format",
+              "after": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1920&h=1080&fit=crop&auto=format",
+              "title": "Fassadenrenovierung",
+              "subtitle": "Vorher/Nachher Beispiel"
+            },
+            {
+              "before": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1920&h=1080&fit=crop&auto=format",
+              "after": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&h=1080&fit=crop&auto=format",
+              "title": "Komplette Sanierung",
+              "subtitle": "Vorher/Nachher Beispiel"
+            }
+          ]
+        },
+        {
+          "_type": "companySection",
+          "title": "Über Müller Bau",
+          "subtitle": "Tradition trifft Innovation",
+          "items": [
+            {
+              "title": "Über Müller Bau",
+              "subtitle": "Tradition trifft Innovation",
+              "description": "Seit über 30 Jahren realisieren wir Bau- und Renovierungsprojekte in Berlin und Umgebung. Qualität, Termintreue und ein persönlicher Service zeichnen uns aus.",
+              "image": "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200&h=800&fit=crop&auto=format"
+            },
+            {
+              "title": "Unser Team",
+              "subtitle": "Kompetent & erfahren",
+              "description": "Ein eingespieltes Team von Fachleuten: Meister, Handwerker und Projektleiter arbeiten Hand in Hand, um höchste Ansprüche zu erfüllen.",
+              "image": "https://images.unsplash.com/photo-1520126537942-1b3be2c6b5f9?w=1200&h=800&fit=crop&auto=format"
+            },
+            {
+              "title": "Nachhaltigkeit & Qualität",
+              "subtitle": "Verantwortung in jedem Schritt",
+              "description": "Wir setzen auf langlebige Materialien, energieeffiziente Lösungen und transparente Prozesse — zum Schutz der Umwelt und für die Zufriedenheit unserer Kunden.",
+              "image": "https://images.unsplash.com/photo-1506912527923-1d9a0b7d78f9?w=1200&h=800&fit=crop&auto=format"
+            }
+          ]
+        },
+        {
+          "_type": "servicesSection",
+          "title": "Unsere Leistungen",
+          "subtitle": "Kompetent, zuverlässig und qualitätsbewusst",
+          "services": ["malerarbeiten", "bodenbelaege", "fassadenarbeiten", "raumausstattung"]
+        },
+        {
+          "_type": "projectsSection",
+          "title": "Ausgewählte Projekte",
+          "subtitle": "Unsere Referenzen",
+          "limit": 8
+        },
+        {
+          "_type": "testSection",
+          "title": "🧪 Feature Flag Test",
+          "message": "Diese Test-Sektion wird nur angezeigt, wenn 'testSection' in den enabledFeatures des Clients aktiviert ist. Dies ist ein Beispiel für das Feature-Flagging-System.",
+          "backgroundColor": "bg-blue-50"
+        },
+        {
+          "_type": "ctaSection",
+          "title": "ERHALTEN SIE IHR ANGEBOT",
+          "description": "Haben Sie eine Idee, einen Wunsch? Wir können Ihnen helfen diesen umzusetzen! Nehmen Sie Kontakt zu uns auf und wir helfen und beraten Sie gerne!",
+          "primaryButtonText": "Kontakt aufnehmen",
+          "primaryButtonHref": "/contact",
+          "secondaryButtonText": "Leistungen ansehen",
+          "secondaryButtonHref": "/services"
+        }
+      ]
+    }
+  },
   "company": {
     "name": "Müller Bau GmbH",
     "tagline": "Reliable construction & renovation",
@@ -113,90 +260,6 @@
       "clientId": "mueller"
     }
   ],
-  "slider": {
-    "slides": [
-      {
-        "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&h=1080&fit=crop&auto=format",
-        "title": "Müller Bau GmbH",
-        "description": "Reliable construction & renovation",
-        "linkText": "Unsere Leistungen",
-        "linkHref": "/services"
-      },
-      {
-        "image": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1920&h=1080&fit=crop&auto=format",
-        "title": "Qualität ist unsere Verpflichtung",
-        "description": "Von der Idee bis zur Umsetzung an Ihrer Seite!",
-        "linkText": "Referenzen ansehen",
-        "linkHref": "/projects"
-      },
-      {
-        "image": "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=1920&h=1080&fit=crop&auto=format",
-        "title": "Fachmarkt für Innenraumgestaltung",
-        "description": "Große Auswahl an Tapeten, Wandbelägen, Farben und mehr",
-        "linkText": "Zum Fachmarkt",
-        "linkHref": "/fachmarkt"
-      },
-      {
-        "image": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1920&h=1080&fit=crop&auto=format",
-        "title": "Professionelle Malerarbeiten",
-        "description": "Von exklusiven Gestaltungen bis zu Industrieanstrichen",
-        "linkText": "Mehr erfahren",
-        "linkHref": "/services"
-      }
-    ],
-    "beforeAfter": [
-      {
-        "before": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&h=1080&fit=crop&auto=format",
-        "after": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1920&h=1080&fit=crop&auto=format",
-        "title": "Wohnungsrenovierung (optional)",
-        "subtitle": "Vorher/Nachher Beispiel"
-      },
-      {
-        "before": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1920&h=1080&fit=crop&auto=format",
-        "after": "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=1920&h=1080&fit=crop&auto=format",
-        "title": "Bodenbelag erneuert (optional)",
-        "subtitle": "Vorher/Nachher Beispiel"
-      },
-      {
-        "before": "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=1920&h=1080&fit=crop&auto=format",
-        "after": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1920&h=1080&fit=crop&auto=format",
-        "title": "Fassadenrenovierung (optional)",
-        "subtitle": "Vorher/Nachher Beispiel"
-      },
-      {
-        "before": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1920&h=1080&fit=crop&auto=format",
-        "after": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&h=1080&fit=crop&auto=format",
-        "title": "Komplette Sanierung (optional)",
-        "subtitle": "Vorher/Nachher Beispiel"
-      }
-    ]
-  },
-  "heroSections": [
-    {
-      "title": "Müller Bau Exklusiv",
-      "subtitle": "Für ein besonderes Wanderlebnis!",
-      "description": "Exklusive Malerarbeiten und Raumgestaltung für anspruchsvolle Projekte.",
-      "linkText": "Hier geht es zu Müller Bau Exklusiv",
-      "linkHref": "/exklusiv",
-      "image": "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop&auto=format"
-    },
-    {
-      "title": "Müller Bau Raumdesign",
-      "subtitle": "UNSER FACHMARKT FÜR INNENRAUMGESTALTUNG!",
-      "description": "In unserem Fachgeschäft erwartet Sie eine große Auswahl an Tapeten, Wandbelägen, Teppichböden, Farben und Schutzanstriche sowie Heimwerkerartikel für alle Einsatzbereiche.",
-      "linkText": "UNSER FACHMARKT",
-      "linkHref": "/fachmarkt",
-      "image": "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=800&h=600&fit=crop&auto=format"
-    },
-    {
-      "title": "Müller Bau Berlin GmbH",
-      "subtitle": "HANDWERKSBETRIEB IN BERLIN",
-      "description": "LEISTUNGSSTARK RUND UM SANIERUNG! – Wir bieten Ihnen ein umfangreiches Leistungsspektrum im Bereich Wohnungs- und Leerwohnungssanierung an.",
-      "linkText": "Mehr erfahren",
-      "linkHref": "/berlin",
-      "image": "https://images.unsplash.com/photo-1568605117037-72d268f1bfed?w=800&h=600&fit=crop&auto=format"
-    }
-  ],
   "menuItems": [
     { "label": "Startseite", "href": "/" },
     { "label": "Unternehmen", "href": "/company" },
@@ -230,39 +293,6 @@
     { "label": "Referenzen", "href": "/projects" },
     { "label": "Kontakt", "href": "/contact" }
   ],
-  "companySections": [
-    {
-      "title": "MÜLLER BAU GMBH",
-      "subtitle": "HANDWERKSBETRIEB AUS BERLIN",
-      "description": "QUALITÄT IST UNSERE VERPFLICHTUNG! – Mit unseren 50 Mitarbeitern führen wir sämtliche Maler- und Renovierungsarbeiten vom Gewerbeobjekt bis hin zu exklusivsten Malerarbeiten aus. Der Kreativität sind keine Grenzen gesetzt vom Boden bis zur Decke."
-    },
-    {
-      "title": "MÜLLER BAU RAUMDESIGN",
-      "subtitle": "FACHGESCHÄFT FÜR INNENRAUMGESTALTUNG!",
-      "description": "In unserem Fachgeschäft erwartet Sie eine große Auswahl an Tapeten, Wandbelägen, Teppichböden, Farben und Schutzanstriche sowie Heimwerkerartikel für alle Einsatzbereiche. Lassen Sie sich inspirieren."
-    },
-    {
-      "title": "MÜLLER BAU BERLIN GMBH",
-      "subtitle": "HANDWERKSBETRIEB IN BERLIN",
-      "description": "LEISTUNGSSTARK RUND UM SANIERUNG! – Wir bieten Ihnen ein umfangreiches Leistungsspektrum im Bereich Wohnungs- und Leerwohnungssanierung an. Wir überzeugen durch Erfahrung und Qualität."
-    }
-  ],
-  "pages": [
-    {
-      "title": "Impressum",
-      "slug": "impressum",
-      "description": "Rechtliche Angaben und Anbieterkennzeichnung.",
-      "contentHtml": "<h2>Impressum</h2><p><strong>Anbieter:</strong> MÜLLER BAU GMBH</p><p><strong>Anschrift:</strong> Kurfürstendamm 90, 10709 Berlin, Deutschland</p><p><strong>Kontakt:</strong> Telefon: +49 30 123456 · E-Mail: info@muellerbau.de</p><p><strong>Vertreten durch:</strong> Geschäftsführung</p><p><strong>Registereintrag:</strong> Handelsregister, Amtsgericht Berlin</p><p><strong>USt-IdNr.:</strong> DE123456789</p><h3>Haftung für Inhalte</h3><p>Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte verantwortlich. Nach §§ 8 bis 10 TMG sind wir jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.</p><h3>Haftung für Links</h3><p>Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber verantwortlich.</p><h3>Urheberrecht</h3><p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Beiträge Dritter sind entsprechend gekennzeichnet.</p>",
-      "image": "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?w=1200&h=800&fit=crop&auto=format"
-    },
-    {
-      "title": "Datenschutz",
-      "slug": "datenschutz",
-      "description": "Informationen zum Datenschutz gemäß DSGVO.",
-      "contentHtml": "<h2>Datenschutzerklärung</h2><p>Wir nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Personenbezogene Daten werden vertraulich und gemäß den gesetzlichen Datenschutzvorschriften sowie dieser Erklärung behandelt.</p><h3>Verantwortlicher</h3><p>MÜLLER BAU GMBH · Kurfürstendamm 90, 10709 Berlin · info@muellerbau.de</p><h3>Erhebung und Verarbeitung</h3><p>Wir verarbeiten personenbezogene Daten (z.B. Name, E-Mail, Telefonnummer) nur, soweit dies zur Bereitstellung unserer Leistungen erforderlich ist.</p><h3>Cookies</h3><p>Unsere Website verwendet Cookies, um bestimmte Funktionen bereitzustellen und die Nutzung zu analysieren. Sie können Cookies in Ihrem Browser deaktivieren.</p><h3>Analyse</h3><p>Es können anonymisierte Nutzungsdaten zur Verbesserung unseres Angebots ausgewertet werden.</p><h3>Ihre Rechte</h3><ul><li>Recht auf Auskunft, Berichtigung, Löschung</li><li>Recht auf Einschränkung der Verarbeitung</li><li>Recht auf Datenübertragbarkeit</li><li>Recht auf Widerspruch</li></ul><p>Wenden Sie sich zur Ausübung Ihrer Rechte an die oben genannten Kontaktdaten.</p>",
-      "image": "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1200&h=800&fit=crop&auto=format"
-    }
-  ],
   "companyDetails": [
     {
       "title": "Über Müller Bau",
@@ -281,26 +311,6 @@
       "subtitle": "Verantwortung in jedem Schritt",
       "description": "Wir setzen auf langlebige Materialien, energieeffiziente Lösungen und transparente Prozesse — zum Schutz der Umwelt und für die Zufriedenheit unserer Kunden.",
       "image": "https://images.unsplash.com/photo-1506912527923-1d9a0b7d78f9?w=1200&h=800&fit=crop&auto=format"
-    }
-  ],
-  "specialServices": [
-    {
-      "title": "Boden sanieren statt erneuern mit Floor Remake",
-      "description": "Anstatt abgenutzte Böden komplett zu entsorgen und durch neue zu ersetzen, kann eine Sanierung mit floor remake eine attraktive und zeitsparende Option sein.",
-      "features": [
-        "Die Sanierung ist meist deutlich günstiger",
-        "In wenigen Stunden bis Tagen kann der Boden wieder in neuem Glanz erstrahlen",
-        "Geringe Ausfallzeiten und große Kostenersparnis"
-      ],
-      "linkText": "Mehr erfahren",
-      "linkHref": "/services/floor-remake"
-    },
-    {
-      "title": "Ableitfähige Bodenbeschichtung",
-      "description": "ESD Beschichtungen für Medizin und Industrie! Ableitfähige Bodenbeschichtung für Krankenhaus und Industrie.",
-      "description2": "Besonders wichtig für Bereiche, die auf einen reibungslosen Betrieb angewiesen sind, wie Zahnarztpraxen, Krankenhäuser und Büros.",
-      "linkText": "Mehr erfahren",
-      "linkHref": "/services/ableitfaehig"
     }
   ],
   "projects": [

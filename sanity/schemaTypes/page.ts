@@ -78,6 +78,7 @@ export default defineType({
         { type: 'servicesSection' },
         { type: 'projectsSection' },
         { type: 'ctaSection' },
+        { type: 'testSection' },
       ],
       description:
         'Build your page by adding sections in order. Appears for home and standard pages.',

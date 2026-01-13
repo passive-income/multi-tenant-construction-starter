@@ -8,20 +8,28 @@ import { AnimatedSection } from '@/components/section/AnimatedSection';
 import CompanySection from '@/components/section/CompanySection';
 import { HeroSection } from '@/components/section/HeroSection';
 import ServicesSection from '@/components/section/ServicesSection';
+import { TestSection } from '@/components/section/TestSection';
 import { Button } from '@/components/ui/button';
 
 interface SectionRendererProps {
   sections: any[];
+  enabledFeatures?: string[];
 }
 
-export function SectionRenderer({ sections }: SectionRendererProps) {
+export function SectionRenderer({ sections, enabledFeatures }: SectionRendererProps) {
   if (!sections || sections.length === 0) {
     return null;
   }
 
+  // Filter sections if enabledFeatures is provided
+  const filteredSections =
+    enabledFeatures && enabledFeatures.length > 0
+      ? sections.filter((section) => !section._type || enabledFeatures.includes(section._type))
+      : sections;
+
   return (
     <>
-      {sections.map((section, index) => {
+      {filteredSections.map((section, index) => {
         if (!section._type) return null;
         const sectionKey =
           (section as any)._key || (section as any)._id || `section-${section._type}-${index}`;
@@ -189,6 +197,16 @@ export function SectionRenderer({ sections }: SectionRendererProps) {
                   </div>
                 </div>
               </AnimatedSection>
+            );
+
+          case 'testSection':
+            return (
+              <TestSection
+                key={sectionKey}
+                title={section.title}
+                message={section.message}
+                backgroundColor={section.backgroundColor}
+              />
             );
 
           default:

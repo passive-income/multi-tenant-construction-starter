@@ -53,6 +53,14 @@ export default defineType({
       type: 'reference',
       to: [{ type: 'footer' }],
     },
+    {
+      name: 'enabledFeatures',
+      title: 'Enabled Features',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description:
+        'Optional: list of allowed section types (e.g. "heroSection", "servicesSection"). If empty, all sections are allowed.',
+    },
   ],
   preview: {
     select: {

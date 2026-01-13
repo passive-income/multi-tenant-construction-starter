@@ -18,6 +18,7 @@ import heroSection from './sections/heroSection';
 import imageSliderSection from './sections/imageSliderSection';
 import projectsSection from './sections/projectsSection';
 import servicesSection from './sections/servicesSection';
+import testSection from './sections/testSection';
 import service from './service';
 import teamMember from './teamMember';
 import testimonial from './testimonial';
@@ -46,5 +47,6 @@ export const schema = {
     projectsSection,
     ctaSection,
     imageSliderSection,
+    testSection,
   ],
 };
