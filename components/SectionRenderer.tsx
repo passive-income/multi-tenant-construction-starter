@@ -20,10 +20,6 @@ interface SectionRendererProps {
   allProjects?: any[];
   clientId?: string;
   dataset?: string;
-  testimonials?: any[];
-  faqs?: any[];
-  teamMembers?: any[];
-  certifications?: any[];
 }
 
 export async function SectionRenderer({
@@ -33,10 +29,6 @@ export async function SectionRenderer({
   allProjects = [],
   clientId = 'mueller',
   dataset = 'production',
-  testimonials = [],
-  faqs = [],
-  teamMembers = [],
-  certifications = [],
 }: SectionRendererProps) {
   if (!sections || sections.length === 0) {
     return null;

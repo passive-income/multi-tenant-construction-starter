@@ -51,10 +51,6 @@ export default async function HomePage() {
           allProjects={siteData.projects}
           clientId="mueller"
           dataset="production"
-          testimonials={siteData.testimonials}
-          faqs={siteData.faqs}
-          teamMembers={siteData.teamMembers}
-          certifications={siteData.certifications}
         />
       </>
     );
