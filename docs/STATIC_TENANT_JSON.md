@@ -217,6 +217,95 @@ Create a tenant file under `data/`, e.g. `data/static-mueller.json`:
 ```
 **Required:** `title`
 
+### `testimonialsSection`
+```json
+{
+  "_type": "testimonialsSection",
+  "title": "What Our Clients Say",
+  "subtitle": "Testimonials from satisfied customers"
+}
+```
+**Note:** Testimonials are loaded from the `testimonials` array in the JSON, not configured inline. Example structure:
+```json
+"testimonials": [
+  {
+    "_id": "testimonial-1",
+    "name": "John Smith",
+    "company": "ABC Corp",
+    "position": "Manager",
+    "text": "Great work on our renovation project!",
+    "rating": 5
+  }
+]
+```
+
+### `teamSection`
+```json
+{
+  "_type": "teamSection",
+  "title": "Our Team",
+  "subtitle": "Meet the experts behind our success"
+}
+```
+**Note:** Team members are loaded from the `teamMembers` array in the JSON. Example structure:
+```json
+"teamMembers": [
+  {
+    "_id": "member-1",
+    "name": "Alice Johnson",
+    "position": "Lead Architect",
+    "bio": "15 years of experience in construction",
+    "specializations": ["Project Management", "Design"],
+    "phone": "+49 123 456789",
+    "email": "alice@example.com"
+  }
+]
+```
+
+### `faqSection`
+```json
+{
+  "_type": "faqSection",
+  "title": "Frequently Asked Questions",
+  "subtitle": "Find answers to common questions",
+  "showSearch": true
+}
+```
+**Note:** FAQs are loaded from the `faqs` array in the JSON, organized by category. Example structure:
+```json
+"faqs": [
+  {
+    "_id": "faq-1",
+    "question": "What is your warranty?",
+    "answer": "We offer a 2-year warranty on all work",
+    "category": "allgemein"
+  }
+]
+```
+
+### `certificationsSection`
+```json
+{
+  "_type": "certificationsSection",
+  "title": "Our Certifications",
+  "subtitle": "Quality and compliance certifications"
+}
+```
+**Note:** Certifications are loaded from the `certifications` array in the JSON. Example structure:
+```json
+"certifications": [
+  {
+    "_id": "cert-1",
+    "name": "DIN EN ISO 9001:2015",
+    "issuer": "TÜV Rheinland",
+    "description": "Quality management certification",
+    "certificateNumber": "QMS-12345",
+    "validFrom": "2023-01-01",
+    "validUntil": "2026-01-01"
+  }
+]
+```
+
 ## Image Handling
 
 For any `image` field in sections or documents, you can use:

@@ -93,8 +93,8 @@ export async function CertificationsSection({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {certifications.map((cert) => (
-            <Card key={cert._id} className="p-6 flex flex-col">
+          {certifications.map((cert, idx) => (
+            <Card key={`certification-${idx}`} className="p-6 flex flex-col">
               {cert.logo && (
                 <div className="relative w-full h-32 mb-4 flex items-center justify-center">
                   <Image

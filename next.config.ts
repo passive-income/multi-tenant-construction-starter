@@ -16,6 +16,7 @@ const nextConfig: NextConfig = {
       { hostname: 'staticmap.openstreetmap.de' },
     ],
     formats: ['image/avif', 'image/webp'],
+    qualities: [60, 65, 70, 75],
   },
   allowedDevOrigins: ['local-origin.dev', '*.local-origin.dev', '192.168.178.62:3000'],
 };

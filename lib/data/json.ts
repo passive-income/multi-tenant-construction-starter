@@ -6,7 +6,36 @@ import type { SiteData } from '@/lib/types/site';
 export async function getJsonData(fileName: string): Promise<SiteData> {
   const filePath = path.join(process.cwd(), 'data', fileName);
   const file = await fs.readFile(filePath, 'utf-8');
-  const parsed = JSON.parse(file) as SiteData & { navigation?: any };
+  const parsed = JSON.parse(file) as SiteData & {
+    navigation?: any;
+    pages?: Record<string, any>;
+    enabledFeatures?: string[];
+  };
+
+  // Transform new pages-based structure into expected SiteData format
+  const transformedData = { ...parsed };
+
+  if (parsed.pages?.home?.sections) {
+    const sections = parsed.pages.home.sections;
+
+    // Extract slider/imageSliderSection
+    const imageSliderSection = sections.find((s: any) => s._type === 'imageSliderSection');
+    if (imageSliderSection?.slides) {
+      transformedData.slider = {
+        slides: imageSliderSection.slides,
+        beforeAfter: parsed.pages?.home?.beforeAfter,
+      };
+    }
+
+    // Extract other sections
+    const heroSections = sections.filter((s: any) => s._type === 'heroSection');
+    if (heroSections.length > 0) {
+      transformedData.heroSections = heroSections;
+    }
+
+    // Add sections array for SectionRenderer
+    transformedData.sections = sections;
+  }
 
   // Normalize navigation: support either top-level menuItems or navigation.menuItems with `link` objects
   let menuItems: MenuItem[] | undefined = parsed.menuItems as any;
@@ -47,5 +76,5 @@ export async function getJsonData(fileName: string): Promise<SiteData> {
     // ignore and fallback to existing parsed.menuItems
   }
 
-  return { ...parsed, menuItems } as SiteData;
+  return { ...transformedData, menuItems } as SiteData;
 }

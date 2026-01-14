@@ -10,22 +10,17 @@
     "servicesSection",
     "projectsSection",
     "ctaSection",
-    "testSection"
+    "testSection",
+    "testimonialsSection",
+    "teamSection",
+    "faqSection",
+    "certificationsSection"
   ],
   "pages": {
     "home": {
       "title": "Home",
       "slug": "home",
       "sections": [
-        {
-          "_type": "heroSection",
-          "title": "Müller Bau GmbH",
-          "subtitle": "HANDWERKSBETRIEB AUS BERLIN",
-          "description": "Qualität ist unsere Verpflichtung! Mit unseren 50 Mitarbeitern führen wir sämtliche Maler- und Renovierungsarbeiten durch. Der Kreativität sind keine Grenzen gesetzt vom Boden bis zur Decke.",
-          "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&h=1080&fit=crop&auto=format",
-          "linkText": "Unsere Leistungen",
-          "linkHref": "/services"
-        },
         {
           "_type": "imageSliderSection",
           "title": "Projektgalerie",
@@ -59,6 +54,15 @@
               "linkHref": "/services"
             }
           ]
+        },
+        {
+          "_type": "heroSection",
+          "title": "Müller Bau GmbH",
+          "subtitle": "HANDWERKSBETRIEB AUS BERLIN",
+          "description": "Qualität ist unsere Verpflichtung! Mit unseren 50 Mitarbeitern führen wir sämtliche Maler- und Renovierungsarbeiten durch. Der Kreativität sind keine Grenzen gesetzt vom Boden bis zur Decke.",
+          "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&h=1080&fit=crop&auto=format",
+          "linkText": "Unsere Leistungen",
+          "linkHref": "/services"
         },
         {
           "_type": "beforeAfterSection",
@@ -142,6 +146,27 @@
           "primaryButtonHref": "/contact",
           "secondaryButtonText": "Leistungen ansehen",
           "secondaryButtonHref": "/services"
+        },
+        {
+          "_type": "testimonialsSection",
+          "title": "Was unsere Kunden sagen",
+          "subtitle": "Erfahrungen und Bewertungen zufriedener Kunden"
+        },
+        {
+          "_type": "teamSection",
+          "title": "Unser Team",
+          "subtitle": "Die Experten hinter Müller Bau"
+        },
+        {
+          "_type": "faqSection",
+          "title": "Häufig gestellte Fragen",
+          "subtitle": "Antworten auf Ihre wichtigsten Fragen",
+          "showSearch": true
+        },
+        {
+          "_type": "certificationsSection",
+          "title": "Unsere Zertifikationen",
+          "subtitle": "Qualität und Vertrauen"
         }
       ]
     }
@@ -260,6 +285,48 @@
       "clientId": "mueller"
     }
   ],
+  "projects": [
+    {
+      "title": "Apartment Complex Berlin",
+      "year": 2023,
+      "location": "Berlin",
+      "images": [
+        "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop&auto=format",
+        "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop&auto=format",
+        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop&auto=format"
+      ]
+    },
+    {
+      "title": "Modernes Wohnhaus Berlin",
+      "year": 2024,
+      "location": "Berlin",
+      "images": [
+        "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop&auto=format",
+        "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&h=600&fit=crop&auto=format",
+        "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=800&h=600&fit=crop&auto=format"
+      ]
+    },
+    {
+      "title": "Gewerbeobjekt Renovierung",
+      "year": 2023,
+      "location": "Berlin",
+      "images": [
+        "https://images.unsplash.com/photo-1568605117037-72d268f1bfed?w=800&h=600&fit=crop&auto=format",
+        "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=800&h=600&fit=crop&auto=format",
+        "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&h=600&fit=crop&auto=format"
+      ]
+    },
+    {
+      "title": "Exklusive Malerarbeiten Villa",
+      "year": 2024,
+      "location": "Berlin",
+      "images": [
+        "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=800&h=600&fit=crop&auto=format",
+        "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&h=600&fit=crop&auto=format",
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=600&fit=crop&auto=format"
+      ]
+    }
+  ],
   "menuItems": [
     { "label": "Startseite", "href": "/" },
     { "label": "Unternehmen", "href": "/company" },
@@ -311,48 +378,6 @@
       "subtitle": "Verantwortung in jedem Schritt",
       "description": "Wir setzen auf langlebige Materialien, energieeffiziente Lösungen und transparente Prozesse — zum Schutz der Umwelt und für die Zufriedenheit unserer Kunden.",
       "image": "https://images.unsplash.com/photo-1506912527923-1d9a0b7d78f9?w=1200&h=800&fit=crop&auto=format"
-    }
-  ],
-  "projects": [
-    {
-      "title": "Apartment Complex Berlin",
-      "year": 2023,
-      "location": "Berlin",
-      "images": [
-        "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop&auto=format",
-        "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop&auto=format",
-        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop&auto=format"
-      ]
-    },
-    {
-      "title": "Modernes Wohnhaus Berlin",
-      "year": 2024,
-      "location": "Berlin",
-      "images": [
-        "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop&auto=format",
-        "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&h=600&fit=crop&auto=format",
-        "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=800&h=600&fit=crop&auto=format"
-      ]
-    },
-    {
-      "title": "Gewerbeobjekt Renovierung",
-      "year": 2023,
-      "location": "Berlin",
-      "images": [
-        "https://images.unsplash.com/photo-1568605117037-72d268f1bfed?w=800&h=600&fit=crop&auto=format",
-        "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=800&h=600&fit=crop&auto=format",
-        "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&h=600&fit=crop&auto=format"
-      ]
-    },
-    {
-      "title": "Exklusive Malerarbeiten Villa",
-      "year": 2024,
-      "location": "Berlin",
-      "images": [
-        "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=800&h=600&fit=crop&auto=format",
-        "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&h=600&fit=crop&auto=format",
-        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=600&fit=crop&auto=format"
-      ]
     }
   ],
   "testimonials": [

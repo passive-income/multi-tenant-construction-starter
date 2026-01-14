@@ -36,8 +36,32 @@ export default async function HomePage() {
 
   // JSON fallback (repo-static)
   const siteData: SiteData = await getJsonData('static-mueller.json');
-  const firstSlideImage = siteData.slider?.slides?.[0]?.image;
 
+  // If we have sections from the transformed data, use SectionRenderer instead
+  if (siteData.sections && Array.isArray(siteData.sections) && siteData.sections.length > 0) {
+    const firstSlideImage = siteData.sections.find((s: any) => s._type === 'imageSliderSection')
+      ?.slides?.[0]?.image;
+    return (
+      <>
+        {firstSlideImage && <PreloadLCPImage src={firstSlideImage} />}
+        <SectionRenderer
+          sections={siteData.sections}
+          enabledFeatures={siteData.enabledFeatures}
+          allServices={siteData.services}
+          allProjects={siteData.projects}
+          clientId="mueller"
+          dataset="production"
+          testimonials={siteData.testimonials}
+          faqs={siteData.faqs}
+          teamMembers={siteData.teamMembers}
+          certifications={siteData.certifications}
+        />
+      </>
+    );
+  }
+
+  // Fallback to MainSection for old JSON format
+  const firstSlideImage = siteData.slider?.slides?.[0]?.image;
   return (
     <>
       {firstSlideImage && <PreloadLCPImage src={firstSlideImage} />}
