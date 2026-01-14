@@ -5,6 +5,22 @@ import { Card } from '@/components/ui/card';
 import type { TeamMember } from '@/lib/types/teamMember';
 import { urlFor } from '@/sanity/lib/image';
 
+const portableTextComponents = {
+  types: {
+    // Fallback for unknown types to prevent errors
+  },
+  block: {
+    normal: ({ children }: any) => <p className="mb-4 text-muted-foreground">{children}</p>,
+    h1: ({ children }: any) => <h1 className="text-2xl font-bold mb-4">{children}</h1>,
+    h2: ({ children }: any) => <h2 className="text-xl font-bold mb-3">{children}</h2>,
+    h3: ({ children }: any) => <h3 className="text-lg font-semibold mb-2">{children}</h3>,
+  },
+  marks: {
+    strong: ({ children }: any) => <strong>{children}</strong>,
+    em: ({ children }: any) => <em>{children}</em>,
+  },
+};
+
 interface TeamMemberCardProps {
   member: TeamMember;
 }
@@ -30,7 +46,7 @@ export function TeamMemberCard({ member }: TeamMemberCardProps) {
 
         {member.bio && (
           <div className="prose prose-sm max-w-none mb-4 flex-1">
-            <PortableText value={member.bio} />
+            <PortableText value={member.bio} components={portableTextComponents} />
           </div>
         )}
 
@@ -39,7 +55,10 @@ export function TeamMemberCard({ member }: TeamMemberCardProps) {
             <p className="text-sm font-medium mb-2">Fachgebiete:</p>
             <div className="flex flex-wrap gap-2">
               {member.specializations.map((spec, idx) => (
-                <span key={idx} className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">
+                <span
+                  key={`${member._id}-spec-${idx}`}
+                  className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded"
+                >
                   {spec}
                 </span>
               ))}

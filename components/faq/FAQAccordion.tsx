@@ -11,6 +11,22 @@ import {
 } from '@/components/ui/accordion';
 import type { FAQ } from '@/lib/types/faq';
 
+const portableTextComponents = {
+  types: {
+    // Fallback for unknown types to prevent errors
+  },
+  block: {
+    normal: ({ children }: any) => <p className="mb-4">{children}</p>,
+    h1: ({ children }: any) => <h1 className="text-2xl font-bold mb-4">{children}</h1>,
+    h2: ({ children }: any) => <h2 className="text-xl font-bold mb-3">{children}</h2>,
+    h3: ({ children }: any) => <h3 className="text-lg font-semibold mb-2">{children}</h3>,
+  },
+  marks: {
+    strong: ({ children }: any) => <strong>{children}</strong>,
+    em: ({ children }: any) => <em>{children}</em>,
+  },
+};
+
 interface FAQAccordionProps {
   faqs: FAQ[];
   showSearch?: boolean;
@@ -50,14 +66,13 @@ export function FAQAccordion({ faqs, showSearch = false }: FAQAccordionProps) {
       ) : (
         <Accordion type="single" collapsible className="w-full">
           {filteredFaqs.map((faq, idx) => {
-            const keyId = faq._id ?? `faq-${idx}`;
             return (
-              <AccordionItem key={keyId} value={String(keyId)}>
+              <AccordionItem key={idx} value={String(idx)}>
                 <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
                 <AccordionContent>
                   {faq.answer ? (
                     <div className="prose prose-sm max-w-none">
-                      <PortableText value={faq.answer} />
+                      <PortableText value={faq.answer} components={portableTextComponents} />
                     </div>
                   ) : (
                     <p className="text-muted-foreground">Keine Antwort verfügbar.</p>

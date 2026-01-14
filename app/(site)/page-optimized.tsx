@@ -18,6 +18,9 @@ async function SanityHomeContent() {
 
   const clientDoc = await client.fetch('*[_type == "client" && $host in domains][0]', { host });
   const clientId = clientDoc?.clientId;
+  const enabledFeatures = Array.isArray(clientDoc?.enabledFeatures)
+    ? clientDoc.enabledFeatures.filter((f: unknown): f is string => typeof f === 'string')
+    : undefined;
 
   if (!clientId) return null;
 
@@ -28,7 +31,7 @@ async function SanityHomeContent() {
 
   if (!homePage?.sections) return null;
 
-  return <SectionRenderer sections={homePage.sections} />;
+  return <SectionRenderer sections={homePage.sections} enabledFeatures={enabledFeatures} />;
 }
 
 // Separate async component for JSON fallback

@@ -60,7 +60,7 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
       <div className="flex items-center gap-1 mb-3">
         {Array.from({ length: 5 }).map((_, i) => (
           <Star
-            key={i}
+            key={`star-${i}-${testimonial._id}`}
             className={`w-5 h-5 ${
               i < testimonial.rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'
             }`}

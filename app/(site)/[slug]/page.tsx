@@ -19,6 +19,9 @@ export default async function GenericPage({ params }: { params: Promise<{ slug: 
     const client = getClient(dataset);
     const clientDoc = await client.fetch('*[_type == "client" && $host in domains][0]', { host });
     const clientId = clientDoc?.clientId;
+    const enabledFeatures = Array.isArray(clientDoc?.enabledFeatures)
+      ? clientDoc.enabledFeatures.filter((f: unknown): f is string => typeof f === 'string')
+      : undefined;
 
     if (clientId) {
       const page = await client.fetch(
@@ -30,7 +33,7 @@ export default async function GenericPage({ params }: { params: Promise<{ slug: 
         if (page.sections && page.sections.length > 0) {
           return (
             <main>
-              <SectionRenderer sections={page.sections} />
+              <SectionRenderer sections={page.sections} enabledFeatures={enabledFeatures} />
             </main>
           );
         }

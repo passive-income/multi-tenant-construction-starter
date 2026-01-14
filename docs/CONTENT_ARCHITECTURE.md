@@ -158,6 +158,55 @@ Call-to-action banner with primary and secondary buttons.
 }
 ```
 
+#### 8. **Testimonials Section** (`testimonialsSection`)
+Display customer testimonials and reviews.
+
+```typescript
+{
+  _type: "testimonialsSection",
+  title: "What Our Clients Say",
+  subtitle: "Testimonials from satisfied customers"
+}
+```
+*Note: Testimonials are loaded from Sanity or static JSON data, not configured inline.*
+
+#### 9. **Team Section** (`teamSection`)
+Display team members with bios and contact info.
+
+```typescript
+{
+  _type: "teamSection",
+  title: "Our Team",
+  subtitle: "Meet the experts behind our success"
+}
+```
+*Note: Team members are loaded from Sanity or static JSON data, not configured inline.*
+
+#### 10. **FAQ Section** (`faqSection`)
+Frequently asked questions organized by category.
+
+```typescript
+{
+  _type: "faqSection",
+  title: "Frequently Asked Questions",
+  subtitle: "Find answers to common questions",
+  showSearch: true
+}
+```
+*Note: FAQs are loaded from Sanity or static JSON data, not configured inline.*
+
+#### 11. **Certifications Section** (`certificationsSection`)
+Display company certifications and qualifications.
+
+```typescript
+{
+  _type: "certificationsSection",
+  title: "Our Certifications",
+  subtitle: "Quality and compliance certifications"
+}
+```
+*Note: Certifications are loaded from Sanity or static JSON data, not configured inline.*
+
 ## Usage
 
 ### Creating Pages
