@@ -1,20 +1,11 @@
-'use client';
-import { motion } from 'framer-motion';
 import type { ReactNode } from 'react';
 
-export const AnimatedSection = ({
+export function AnimatedSection({
   children,
   className = '',
 }: {
   children: ReactNode;
   className?: string;
-}) => (
-  <motion.section
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5 }}
-    className={className}
-  >
-    {children}
-  </motion.section>
-);
+}) {
+  return <section className={`animate-fade-in-up ${className}`}>{children}</section>;
+}

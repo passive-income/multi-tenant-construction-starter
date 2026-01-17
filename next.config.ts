@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
   reactStrictMode: true,
+  compress: true,
+  poweredByHeader: false,
+  generateEtags: true,
   images: {
     remotePatterns: [
       { hostname: 'images.unsplash.com' },
@@ -16,7 +19,17 @@ const nextConfig: NextConfig = {
       { hostname: 'staticmap.openstreetmap.de' },
     ],
     formats: ['image/avif', 'image/webp'],
-    qualities: [60, 65, 70, 75],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    minimumCacheTTL: 60,
+    dangerouslyAllowSVG: false,
+  },
+  experimental: {
+    optimizePackageImports: [
+      'lucide-react',
+      '@radix-ui/react-accordion',
+      '@radix-ui/react-dropdown-menu',
+    ],
   },
   allowedDevOrigins: ['local-origin.dev', '*.local-origin.dev', '192.168.178.62:3000'],
 };
