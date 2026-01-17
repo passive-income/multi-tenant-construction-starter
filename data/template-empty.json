@@ -1,0 +1,54 @@
+{
+  "clientId": "",
+  "name": "",
+  "domains": [],
+  "enabledFeatures": [],
+  "pages": {
+    "home": {
+      "title": "Home",
+      "slug": "home",
+      "sections": []
+    }
+  },
+  "company": {
+    "name": "",
+    "tagline": "",
+    "phone": "",
+    "email": "",
+    "address": "",
+    "description": "",
+    "logoText": ""
+  },
+  "footer": {
+    "locations": [],
+    "openingHours": {},
+    "copyright": "",
+    "links": []
+  },
+  "theme": {},
+  "services": [],
+  "projects": [],
+  "menuItems": [],
+  "companyDetails": [],
+  "testimonials": [],
+  "faqs": [],
+  "contactSettings": {
+    "email": "",
+    "phone": "",
+    "whatsappNumber": "",
+    "mapAddress": "",
+    "showMap": false,
+    "openingHours": "",
+    "formFields": []
+  },
+  "teamMembers": [],
+  "certifications": [],
+  "contact": {
+    "ctaTitle": "",
+    "ctaDescription": "",
+    "ctaButtonText": "",
+    "ctaButtonHref": "",
+    "secondaryButtonText": "",
+    "secondaryButtonHref": ""
+  }
+}

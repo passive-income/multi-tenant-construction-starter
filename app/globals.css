@@ -199,6 +199,28 @@ summary:focus-visible {
   outline-offset: 2px;
 }
 
+/* Lightweight fade-in-up animation for sections */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in-up {
+    animation: none;
+  }
+}
+
 /* Prevent CLS from navigation menu viewport */
 [data-slot="navigation-menu-viewport"] {
   will-change: width, height;

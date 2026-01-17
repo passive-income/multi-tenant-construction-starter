@@ -1,17 +1,28 @@
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { BeforeAfterGridSection } from '@/components/before-after/BeforeAfterGridSection';
 import { ImageSlider } from '@/components/image/ImageSlider';
 import { ProjectGallery } from '@/components/ProjectGallery';
 import { AnimatedSection } from '@/components/section/AnimatedSection';
-import { CertificationsSection } from '@/components/section/CertificationsSection';
 import CompanySection from '@/components/section/CompanySection';
-import { FAQSection } from '@/components/section/FAQSection';
 import { HeroSection } from '@/components/section/HeroSection';
 import ServicesSection from '@/components/section/ServicesSection';
-import { TeamSection } from '@/components/section/TeamSection';
-import { TestimonialsSection } from '@/components/section/TestimonialsSection';
 import { TestSection } from '@/components/section/TestSection';
 import { Button } from '@/components/ui/button';
+
+// Lazy-load below-the-fold sections to reduce initial JS
+const TestimonialsSection = dynamic(() =>
+  import('@/components/section/TestimonialsSection').then((m) => m.TestimonialsSection),
+);
+const TeamSection = dynamic(() =>
+  import('@/components/section/TeamSection').then((m) => m.TeamSection),
+);
+const FAQSection = dynamic(() =>
+  import('@/components/section/FAQSection').then((m) => m.FAQSection),
+);
+const CertificationsSection = dynamic(() =>
+  import('@/components/section/CertificationsSection').then((m) => m.CertificationsSection),
+);
 
 interface SectionRendererProps {
   sections: any[];

@@ -30,21 +30,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link
-          rel="preload"
-          as="image"
-          href="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop&auto=format"
-          fetchPriority="high"
-        />
         <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://staticmap.openstreetmap.de" />
+        <link rel="preconnect" href="https://cdn.sanity.io" />
+        <link rel="dns-prefetch" href="https://staticmap.openstreetmap.de" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <a href="#main-content" className="skip-link">
           Skip to content
         </a>
         {children}
-        {process.env.NEXT_PUBLIC_LOG_CLS === '1' && <ClsLogger />}
+        {process.env.NODE_ENV !== 'production' && <ClsLogger />}
       </body>
     </html>
   );

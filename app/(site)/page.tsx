@@ -4,7 +4,6 @@ import { MainSection } from '@/components/section/MainSection';
 import { getJsonData } from '@/lib/data/json';
 import type { SiteData } from '@/lib/types/site';
 import { getHost } from '@/lib/utils/host';
-import { getClient } from '@/sanity/lib/client';
 
 // Cache for 5 minutes, revalidate in background
 export const revalidate = 300;
@@ -15,6 +14,7 @@ export default async function HomePage() {
   // Try Sanity-resolved home page first (resolve client by host internally)
   try {
     const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production';
+    const { getClient } = await import('@/sanity/lib/client');
     const client = getClient(dataset);
     const clientDoc = await client.fetch('*[_type == "client" && $host in domains][0]', { host });
     const clientId = clientDoc?.clientId;

@@ -1,7 +1,6 @@
 'use client';
 
 import useEmblaCarousel, { type UseEmblaCarouselType } from 'embla-carousel-react';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
 import * as React from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -25,6 +24,7 @@ type CarouselContextProps = {
   scrollNext: () => void;
   canScrollPrev: boolean;
   canScrollNext: boolean;
+  controlsVisible: boolean;
 } & CarouselProps;
 
 const CarouselContext = React.createContext<CarouselContextProps | null>(null);
@@ -57,6 +57,7 @@ function Carousel({
   );
   const [canScrollPrev, setCanScrollPrev] = React.useState(false);
   const [canScrollNext, setCanScrollNext] = React.useState(false);
+  const [controlsVisible, setControlsVisible] = React.useState(false);
 
   const onSelect = React.useCallback((api: CarouselApi) => {
     if (!api) return;
@@ -112,10 +113,17 @@ function Carousel({
         scrollNext,
         canScrollPrev,
         canScrollNext,
+        controlsVisible,
       }}
     >
       <div
-        onKeyDownCapture={handleKeyDown}
+        onKeyDownCapture={(e) => {
+          if (!controlsVisible) setControlsVisible(true);
+          handleKeyDown(e);
+        }}
+        onMouseMove={() => !controlsVisible && setControlsVisible(true)}
+        onTouchStart={() => !controlsVisible && setControlsVisible(true)}
+        onFocusCapture={() => !controlsVisible && setControlsVisible(true)}
         className={cn('relative', className)}
         role="region"
         aria-roledescription="carousel"
@@ -166,7 +174,9 @@ function CarouselPrevious({
   ...props
 }: React.ComponentProps<typeof Button>) {
   const { orientation, scrollPrev, canScrollPrev } = useCarousel();
+  const { controlsVisible } = useCarousel();
 
+  if (!controlsVisible) return null;
   return (
     <Button
       data-slot="carousel-previous"
@@ -183,7 +193,21 @@ function CarouselPrevious({
       onClick={scrollPrev}
       {...props}
     >
-      <ArrowLeft />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M19 12H5" />
+        <path d="M12 19l-7-7 7-7" />
+      </svg>
       <span className="sr-only">Previous slide</span>
     </Button>
   );
@@ -196,7 +220,9 @@ function CarouselNext({
   ...props
 }: React.ComponentProps<typeof Button>) {
   const { orientation, scrollNext, canScrollNext } = useCarousel();
+  const { controlsVisible } = useCarousel();
 
+  if (!controlsVisible) return null;
   return (
     <Button
       data-slot="carousel-next"
@@ -213,7 +239,21 @@ function CarouselNext({
       onClick={scrollNext}
       {...props}
     >
-      <ArrowRight />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M5 12h14" />
+        <path d="M12 5l7 7-7 7" />
+      </svg>
       <span className="sr-only">Next slide</span>
     </Button>
   );
