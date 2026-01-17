@@ -8,7 +8,8 @@ import type { SiteData } from '@/lib/types/site';
 import { getHost } from '@/lib/utils/host';
 import { getClient } from '@/sanity/lib/client';
 
-export const dynamic = 'force-dynamic';
+// Cache for 5 minutes, revalidate in background
+export const revalidate = 300;
 
 // Separate async component for Sanity content
 async function SanityHomeContent() {
