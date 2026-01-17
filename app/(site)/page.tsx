@@ -23,9 +23,14 @@ async function getHomePageData(host: string | undefined) {
     if (!clientDoc) {
       return null;
     }
+    // Check for valid clientId before querying pages
+    if (!clientDoc.clientId) {
+      console.warn('[getHomePageData] Client document missing clientId for host:', host);
+      return null;
+    }
     const homePage = await client.fetch(
       '*[_type == "page" && slug.current == "home" && clientId == $clientId][0]',
-      { clientId: clientDoc.clientId ?? null },
+      { clientId: clientDoc.clientId },
     );
     return { clientDoc, homePage };
   } catch (error) {
