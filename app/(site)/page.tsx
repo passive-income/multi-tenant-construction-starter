@@ -28,7 +28,8 @@ async function getHomePageData(host: string | undefined) {
       { clientId: clientDoc.clientId ?? null },
     );
     return { clientDoc, homePage };
-  } catch (_error) {
+  } catch (error) {
+    console.error('[getHomePageData] Failed to fetch Sanity data:', error);
     return null;
   }
 }
