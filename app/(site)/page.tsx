@@ -37,9 +37,9 @@ export async function generateMetadata(): Promise<Metadata> {
   const host = await getHost();
 
   // Try to get data from Sanity first
-  const sanyityData = await getHomePageData(host);
-  if (sanyityData?.homePage?.seo) {
-    const { clientDoc, homePage } = sanyityData;
+  const sanityData = await getHomePageData(host);
+  if (sanityData?.homePage?.seo) {
+    const { clientDoc, homePage } = sanityData;
     return {
       title: homePage.seo.title || clientDoc.name,
       description: homePage.seo.description || clientDoc.description,
@@ -74,9 +74,9 @@ export default async function HomePage() {
   const host = await getHost();
 
   // Try Sanity-resolved home page first
-  const sanyityData = await getHomePageData(host);
-  if (sanyityData?.homePage?.sections) {
-    const { clientDoc, homePage } = sanyityData;
+  const sanityData = await getHomePageData(host);
+  if (sanityData?.homePage?.sections) {
+    const { clientDoc, homePage } = sanityData;
     const enabledFeatures = Array.isArray(clientDoc?.enabledFeatures)
       ? clientDoc.enabledFeatures.filter((f: unknown): f is string => typeof f === 'string')
       : undefined;
