@@ -65,7 +65,7 @@ export default async function GenericPage({ params }: { params: Promise<{ slug: 
 
   // JSON fallback
   const data = await getJsonData('static-mueller.json');
-  const pages: any[] = (data as any)?.pages || [];
+  const pages: any[] = Array.isArray((data as any)?.pages) ? (data as any).pages : [];
   const page = pages.find((p: any) => p?.slug === slug);
 
   if (!page) {

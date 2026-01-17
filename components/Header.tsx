@@ -13,13 +13,14 @@ import MobileNavigation from './MobileNavigation';
  */
 function MinimalHeader() {
   const logoText = 'Construction Multi-Tenant Starter';
+  const defaultItems: MenuItem[] = [{ label: 'Startseite', href: '/' }];
   return (
     <header className="w-full h-16 shrink-0 bg-white border-b border-border">
       <div className="container header-nav mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-full">
         <Link href="/" aria-label="Home" className="flex items-center space-x-2">
           <span className="font-bold text-xl hidden lg:block">{logoText}</span>
         </Link>
-        <MobileNavigation logoText={logoText} />
+        <MobileNavigation logoText={logoText} items={defaultItems} />
       </div>
     </header>
   );
@@ -99,7 +100,7 @@ export async function Header() {
           hoverClass={hoverClass}
         />
 
-        <MobileNavigation logoText={logoText} />
+        <MobileNavigation logoText={logoText} items={navItems} />
       </div>
     </header>
   );

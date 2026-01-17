@@ -1,43 +1,33 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import staticData from '@/data/static-mueller.json';
-import type { MenuData, MenuItem } from '@/lib/types/navigation';
+import type { MenuItem } from '@/lib/types/navigation';
 
-const MobileNavigation = ({ logoText }: { logoText: string }) => {
+const MobileNavigation = ({ logoText, items }: { logoText: string; items: MenuItem[] }) => {
   const [open, setOpen] = useState(false);
 
   const pathname = usePathname() ?? '/';
+
+  // Prevent body scroll when sheet is open
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [open]);
 
   const isActive = (href: string) => {
     if (href === '/') return pathname === '/';
     if (href === '/services') return pathname.startsWith('/services');
     return pathname === href;
   };
-
-  const rawItems: MenuItem[] = ((staticData as unknown as MenuData)?.menuItems as MenuItem[]) || [
-    { label: 'Startseite', href: '/' },
-    { label: 'Unternehmen', href: '/company' },
-    { label: 'Leistungen', href: '/services' },
-    { label: 'Fachmarkt', href: '/fachmarkt' },
-    { label: 'Referenzen', href: '/projects' },
-    { label: 'Kontakt', href: '/contact' },
-  ];
-
-  const menuItems: MenuItem[] = rawItems
-    .map((item) => ({
-      ...item,
-      href: item.href || '/',
-      subItems: Array.isArray(item.subItems)
-        ? item.subItems
-            .map((sub) => ({ ...sub, href: sub.href || item.href || '/' }))
-            .filter((sub) => !!sub.href)
-        : undefined,
-    }))
-    .filter((item) => !!item.href);
 
   return (
     <div className="block md:hidden">
@@ -65,12 +55,15 @@ const MobileNavigation = ({ logoText }: { logoText: string }) => {
             <span className="sr-only">Toggle menu</span>
           </Button>
         </SheetTrigger>
-        <SheetContent side="right" className="w-75 sm:w-100 px-4 sm:px-6 mobile-navigation">
+        <SheetContent
+          side="right"
+          className="w-75 sm:w-100 px-4 sm:px-6 mobile-navigation overflow-y-auto"
+        >
           <SheetHeader className="pb-4 border-b border-border/50 px-0 sm:px-0">
             <SheetTitle className="text-lg font-bold">{logoText}</SheetTitle>
           </SheetHeader>
-          <nav className="flex flex-col" aria-label="Mobile Navigation">
-            {menuItems.map((item) => (
+          <nav className="flex flex-col overflow-y-auto" aria-label="Mobile Navigation">
+            {items.map((item) => (
               <div key={item.label} className="border-b border-border/40 last:border-b-0">
                 {item.subItems ? (
                   <div className="py-3">
