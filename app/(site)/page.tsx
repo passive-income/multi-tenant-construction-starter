@@ -9,38 +9,55 @@ import { getHost } from '@/lib/utils/host';
 // Cache for 5 minutes, revalidate in background
 export const revalidate = 300;
 
-export async function generateMetadata(): Promise<Metadata> {
-  const host = await getHost();
-
-  // Try to get data from Sanity first
-  let siteData: SiteData | null = null;
+/**
+ * Shared helper to fetch Sanity data for home page
+ * Returns { clientDoc, homePage } if successful, null otherwise
+ */
+async function getHomePageData(host: string | undefined) {
+  if (!host) return null;
   try {
     const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production';
     const { getClient } = await import('@/sanity/lib/client');
     const client = getClient(dataset);
     const clientDoc = await client.fetch('*[_type == "client" && $host in domains][0]', { host });
-    if (clientDoc) {
-      const homePage = await client.fetch(
-        '*[_type == "page" && slug.current == "home" && clientId == $clientId][0]',
-        { clientId: clientDoc.clientId ?? null },
-      );
-      if (homePage?.seo) {
-        return {
-          title: homePage.seo.title || clientDoc.name,
-          description: homePage.seo.description || clientDoc.description,
-          alternates: {
-            canonical: `https://${host}`,
-          },
-        };
-      }
+    if (!clientDoc) {
+      return null;
     }
-  } catch (_error) {
-    // Fall back to JSON
+    // Check for valid clientId before querying pages
+    if (!clientDoc.clientId) {
+      console.warn('[getHomePageData] Client document missing clientId for host:', host);
+      return null;
+    }
+    const homePage = await client.fetch(
+      '*[_type == "page" && slug.current == "home" && clientId == $clientId][0]',
+      { clientId: clientDoc.clientId },
+    );
+    return { clientDoc, homePage };
+  } catch (error) {
+    console.error('[getHomePageData] Failed to fetch Sanity data:', error);
+    return null;
+  }
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const host = await getHost();
+
+  // Try to get data from Sanity first
+  const sanityData = await getHomePageData(host);
+  if (sanityData?.homePage?.seo) {
+    const { clientDoc, homePage } = sanityData;
+    return {
+      title: homePage.seo.title || clientDoc.name,
+      description: homePage.seo.description || clientDoc.description,
+      alternates: {
+        canonical: `https://${host}`,
+      },
+    };
   }
 
   // Fallback to JSON data
   try {
-    siteData = await getJsonData('static-mueller.json');
+    const siteData = await getJsonData('static-mueller.json');
     return {
       title: siteData.company?.name || 'Construction Company',
       description: siteData.company?.description || 'Professional construction services',
@@ -62,27 +79,14 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function HomePage() {
   const host = await getHost();
 
-  // Try Sanity-resolved home page first (resolve client by host internally)
-  try {
-    const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production';
-    const { getClient } = await import('@/sanity/lib/client');
-    const client = getClient(dataset);
-    const clientDoc = await client.fetch('*[_type == "client" && $host in domains][0]', { host });
-    const clientId = clientDoc?.clientId;
+  // Try Sanity-resolved home page first
+  const sanityData = await getHomePageData(host);
+  if (sanityData?.homePage?.sections) {
+    const { clientDoc, homePage } = sanityData;
     const enabledFeatures = Array.isArray(clientDoc?.enabledFeatures)
       ? clientDoc.enabledFeatures.filter((f: unknown): f is string => typeof f === 'string')
       : undefined;
-    if (clientId) {
-      const homePage = await client.fetch(
-        '*[_type == "page" && slug.current == "home" && clientId == $clientId][0]',
-        { clientId: clientId ?? null },
-      );
-      if (homePage?.sections) {
-        return <SectionRenderer sections={homePage.sections} enabledFeatures={enabledFeatures} />;
-      }
-    }
-  } catch (_error) {
-    // ignore and fall back to JSON
+    return <SectionRenderer sections={homePage.sections} enabledFeatures={enabledFeatures} />;
   }
 
   // JSON fallback (repo-static)
