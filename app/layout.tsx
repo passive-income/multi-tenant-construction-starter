@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
+import { ClerkProvider } from '@clerk/nextjs';
 import ClsLogger from '@/components/ClsLogger';
 
 const geistSans = Geist({
@@ -48,19 +49,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://cdn.sanity.io" />
-        <link rel="dns-prefetch" href="https://staticmap.openstreetmap.de" />
-      </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <a href="#main-content" className="skip-link">
-          Skip to content
-        </a>
-        {children}
-        {process.env.NODE_ENV !== 'production' && <ClsLogger />}
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <head>
+          <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
+          <link rel="preconnect" href="https://cdn.sanity.io" />
+          <link rel="dns-prefetch" href="https://staticmap.openstreetmap.de" />
+        </head>
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+          <a href="#main-content" className="skip-link">
+            Skip to content
+          </a>
+          {children}
+          {process.env.NODE_ENV !== 'production' && <ClsLogger />}
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

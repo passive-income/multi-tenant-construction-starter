@@ -2,17 +2,20 @@ import { createClient } from 'next-sanity';
 
 import { apiVersion, dataset, projectId } from '../env';
 
-export const getClient = (dataset: string, _useCdn = true) =>
+export const getClient = (dataset: string, useCdn = false) =>
   createClient({
     projectId,
     dataset,
     apiVersion,
-    useCdn: true, // Set to false if statically generating pages, using ISR or tag-based revalidation
+    useCdn,
+    // Use SANITY_TOKEN for reads, fallback to SANITY_API_WRITE_TOKEN for writes
+    token: process.env.SANITY_TOKEN || process.env.SANITY_API_WRITE_TOKEN,
   });
 
 export const client = createClient({
   projectId,
   dataset,
   apiVersion,
-  useCdn: true, // Set to false if statically generating pages, using ISR or tag-based revalidation
+  useCdn: true,
+  token: process.env.SANITY_TOKEN,
 });

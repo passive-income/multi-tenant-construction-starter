@@ -97,13 +97,13 @@ export function FooterMap({ clientId, address, href, className }: FooterMapProps
   }
 
   return (
-    <div style={{ minHeight: '200px' }} className={className}>
+    <div className={className}>
       <a
         href={href}
         target="_blank"
         rel="noreferrer noopener"
         className="block mb-2 relative mx-auto sm:mx-0"
-        style={{ display: 'block', width: '100%', maxWidth: '400px', height: '200px' }}
+        style={{ display: 'block', width: '100%', maxWidth: '400px' }}
       >
         <Image
           src={src as string}
@@ -111,9 +111,10 @@ export function FooterMap({ clientId, address, href, className }: FooterMapProps
           width={400}
           height={200}
           unoptimized
-          onLoadingComplete={() => setImgLoaded(true)}
+          onLoad={() => setImgLoaded(true)}
           onError={() => setImgError(true)}
-          className="w-full h-full object-cover rounded shadow-md"
+          style={{ width: '100%', height: 'auto' }}
+          className="h-full object-cover rounded shadow-md"
         />
         {(!imgLoaded || (isLoading && !generatedMapUrl)) && (
           <div className="absolute inset-0 bg-white/60 backdrop-blur-[1px] flex items-center justify-center rounded shadow-inner">

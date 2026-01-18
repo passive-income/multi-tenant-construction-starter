@@ -4,13 +4,39 @@
     "type": "json",
     "source": "static-mueller.json",
     "domain": "localhost:3000",
+    "clientId": "mueller",
     "theme": { "primaryColor": "#1E3A8A", "accentColor": "#F59E0B" }
   },
   {
-    "name": "Schmidt Construction",
+    "name": "Beta Builders AG",
     "type": "sanity",
-    "source": "schmidt-dataset",
-    "domain": "schmidtbau.de",
+    "source": "production",
+    "domain": "localhost:3010",
+    "clientId": "beta",
     "theme": { "primaryColor": "#059669", "accentColor": "#FBBF24" }
+  },
+  {
+    "name": "Alpha Client Gamma",
+    "type": "sanity",
+    "source": "production",
+    "domain": "alpha-client-gamma.vercel.app",
+    "clientId": "alpha",
+    "theme": { "primaryColor": "#7C3AED", "accentColor": "#EC4899" }
+  },
+  {
+    "name": "Beta Local",
+    "type": "sanity",
+    "source": "production",
+    "domain": "beta.local",
+    "clientId": "beta",
+    "theme": { "primaryColor": "#059669", "accentColor": "#FBBF24" }
+  },
+  {
+    "name": "Development",
+    "type": "sanity",
+    "source": "production",
+    "domain": "localhost:3002",
+    "clientId": "mueller",
+    "theme": { "primaryColor": "#1E3A8A", "accentColor": "#F59E0B" }
   }
 ]

@@ -1,15 +1,18 @@
-import { type NextRequest, NextResponse } from 'next/server';
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 
-export function proxy(req: NextRequest) {
-  const host = req.headers.get('host') || '';
+// Protect dashboard routes
+const isProtectedRoute = createRouteMatcher(['/dashboard(.*)']);
 
-  const res = NextResponse.next();
+export default clerkMiddleware((auth, req) => {
+  // Protect dashboard routes
+  if (isProtectedRoute(req)) {
+    auth.protect();
+  }
+});
 
-  // Persist the host so server-side code can resolve the tenant from Sanity
-  // without relying on an in-repo static clients list.
-  if (host) res.cookies.set('clientHost', host);
-
-  return res;
-}
-
-export const config = { matcher: ['/:path*'] };
+export const config = {
+  matcher: [
+    '/((?!_next|[^?]*.(?:html?|css|js(?!on)|jpe?g|webp|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    '/(api|trpc)(.*)',
+  ],
+};

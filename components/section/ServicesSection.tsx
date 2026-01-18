@@ -26,10 +26,7 @@ export default function ServicesSection({
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {services.map((s: any, idx: number) => (
-            <Card
-              key={s.slug || s._id || `service-${idx}`}
-              className="hover:shadow-lg transition-shadow"
-            >
+            <Card key={idx} className="hover:shadow-lg transition-shadow">
               <CardHeader>
                 <CardTitle className="text-lg">{s.title}</CardTitle>
               </CardHeader>

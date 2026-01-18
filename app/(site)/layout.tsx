@@ -2,28 +2,28 @@ import { AnalyticsWrapper } from '@/components/AnalyticsWrapper';
 import Footer from '@/components/footer/Footer';
 import { Header } from '@/components/Header';
 import { ScrollRestoration } from '@/components/ScrollRestoration';
-import { getJsonData } from '@/lib/data/json';
+import { getSiteData } from '@/lib/data/streaming';
 import type { SiteData } from '@/lib/types/site';
 import { getHost } from '@/lib/utils/host';
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
-  // Resolve tenant via Sanity first; fall back to static JSON file
+  // Resolve tenant via Sanity first
   let data: SiteData | null = null;
   const host = await getHost();
-  try {
-    const { getSanityData } = await import('@/lib/data/sanity');
-    data = await getSanityData(process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production', host);
-    console.log(`[Layout] Loaded data from Sanity for host: ${host}`, {
-      hasFooter: !!data?.footer,
-      footerLinks: data?.footer?.links?.length || 0,
-    });
-  } catch (e) {
-    console.log(`[Layout] Failed to load from Sanity, falling back to JSON:`, e);
-    data = null;
+
+  if (host) {
+    data = await getSiteData(host);
   }
+
   if (!data) {
-    data = await getJsonData('static-mueller.json');
-    console.log(`[Layout] Loaded data from static JSON`);
+    return (
+      <main className="min-h-screen flex flex-col" id="main-content">
+        <ScrollRestoration />
+        <AnalyticsWrapper />
+        <Header />
+        <div className="flex-1 relative z-0">{children}</div>
+      </main>
+    );
   }
 
   return (
@@ -32,7 +32,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       <AnalyticsWrapper />
       <Header />
       <div className="flex-1 relative z-0">{children}</div>
-      <Footer clientId={data.clientId} footer={data.footer} />
+      {data.footer && <Footer clientId={data.clientId} footer={data.footer} />}
     </main>
   );
 }

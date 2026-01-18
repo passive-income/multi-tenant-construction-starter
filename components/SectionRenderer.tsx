@@ -55,8 +55,10 @@ export async function SectionRenderer({
     <>
       {filteredSections.map((section, index) => {
         if (!section._type) return null;
+        // Ensure sectionKey is always a string, not an object
+        const rawKey = (section as any)._key || (section as any)._id;
         const sectionKey =
-          (section as any)._key || (section as any)._id || `section-${section._type}-${index}`;
+          typeof rawKey === 'string' ? rawKey : `section-${section._type}-${index}`;
 
         switch (section._type) {
           case 'imageSliderSection':
@@ -184,7 +186,7 @@ export async function SectionRenderer({
             }
 
             return (
-              <AnimatedSection key={index} className="py-16 bg-white">
+              <AnimatedSection key={sectionKey} className="py-16 bg-white">
                 <div className="container">
                   <div className="text-center mb-12">
                     <h2 className="text-3xl md:text-4xl font-bold mb-4">{section.title}</h2>
@@ -218,7 +220,7 @@ export async function SectionRenderer({
           case 'ctaSection':
             return (
               <AnimatedSection
-                key={index}
+                key={sectionKey}
                 className={`py-16 ${section.backgroundColor || 'bg-primary'} ${section.textColor || 'text-primary-foreground'}`}
               >
                 <div className="container text-center">

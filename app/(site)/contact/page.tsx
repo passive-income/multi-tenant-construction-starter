@@ -1,4 +1,6 @@
 import { Clock, Mail, MapPin, Phone } from 'lucide-react';
+import { unstable_cache } from 'next/cache';
+import { cache } from 'react';
 import { ContactForm } from '@/components/contact/ContactForm';
 import { ServerContactForm } from '@/components/contact/ServerContactForm';
 import { FooterMap } from '@/components/footer/FooterMap';
@@ -9,6 +11,63 @@ import { getHost } from '@/lib/utils/host';
 import { getClient } from '@/sanity/lib/client';
 import { contactSettingsQuery } from '@/sanity/queries';
 
+/**
+ * Cached contact settings fetcher
+ */
+const getCachedContactSettings = cache((host: string) => {
+  return unstable_cache(
+    async () => {
+      const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production';
+      const client = getClient(dataset);
+
+      // Resolve client by host (fallback to default clientId env)
+      let clientId: string | undefined = process.env.NEXT_PUBLIC_DEFAULT_CLIENT_ID;
+      if (host) {
+        const clientDoc = await client.fetch('*[_type == "client" && $host in domains][0]', {
+          host,
+        });
+        // If client explicitly uses a static JSON data source, load contact settings from that file
+        const ds = clientDoc?.dataSource || clientDoc?.type || null;
+        if (ds === 'json' || ds === 'static') {
+          const staticFile = clientDoc?.staticFileName || 'static-mueller.json';
+          try {
+            const json = await getJsonData(staticFile);
+            // json.contactSettings is expected to exist in the static file
+            const cs = (json as any)?.contactSettings;
+            if (cs) {
+              return cs as ContactSettings;
+            }
+          } catch (_err) {
+            // ignore and fall back to Sanity below
+          }
+        }
+        clientId = clientDoc?.clientId ?? clientId;
+      }
+
+      // If not provided by static JSON, try Sanity queries
+      try {
+        if (clientId) {
+          const settings = await client.fetch(contactSettingsQuery, { clientId: clientId ?? null });
+          if (settings) return settings;
+        } else {
+          const settings = await client.fetch(`*[_type == "contactSettings"][0]`);
+          if (settings) return settings;
+        }
+      } catch (_e) {
+        // ignore and fall back
+      }
+
+      return null;
+    },
+    [`contact-settings-${host}`],
+    {
+      revalidate: 300,
+      // Global + per-host tags so webhook can invalidate immediately
+      tags: ['all-sites', `site-${host}`],
+    },
+  )();
+});
+
 export default async function ContactPage({
   searchParams,
 }: {
@@ -16,50 +75,19 @@ export default async function ContactPage({
 }) {
   const params = await searchParams;
   const host = await getHost();
-  const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production';
-  const client = getClient(dataset);
-
-  let settings: ContactSettings | null = null;
-
-  // Resolve client by host (fallback to default clientId env)
   let clientId: string | undefined = process.env.NEXT_PUBLIC_DEFAULT_CLIENT_ID;
+
   if (host) {
+    const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production';
+    const client = getClient(dataset);
     const clientDoc = await client.fetch('*[_type == "client" && $host in domains][0]', { host });
-    // If client explicitly uses a static JSON data source, load contact settings from that file
-    const ds = clientDoc?.dataSource || clientDoc?.type || null;
-    if (ds === 'json' || ds === 'static') {
-      const staticFile = clientDoc?.staticFileName || 'static-mueller.json';
-      try {
-        const json = await getJsonData(staticFile);
-        // json.contactSettings is expected to exist in the static file
-        const cs = (json as any)?.contactSettings;
-        if (cs) {
-          // Use the static settings directly and skip Sanity
-          // Normalize shape to ContactSettings
-          // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-          settings = cs as ContactSettings;
-        }
-      } catch (_err) {
-        // ignore and fall back to Sanity below
-      }
-    }
     clientId = clientDoc?.clientId ?? clientId;
   }
 
-  // If settings not provided by static JSON, try Sanity queries (guard clientId)
-  if (!settings) {
-    try {
-      // Always provide the `clientId` param (use null if undefined) to avoid
-      // GROQ parse errors when the param is referenced in the query.
-      if (clientId) {
-        settings = await client.fetch(contactSettingsQuery, { clientId: clientId ?? null });
-      } else {
-        // If no clientId we still call the param-free fallback query
-        settings = await client.fetch(`*[_type == "contactSettings"][0]`);
-      }
-    } catch (_e) {
-      settings = null;
-    }
+  // Try cached Sanity/JSON fetch first
+  let settings: ContactSettings | null = null;
+  if (host) {
+    settings = await getCachedContactSettings(host);
   }
 
   // Final fallback: load static JSON unconditionally if still missing

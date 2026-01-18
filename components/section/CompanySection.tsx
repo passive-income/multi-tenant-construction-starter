@@ -29,11 +29,23 @@ export default function CompanySection({ company, companySections }: CompanySect
             {companySections.map((section: any, index: number) => (
               <Card key={index}>
                 <CardHeader>
-                  <CardTitle>{section.title}</CardTitle>
-                  <CardDescription>{section.subtitle}</CardDescription>
+                  <CardTitle>
+                    {typeof section.title === 'string'
+                      ? section.title
+                      : section.title?.text || 'Untitled'}
+                  </CardTitle>
+                  <CardDescription>
+                    {typeof section.subtitle === 'string'
+                      ? section.subtitle
+                      : section.subtitle?.text || ''}
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm">{section.description}</p>
+                  <p className="text-sm">
+                    {typeof section.description === 'string'
+                      ? section.description
+                      : section.description?.text || ''}
+                  </p>
                 </CardContent>
               </Card>
             ))}

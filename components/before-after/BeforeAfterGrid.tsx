@@ -1,7 +1,7 @@
 'use client';
 
 import type React from 'react';
-import { BeforeAfterSlider } from '@/components/before-after/BeforeAfterSlider';
+import { BeforeAfterSliderWrapper } from '@/components/before-after/BeforeAfterSliderWrapper';
 
 export interface BeforeAfterItem {
   beforeSrc: string;
@@ -54,7 +54,7 @@ export default function BeforeAfterGrid({
               ) : null}
             </div>
           )}
-          <BeforeAfterSlider
+          <BeforeAfterSliderWrapper
             beforeSrc={it.beforeSrc}
             afterSrc={it.afterSrc}
             beforeLabel={it.beforeLabel}

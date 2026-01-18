@@ -24,8 +24,21 @@ import { getClient } from '@/sanity/lib/client';
  */
 export const getClientByHost = cache(async (host: string, dataset: string) => {
   const client = getClient(dataset);
-  const clientDoc = await client.fetch('*[_type == "client" && $host in domains][0]', { host });
-  return clientDoc?.clientId || null;
+  console.log(`[getClientByHost] Querying for host: "${host}"`);
+
+  // Debug: fetch all clients to see what's available
+  const allClients = await client.fetch(
+    '*[_type == "client"]{ _id, clientId, domains, dataSource }',
+  );
+  console.log(`[getClientByHost] All clients in Sanity:`, JSON.stringify(allClients, null, 2));
+
+  const clientDoc = await client.fetch(
+    '*[_type == "client" && $host in domains][0]{ clientId, domains, dataSource }',
+    { host },
+  );
+  console.log(`[getClientByHost] Query result for host "${host}":`, clientDoc);
+
+  return clientDoc;
 });
 
 /**
@@ -38,23 +51,42 @@ export const getSiteData = cache(async (host: string): Promise<SiteData> => {
     async () => {
       const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production';
 
+      console.log(`[getSiteData] Loading data for host: ${host}`);
+
       try {
-        const clientId = await getClientByHost(host, dataset);
-        if (clientId) {
-          const data = await getSanityData(dataset, host);
-          if (data) return data;
+        const clientDoc = await getClientByHost(host, dataset);
+
+        if (!clientDoc) {
+          console.log(`[getSiteData] No client found for host: ${host}`);
+          return null as any;
         }
+
+        const { clientId, dataSource } = clientDoc;
+        console.log(`[getSiteData] Resolved clientId: ${clientId}, dataSource: ${dataSource}`);
+
+        // If dataSource is "static", use static JSON file
+        if (dataSource === 'static') {
+          console.log(`[getSiteData] Client ${clientId} is static, loading from JSON`);
+          return await getJsonData(`static-${clientId}.json`);
+        }
+
+        // Otherwise fetch from Sanity
+        const data = await getSanityData(dataset, host);
+        console.log(`[getSiteData] Loaded data from Sanity for clientId: ${clientId}`);
+        if (data) return data;
       } catch (error) {
-        console.error('[getSiteData] Sanity fetch failed:', error);
+        console.error('[getSiteData] Error:', error);
       }
 
-      // Fallback to static JSON
-      return await getJsonData('static-mueller.json');
+      // No data available
+      console.log(`[getSiteData] No data available for host: ${host}`);
+      return null as any;
     },
     [`site-data-${host}`],
     {
       revalidate: 300, // 5 minutes
-      tags: [`site-${host}`],
+      // Include global tag so Sanity webhook can invalidate all tenants
+      tags: [`site-${host}`, 'all-sites'],
     },
   )();
 });

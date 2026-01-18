@@ -672,7 +672,7 @@
     "_type": "client",
     "clientId": "alpha",
     "name": "Alpha Construction",
-    "domains": ["localhost:3010", "alpha.local"],
+    "domains": ["alpha.local", "alpha-client-gamma.vercel.app"],
     "dataSource": "sanity",
     "companyRef": { "_ref": "company-alpha", "_type": "reference" },
     "footerRef": { "_ref": "footer-alpha", "_type": "reference" }
@@ -682,7 +682,7 @@
     "_type": "client",
     "clientId": "beta",
     "name": "Beta Builders",
-    "domains": ["beta.local", "localhost:3001"],
+    "domains": ["beta.local", "localhost:3010"],
     "dataSource": "sanity",
     "companyRef": { "_ref": "company-beta", "_type": "reference" },
     "footerRef": { "_ref": "footer-beta", "_type": "reference" }

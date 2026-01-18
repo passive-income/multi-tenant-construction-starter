@@ -2,6 +2,7 @@ import beforeAfter from './beforeAfter';
 import certification from './certification';
 import client from './client';
 import company from './company';
+// import complianceRequest from './complianceRequest';
 import contactSettings from './contactSettings';
 import faq from './faq';
 import footer from './footer';
@@ -39,6 +40,7 @@ export const schema = {
     contactSettings,
     teamMember,
     certification,
+    // complianceRequest,
     // Section types
     heroSection,
     servicesSection,

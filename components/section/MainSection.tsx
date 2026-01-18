@@ -99,10 +99,18 @@ export function MainSection({ data }: MainSectionProps) {
               {data.specialServices.map((service: any, index: number) => (
                 <Card key={index}>
                   <CardHeader>
-                    <CardTitle>{service.title}</CardTitle>
+                    <CardTitle>
+                      {typeof service.title === 'string'
+                        ? service.title
+                        : service.title?.text || 'Untitled'}
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="mb-4">{service.description}</p>
+                    <p className="mb-4">
+                      {typeof service.description === 'string'
+                        ? service.description
+                        : service.description?.text || ''}
+                    </p>
                     {service.features && service.features.length > 0 && (
                       <ul className="list-disc list-inside space-y-2 text-sm text-muted-foreground mb-4">
                         {service.features.map((feature: string, idx: number) => (
