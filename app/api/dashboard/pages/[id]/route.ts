@@ -54,8 +54,6 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     validateTenantAccess(clientId, existingPage.clientId);
 
     function sanitizeRequestBody(input: any) {
-      const _allowedFields = ['pageType', 'title', 'slug', 'description', 'image', 'sections'];
-
       const sanitized: Record<string, any> = {};
 
       // Basic validations per field
@@ -129,7 +127,7 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     // Update page (only after host is authorized)
     const updated = await client.patch(id).set(sanitizedBody).commit();
 
-    revalidateTag(`site-${host}`);
+    await revalidateTag(`site-${host}`, {});
 
     return NextResponse.json({ success: true, data: updated });
   } catch (error: any) {
@@ -183,7 +181,7 @@ export async function DELETE(
     // Delete page (only after host is authorized)
     await client.delete(id);
 
-    revalidateTag(`site-${host}`);
+    await revalidateTag(`site-${host}`, {});
 
     return NextResponse.json({ success: true });
   } catch (error: any) {

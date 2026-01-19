@@ -88,7 +88,7 @@ export async function POST(request: NextRequest) {
       try {
         // Call revalidateTag with the single supported string tag.
         // (Only a single string argument is supported by this runtime API.)
-        revalidateTag(tag);
+        await revalidateTag(tag, {});
         revalidatedTags.add(tag);
         console.log(`[Revalidate] Cleared cache tag: ${tag}`);
       } catch (error) {

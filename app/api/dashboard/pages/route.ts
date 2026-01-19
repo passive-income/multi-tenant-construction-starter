@@ -87,7 +87,7 @@ export async function POST(request: NextRequest) {
       seo: body.seo || {},
       _createdAt: new Date().toISOString(),
     });
-    revalidateTag(`site-${host}`);
+    await revalidateTag(`site-${host}`, {});
 
     return NextResponse.json({ success: true, data: newPage }, { status: 201 });
   } catch (error) {

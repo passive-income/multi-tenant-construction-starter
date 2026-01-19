@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
     const revalidated = new Set<string>();
     for (const tag of tags) {
       try {
-        await revalidateTag(tag);
+        await revalidateTag(tag, {});
         revalidated.add(tag);
       } catch (_err) {
         // continue
