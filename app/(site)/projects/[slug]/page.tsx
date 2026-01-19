@@ -1,4 +1,6 @@
+import { unstable_cache } from 'next/cache';
 import Image from 'next/image';
+import { cache } from 'react';
 import { getHost } from '@/lib/utils/host';
 import { normalizeImageSrc } from '@/lib/utils/image';
 import { getClient } from '@/sanity/lib/client';
@@ -6,21 +8,50 @@ import { getClient } from '@/sanity/lib/client';
 // Cache for 10 minutes, revalidate in background
 export const revalidate = 600;
 
+/**
+ * Cached project fetcher from Sanity
+ */
+const getCachedProject = cache((host: string, slug: string) => {
+  return unstable_cache(
+    async () => {
+      try {
+        const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production';
+        const client = getClient(dataset);
+        const clientDoc = await client.fetch('*[_type == "client" && $host in domains][0]', {
+          host,
+        });
+        const clientId = clientDoc?.clientId;
+
+        if (clientId) {
+          const project = await client.fetch(
+            '*[_type == "project" && slug.current == $slug && clientId == $clientId][0]',
+            { slug, clientId },
+          );
+          return project || null;
+        }
+      } catch (err) {
+        console.error('Error loading Sanity project for slug', { host, slug, err });
+        // Fallback
+      }
+      return null;
+    },
+    [`project-${host}-${slug}`],
+    {
+      revalidate: 600,
+      // Global + per-host tags so webhook can invalidate immediately
+      tags: ['all-sites', `site-${host}`],
+    },
+  )();
+});
+
 export default async function ProjectDetail({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const host = await getHost();
 
-  const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production';
-  const client = getClient(dataset);
-
-  // Find client doc by host to scope by clientId
-  const clientDoc = await client.fetch('*[_type == "client" && $host in domains][0]', { host });
-  const clientId = clientDoc?.clientId;
-
-  const project = await client.fetch(
-    '*[_type == "project" && slug.current == $slug && clientId == $clientId][0]',
-    { slug, clientId },
-  );
+  let project = null;
+  if (host) {
+    project = await getCachedProject(host, slug);
+  }
 
   if (!project) {
     return (

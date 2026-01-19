@@ -1,34 +1,23 @@
-import { Suspense } from 'react';
-import { ProjectsLoading } from '@/components/loading/ProjectsLoading';
 import { ProjectGallery } from '@/components/ProjectGallery';
-import { getJsonData } from '@/lib/data/json';
-import { getSanityData } from '@/lib/data/sanity';
-import type { SiteData } from '@/lib/types/site';
+import { getSiteData } from '@/lib/data/streaming';
 import { getHost } from '@/lib/utils/host';
 
-async function ProjectsContent() {
-  let data: SiteData | null = null;
+// Cache for 5 minutes with stale-while-revalidate
+export const revalidate = 300;
+
+export default async function ProjectsPage() {
   const host = await getHost();
-  try {
-    data = await getSanityData(process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production', host);
-  } catch (_e) {
-    data = null;
+  if (!host) {
+    return <div>Host not found</div>;
   }
+  const data = await getSiteData(host);
   if (!data) {
-    data = await getJsonData('static-mueller.json');
+    return <div>No data found</div>;
   }
   return (
     <section className="container py-16">
       <h2 className="text-3xl mb-8 text-center">Projects</h2>
       <ProjectGallery images={((data.projects || []).map((p: any) => p.images) as any[]).flat()} />
     </section>
-  );
-}
-
-export default function ProjectsPage() {
-  return (
-    <Suspense fallback={<ProjectsLoading />}>
-      <ProjectsContent />
-    </Suspense>
   );
 }

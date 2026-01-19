@@ -194,7 +194,7 @@ export default function Footer({ clientId, footer }: FooterProps) {
 
       <div className="bg-muted/50 border-t border-gray-300">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between text-sm text-center text-gray-700">
-          <div className="hidden sm:block">© {year} Müller Bau</div>
+          <div className="hidden sm:block">{footerData.copyright || `© ${year} Müller Bau`}</div>
           <div className="flex items-center gap-4 mx-auto sm:mx-0">
             {footerData.links?.map((link, idx) => {
               const href =

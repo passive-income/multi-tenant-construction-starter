@@ -1,22 +1,19 @@
 import Image from 'next/image';
-import { Suspense } from 'react';
-import { ServicesLoading } from '@/components/loading/ServicesLoading';
-import { getJsonData } from '@/lib/data/json';
-import { getSanityData } from '@/lib/data/sanity';
-import type { SiteData } from '@/lib/types/site';
+import { getSiteData } from '@/lib/data/streaming';
 import { getHost } from '@/lib/utils/host';
 
-async function CompanyContent() {
+// Cache for 5 minutes with stale-while-revalidate
+export const revalidate = 300;
+
+export default async function CompanyPage() {
   // Resolve tenant via Sanity first; fall back to static JSON file
-  let data: SiteData | null = null;
   const host = await getHost();
-  try {
-    data = await getSanityData(process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production', host);
-  } catch (_e) {
-    data = null;
+  if (!host) {
+    return <div>Host not found</div>;
   }
+  const data = await getSiteData(host);
   if (!data) {
-    data = await getJsonData('static-mueller.json');
+    return <div>No data found</div>;
   }
   return (
     <section className="container py-16 bg-gray-50">
@@ -43,13 +40,5 @@ async function CompanyContent() {
         ))}
       </div>
     </section>
-  );
-}
-
-export default function CompanyPage() {
-  return (
-    <Suspense fallback={<ServicesLoading />}>
-      <CompanyContent />
-    </Suspense>
   );
 }

@@ -24,8 +24,13 @@ import { getClient } from '@/sanity/lib/client';
  */
 export const getClientByHost = cache(async (host: string, dataset: string) => {
   const client = getClient(dataset);
-  const clientDoc = await client.fetch('*[_type == "client" && $host in domains][0]', { host });
-  return clientDoc?.clientId || null;
+  // Query only the matching client to avoid heavy production load
+  const clientDoc = await client.fetch(
+    '*[_type == "client" && $host in domains][0]{ clientId, domains, dataSource }',
+    { host },
+  );
+
+  return clientDoc;
 });
 
 /**
@@ -33,28 +38,41 @@ export const getClientByHost = cache(async (host: string, dataset: string) => {
  * Optimized for streaming with proper error boundaries and caching
  * Cached for 5 minutes with stale-while-revalidate
  */
-export const getSiteData = cache(async (host: string): Promise<SiteData> => {
+export const getSiteData = cache(async (host: string): Promise<SiteData | null> => {
   return unstable_cache(
     async () => {
       const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production';
-
       try {
-        const clientId = await getClientByHost(host, dataset);
-        if (clientId) {
-          const data = await getSanityData(dataset, host);
-          if (data) return data;
+        const clientDoc = await getClientByHost(host, dataset);
+
+        if (!clientDoc) {
+          return null;
         }
+
+        const { clientId, dataSource } = clientDoc;
+
+        // If dataSource is "static", use static JSON file
+        if (dataSource === 'static') {
+          console.log(`[getSiteData] Client ${clientId} is static, loading from JSON`);
+          return await getJsonData(`static-${clientId}.json`);
+        }
+
+        // Otherwise fetch from Sanity
+        const data = await getSanityData(dataset, host);
+        console.log(`[getSiteData] Loaded data from Sanity for clientId: ${clientId}`);
+        if (data) return data;
       } catch (error) {
-        console.error('[getSiteData] Sanity fetch failed:', error);
+        console.error('[getSiteData] Error:', error);
       }
 
-      // Fallback to static JSON
-      return await getJsonData('static-mueller.json');
+      // No data available
+      return null;
     },
     [`site-data-${host}`],
     {
       revalidate: 300, // 5 minutes
-      tags: [`site-${host}`],
+      // Include global tag so Sanity webhook can invalidate all tenants
+      tags: [`site-${host}`, 'all-sites'],
     },
   )();
 });
@@ -64,7 +82,7 @@ export const getSiteData = cache(async (host: string): Promise<SiteData> => {
  */
 export const getServices = cache(async (host: string) => {
   const data = await getSiteData(host);
-  return data.services || [];
+  return data?.services ?? [];
 });
 
 /**
@@ -72,7 +90,7 @@ export const getServices = cache(async (host: string) => {
  */
 export const getProjects = cache(async (host: string) => {
   const data = await getSiteData(host);
-  return data.projects || [];
+  return data?.projects ?? [];
 });
 
 /**
@@ -80,7 +98,7 @@ export const getProjects = cache(async (host: string) => {
  */
 export const getCompanyDetails = cache(async (host: string) => {
   const data = await getSiteData(host);
-  return data.companyDetails || [];
+  return data?.companyDetails ?? [];
 });
 
 /**
@@ -88,7 +106,7 @@ export const getCompanyDetails = cache(async (host: string) => {
  */
 export const getMenuItems = cache(async (host: string) => {
   const data = await getSiteData(host);
-  return data.menuItems || [];
+  return data?.menuItems ?? [];
 });
 
 /**

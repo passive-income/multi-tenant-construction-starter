@@ -117,7 +117,7 @@ export function BeforeAfterSlider({
           src={afterSrc}
           alt={afterLabel}
           fill
-          sizes="100vw"
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 90vw, 80vw"
           className="absolute inset-0 h-full w-full object-cover"
           priority={false}
           quality={70}
@@ -133,7 +133,7 @@ export function BeforeAfterSlider({
             src={beforeSrc}
             alt={beforeLabel}
             fill
-            sizes="100vw"
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 90vw, 80vw"
             className="absolute inset-0 h-full w-full object-cover"
             priority={false}
             quality={70}
