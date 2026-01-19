@@ -18,9 +18,9 @@ This app uses **Sanity Webhooks** to trigger instant cache revalidation when con
 First, create a secure random string for webhook authentication:
 
 ```bash
-# Generate a strong secret
-openssl rand -hex 32
-# Example output: a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6a7b8c9d0e1f
+# Generate a strong secret (example placeholder shown)
+# openssl rand -hex 32
+# Example output: YOUR_WEBHOOK_SECRET_HERE
 ```
 
 ### 2. Add Environment Variable
@@ -28,7 +28,7 @@ openssl rand -hex 32
 Add the secret to your `.env.local` file:
 
 ```env
-SANITY_WEBHOOK_SECRET=a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6a7b8c9d0e1f
+SANITY_WEBHOOK_SECRET=YOUR_WEBHOOK_SECRET_HERE
 ```
 
 ### 3. Deploy Your App
@@ -58,13 +58,12 @@ https://your-domain.com/api/revalidate
    
    **Include previous version**: ❌ No
    
-   **Secret**: `a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6a7b8c9d0e1f`
-   (same as `SANITY_WEBHOOK_SECRET`)
-   
+   **Secret**: `YOUR_WEBHOOK_SECRET_HERE` (same as `SANITY_WEBHOOK_SECRET`)
+
    **HTTP Headers** (optional, for extra security):
    ```json
    {
-     "x-sanity-webhook-secret": "your-secret-here"
+     "sanity-webhook-secret": "YOUR_WEBHOOK_SECRET_HERE"
    }
    ```
 

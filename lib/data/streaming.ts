@@ -24,19 +24,11 @@ import { getClient } from '@/sanity/lib/client';
  */
 export const getClientByHost = cache(async (host: string, dataset: string) => {
   const client = getClient(dataset);
-  console.log(`[getClientByHost] Querying for host: "${host}"`);
-
-  // Debug: fetch all clients to see what's available
-  const allClients = await client.fetch(
-    '*[_type == "client"]{ _id, clientId, domains, dataSource }',
-  );
-  console.log(`[getClientByHost] All clients in Sanity:`, JSON.stringify(allClients, null, 2));
-
+  // Query only the matching client to avoid heavy production load
   const clientDoc = await client.fetch(
     '*[_type == "client" && $host in domains][0]{ clientId, domains, dataSource }',
     { host },
   );
-  console.log(`[getClientByHost] Query result for host "${host}":`, clientDoc);
 
   return clientDoc;
 });
@@ -46,23 +38,18 @@ export const getClientByHost = cache(async (host: string, dataset: string) => {
  * Optimized for streaming with proper error boundaries and caching
  * Cached for 5 minutes with stale-while-revalidate
  */
-export const getSiteData = cache(async (host: string): Promise<SiteData> => {
+export const getSiteData = cache(async (host: string): Promise<SiteData | null> => {
   return unstable_cache(
     async () => {
       const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production';
-
-      console.log(`[getSiteData] Loading data for host: ${host}`);
-
       try {
         const clientDoc = await getClientByHost(host, dataset);
 
         if (!clientDoc) {
-          console.log(`[getSiteData] No client found for host: ${host}`);
-          return null as any;
+          return null;
         }
 
         const { clientId, dataSource } = clientDoc;
-        console.log(`[getSiteData] Resolved clientId: ${clientId}, dataSource: ${dataSource}`);
 
         // If dataSource is "static", use static JSON file
         if (dataSource === 'static') {
@@ -79,8 +66,7 @@ export const getSiteData = cache(async (host: string): Promise<SiteData> => {
       }
 
       // No data available
-      console.log(`[getSiteData] No data available for host: ${host}`);
-      return null as any;
+      return null;
     },
     [`site-data-${host}`],
     {
@@ -96,7 +82,7 @@ export const getSiteData = cache(async (host: string): Promise<SiteData> => {
  */
 export const getServices = cache(async (host: string) => {
   const data = await getSiteData(host);
-  return data.services || [];
+  return data?.services ?? [];
 });
 
 /**
@@ -104,7 +90,7 @@ export const getServices = cache(async (host: string) => {
  */
 export const getProjects = cache(async (host: string) => {
   const data = await getSiteData(host);
-  return data.projects || [];
+  return data?.projects ?? [];
 });
 
 /**
@@ -112,7 +98,7 @@ export const getProjects = cache(async (host: string) => {
  */
 export const getCompanyDetails = cache(async (host: string) => {
   const data = await getSiteData(host);
-  return data.companyDetails || [];
+  return data?.companyDetails ?? [];
 });
 
 /**
@@ -120,7 +106,7 @@ export const getCompanyDetails = cache(async (host: string) => {
  */
 export const getMenuItems = cache(async (host: string) => {
   const data = await getSiteData(host);
-  return data.menuItems || [];
+  return data?.menuItems ?? [];
 });
 
 /**

@@ -10,19 +10,16 @@ export function CacheClearButton() {
     setLoading(true);
     setMessage(null);
     try {
-      const response = await fetch('/api/revalidate/tenant', {
+      // Call the server-side revalidation route which uses the server secret
+      const response = await fetch('/api/revalidate/tenant/server', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-dashboard-secret': process.env.NEXT_PUBLIC_DASHBOARD_API_SECRET || '',
-        },
-        body: JSON.stringify({ host: window.location.hostname }),
       });
 
-      if (response.ok) {
+      const json = await response.json().catch(() => null);
+      if (response.ok && json?.success) {
         setMessage('Cache cleared successfully');
       } else {
-        setMessage('Failed to clear cache');
+        setMessage(json?.error || 'Failed to clear cache');
       }
     } catch (_error) {
       setMessage('Error clearing cache');

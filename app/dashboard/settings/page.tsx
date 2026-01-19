@@ -1,6 +1,8 @@
+import { headers } from 'next/headers';
 import { CacheClearButton } from '@/components/dashboard/CacheClearButton';
 
-export default function SettingsPage() {
+export default async function SettingsPage() {
+  const host = (await headers()).get('host') || 'Loading...';
   return (
     <div className="p-8 max-w-2xl">
       <h1 className="text-3xl font-bold text-gray-900 mb-8">Settings</h1>
@@ -11,9 +13,7 @@ export default function SettingsPage() {
         <dl className="space-y-4">
           <div>
             <dt className="text-sm font-medium text-gray-500">Domain</dt>
-            <dd className="mt-1 text-lg text-gray-900">
-              {typeof window !== 'undefined' ? window.location.hostname : 'Loading...'}
-            </dd>
+            <dd className="mt-1 text-lg text-gray-900">{host.split(':')[0]}</dd>
           </div>
         </dl>
       </div>

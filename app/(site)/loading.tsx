@@ -1,3 +1,5 @@
+import { HeroSectionsLoading } from '@/components/loading/HeroSectionsLoading';
+
 export default function Loading() {
-  return null;
+  return <HeroSectionsLoading />;
 }

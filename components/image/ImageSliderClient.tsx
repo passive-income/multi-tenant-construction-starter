@@ -24,7 +24,7 @@ export function ImageSliderClient({ slides, headerHeight }: ImageSliderClientPro
   const [api, setApi] = React.useState<any>();
   const [current, setCurrent] = React.useState(0);
   const [carouselMod, setCarouselMod] = React.useState<any>(null);
-  const plugin = React.useRef<any>(null);
+  const [plugin, setPlugin] = React.useState<any>(null);
 
   // Load carousel module
   React.useEffect(() => {
@@ -38,21 +38,32 @@ export function ImageSliderClient({ slides, headerHeight }: ImageSliderClientPro
     })();
   }, []);
 
-  // Load autoplay plugin
+  // Load autoplay plugin and set into state so Carousel re-renders with it
   React.useEffect(() => {
     if (!carouselMod) return;
+    let mounted = true;
     const timeoutId = setTimeout(() => {
       (async () => {
         try {
           const mod = await import('embla-carousel-autoplay');
           const Autoplay = mod?.default ?? mod;
-          plugin.current = Autoplay({ delay: 5000, stopOnInteraction: true });
+          const instance = Autoplay({ delay: 5000, stopOnInteraction: true });
+          if (mounted) setPlugin(instance);
         } catch (_e) {
           // ignore
         }
       })();
     }, 500);
-    return () => clearTimeout(timeoutId);
+    return () => {
+      mounted = false;
+      clearTimeout(timeoutId);
+      try {
+        setPlugin((p: any) => {
+          p?.stop?.();
+          return null;
+        });
+      } catch {}
+    };
   }, [carouselMod]);
 
   React.useEffect(() => {
@@ -71,7 +82,7 @@ export function ImageSliderClient({ slides, headerHeight }: ImageSliderClientPro
     <>
       <Carousel
         setApi={setApi}
-        plugins={plugin.current ? [plugin.current] : []}
+        plugins={plugin ? [plugin] : []}
         className="w-full h-full"
         opts={{
           align: 'start',
@@ -152,12 +163,12 @@ export function ImageSliderClient({ slides, headerHeight }: ImageSliderClientPro
           className="left-4 md:left-8 lg:left-12 size-10 md:size-12 cursor-pointer"
           onMouseEnter={() => {
             try {
-              plugin.current?.stop?.();
+              plugin?.stop?.();
             } catch {}
           }}
           onMouseLeave={() => {
             try {
-              plugin.current?.play?.();
+              plugin?.play?.();
             } catch {}
           }}
         />
@@ -165,12 +176,12 @@ export function ImageSliderClient({ slides, headerHeight }: ImageSliderClientPro
           className="right-4 md:right-8 lg:right-12 size-10 md:size-12 cursor-pointer"
           onMouseEnter={() => {
             try {
-              plugin.current?.stop?.();
+              plugin?.stop?.();
             } catch {}
           }}
           onMouseLeave={() => {
             try {
-              plugin.current?.play?.();
+              plugin?.play?.();
             } catch {}
           }}
         />

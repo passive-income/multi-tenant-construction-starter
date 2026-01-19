@@ -52,9 +52,25 @@ export async function POST(request: NextRequest) {
       _createdAt: new Date().toISOString(),
     });
 
-    // Revalidate the site cache
+    // Revalidate the site cache — validate host against tenant domains first
     const headersList = await headers();
-    const host = headersList.get('x-forwarded-host') || headersList.get('host') || '';
+    const rawHost = headersList.get('x-forwarded-host') || headersList.get('host') || '';
+    const host = String(rawHost).split(':')[0].toLowerCase();
+
+    // fetch authorized domains for tenant
+    const tenantDoc = await client.fetch(
+      '*[_type == "client" && clientId == $clientId][0]{ domains }',
+      { clientId },
+    );
+    const domains = tenantDoc?.domains || [];
+    const normalizedDomains = Array.isArray(domains)
+      ? domains.map((d: string) => String(d).toLowerCase())
+      : [];
+
+    if (!normalizedDomains.includes(host)) {
+      return NextResponse.json({ error: 'Unauthorized host for revalidation' }, { status: 403 });
+    }
+
     revalidateTag(`site-${host}`, 'default');
 
     return NextResponse.json({ success: true, data: newPage }, { status: 201 });

@@ -12,6 +12,19 @@ export default function DataPrivacyPage() {
     setError(null);
     try {
       const response = await fetch('/api/dashboard/gdpr/export');
+      if (!response.ok) {
+        let msg = 'Failed to export data';
+        try {
+          const errJson = await response.json();
+          msg = errJson?.error || msg;
+        } catch (_e) {
+          const txt = await response.text().catch(() => '');
+          if (txt) msg = txt;
+        }
+        setError(msg);
+        return;
+      }
+
       const data = await response.json();
 
       // Trigger download

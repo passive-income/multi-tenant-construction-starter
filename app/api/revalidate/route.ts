@@ -86,9 +86,10 @@ export async function POST(request: NextRequest) {
     const revalidatedTags = new Set<string>();
     for (const tag of tagsToRevalidate) {
       try {
-        // Next.js 16+ requires a profile string or CacheLifeConfig
-        // Using empty profile to revalidate immediately
-        revalidateTag(tag, '');
+        // The second parameter to revalidateTag is optional. When provided
+        // it can be a cache profile name or a CacheLifeConfig object ({ expire: number }).
+        // Omit it here to use the default immediate revalidation behavior.
+        revalidateTag(tag, 'default');
         revalidatedTags.add(tag);
         console.log(`[Revalidate] Cleared cache tag: ${tag}`);
       } catch (error) {

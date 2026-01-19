@@ -13,8 +13,8 @@ Add to `.env.local`:
 
 ```bash
 # Clerk (already configured from previous setup)
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_bWFnaWNhbC1zYXR5ci0zMi5jbGVyay5hY2NvdW50cy5kZXYk
-CLERK_SECRET_KEY=sk_test_HyHRKsTS8rc53UabEArjZblVMlX07AzT5mmVPX1iYG
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_publishable_key_here
+CLERK_SECRET_KEY=your_secret_key_here
 
 # Dashboard Security
 DASHBOARD_API_SECRET=$(openssl rand -hex 32)

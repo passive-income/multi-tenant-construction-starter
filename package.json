@@ -13,7 +13,8 @@
     "type-check": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "clerk:upgrade": "npx @clerk/upgrade"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx,json,md}": [

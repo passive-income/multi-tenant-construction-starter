@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import type { MenuItem } from '@/lib/types/navigation';
@@ -11,15 +11,23 @@ const MobileNavigation = ({ logoText, items }: { logoText: string; items: MenuIt
 
   const pathname = usePathname() ?? '/';
 
-  // Prevent body scroll when sheet is open
+  // Prevent body scroll when sheet is open, preserving previous overflow
+  const previousBodyOverflowRef = useRef<string | null>(null);
   useEffect(() => {
     if (open) {
+      // store previous value so we can restore it later
+      previousBodyOverflowRef.current = document.body.style.overflow || null;
       document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = 'unset';
+      // only restore if we are still the ones who set it to 'hidden'
+      if (document.body.style.overflow === 'hidden') {
+        document.body.style.overflow = previousBodyOverflowRef.current ?? '';
+      }
     }
     return () => {
-      document.body.style.overflow = 'unset';
+      if (document.body.style.overflow === 'hidden') {
+        document.body.style.overflow = previousBodyOverflowRef.current ?? '';
+      }
     };
   }, [open]);
 

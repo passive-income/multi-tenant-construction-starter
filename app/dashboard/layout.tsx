@@ -15,20 +15,31 @@ export default async function DashboardLayout({ children }: { children: ReactNod
   try {
     const tenant = await getCurrentTenant();
     clientId = tenant.clientId;
-  } catch {
-    return (
-      <div className="min-h-screen bg-red-50 p-8">
-        <div className="max-w-md mx-auto bg-white rounded-lg shadow p-6">
-          <h1 className="text-2xl font-bold text-red-600 mb-4">Access Denied</h1>
-          <p className="text-gray-700 mb-4">
-            Your user account is not yet assigned to a tenant. Please contact your administrator.
-          </p>
-          <Link href="/" className="text-blue-600 hover:underline">
-            Return to site
-          </Link>
+  } catch (e: any) {
+    const msg = e?.message || '';
+    // If user is simply missing tenant assignment, show Access Denied UI
+    if (
+      msg.includes('tenant') ||
+      msg.includes('does not have a tenant') ||
+      msg.includes('missing clientId')
+    ) {
+      return (
+        <div className="min-h-screen bg-red-50 p-8">
+          <div className="max-w-md mx-auto bg-white rounded-lg shadow p-6">
+            <h1 className="text-2xl font-bold text-red-600 mb-4">Access Denied</h1>
+            <p className="text-gray-700 mb-4">
+              Your user account is not yet assigned to a tenant. Please contact your administrator.
+            </p>
+            <Link href="/" className="text-blue-600 hover:underline">
+              Return to site
+            </Link>
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
+
+    // Unknown error (e.g., Clerk/API outage) - rethrow so it surfaces as an error
+    throw e;
   }
 
   return (
