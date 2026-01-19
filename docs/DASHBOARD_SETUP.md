@@ -134,9 +134,10 @@ All deletions and sensitive actions are logged:
 
 ### 4. Cache Management
 
-After publishing changes, admins can manually invalidate cache:
-- Dashboard → Settings → "Clear Cache Now"
-- Or automatically via dashboard API
+Cache invalidation is performed automatically when content is published (via Sanity webhook or the dashboard revalidation API). Admins can also manually clear the cache from the dashboard if needed:
+
+- Automatic: Webhook/API triggers immediate revalidation on publish
+- Manual: Dashboard → Settings → "Clear Cache Now"
 
 ## API Endpoints
 
@@ -148,7 +149,8 @@ Authorization: Clerk auth required
 
 # Create page
 POST /api/dashboard/pages
-Body: { title, slug, clientId, sections, seo }
+Body: { title, slug, sections, seo }
+Note: `clientId` must NOT be provided by the client — it is derived server-side from the authenticated user's tenant metadata.
 
 # Get page
 GET /api/dashboard/pages/{id}

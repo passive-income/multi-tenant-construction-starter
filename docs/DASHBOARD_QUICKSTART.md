@@ -17,18 +17,18 @@ NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_publishable_key_here
 CLERK_SECRET_KEY=your_secret_key_here
 
 # Dashboard Security
-DASHBOARD_API_SECRET=$(openssl rand -hex 32)
+DASHBOARD_API_SECRET=your_generated_secret_here
 SANITY_WEBHOOK_ENABLED=false
 ```
 
-Generate a secure secret:
+Generate a secure secret (example):
 ```bash
 openssl rand -hex 32
 ```
 
-Then update `.env.local`:
+Copy the generated value into your `.env.local` as `DASHBOARD_API_SECRET`:
 ```bash
-DASHBOARD_API_SECRET=your-generated-secret-here
+DASHBOARD_API_SECRET=your_generated_secret_here
 ```
 
 ## Clerk User Setup

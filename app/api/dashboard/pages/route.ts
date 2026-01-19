@@ -21,9 +21,12 @@ export async function GET() {
     );
 
     return NextResponse.json({ success: true, data: pages });
-  } catch (error) {
+  } catch (error: any) {
     console.error('[GET /api/dashboard/pages]', error);
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    if (error.message?.includes('Access denied')) {
+      return NextResponse.json({ error: error.message }, { status: 403 });
+    }
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
 
@@ -36,23 +39,9 @@ export async function POST(request: NextRequest) {
     const { clientId } = await getCurrentTenant();
     const body = await request.json();
 
-    // Validate that the page is being created for the user's tenant
-    if (body.clientId !== clientId) {
-      return NextResponse.json({ error: 'Invalid clientId' }, { status: 400 });
-    }
-
     const client = getClient(dataset);
-    const newPage = await client.create({
-      _type: 'page',
-      clientId,
-      title: body.title || 'Untitled Page',
-      slug: { current: body.slug || body.title?.toLowerCase().replace(/\s+/g, '-') || 'page' },
-      sections: body.sections || [],
-      seo: body.seo || {},
-      _createdAt: new Date().toISOString(),
-    });
 
-    // Revalidate the site cache — validate host against tenant domains first
+    // Revalidate host/domain before creating the page to avoid orphaned documents
     const headersList = await headers();
     const rawHost = headersList.get('x-forwarded-host') || headersList.get('host') || '';
     const host = String(rawHost).split(':')[0].toLowerCase();
@@ -71,7 +60,34 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized host for revalidation' }, { status: 403 });
     }
 
-    revalidateTag(`site-${host}`, 'default');
+    function makeSlug(input: unknown) {
+      if (!input) return 'page';
+      const raw = String(input);
+      // Normalize Unicode, lowercase
+      const normalized = raw
+        .normalize('NFD')
+        .replace(/\p{Diacritic}/gu, '')
+        .toLowerCase();
+      // Replace non-alphanumeric with hyphens, collapse hyphens, trim
+      const slug = normalized
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+        .replace(/-+/g, '-');
+      return slug || 'page';
+    }
+
+    const slugValue = body.slug ? makeSlug(body.slug) : makeSlug(body.title);
+
+    const newPage = await client.create({
+      _type: 'page',
+      clientId,
+      title: body.title || 'Untitled Page',
+      slug: { current: slugValue },
+      sections: body.sections || [],
+      seo: body.seo || {},
+      _createdAt: new Date().toISOString(),
+    });
+    revalidateTag(`site-${host}`);
 
     return NextResponse.json({ success: true, data: newPage }, { status: 201 });
   } catch (error) {

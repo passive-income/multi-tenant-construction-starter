@@ -86,10 +86,9 @@ export async function POST(request: NextRequest) {
     const revalidatedTags = new Set<string>();
     for (const tag of tagsToRevalidate) {
       try {
-        // The second parameter to revalidateTag is optional. When provided
-        // it can be a cache profile name or a CacheLifeConfig object ({ expire: number }).
-        // Omit it here to use the default immediate revalidation behavior.
-        revalidateTag(tag, 'default');
+        // Call revalidateTag with the single supported string tag.
+        // (Only a single string argument is supported by this runtime API.)
+        revalidateTag(tag);
         revalidatedTags.add(tag);
         console.log(`[Revalidate] Cleared cache tag: ${tag}`);
       } catch (error) {
@@ -121,7 +120,8 @@ export async function OPTIONS() {
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type, sanity-webhook-secret',
+        'Access-Control-Allow-Headers':
+          'Content-Type, sanity-webhook-secret, x-sanity-webhook-secret',
       },
     },
   );

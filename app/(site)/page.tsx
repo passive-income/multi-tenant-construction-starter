@@ -20,22 +20,21 @@ export async function generateMetadata(): Promise<Metadata> {
   const host = await getHost();
   const siteData = await getPageData(host);
 
+  const canonicalHost = host || process.env.SITE_URL || '';
+  const alternates = canonicalHost ? { canonical: `https://${canonicalHost}` } : undefined;
+
   if (siteData?.company?.name) {
     return {
       title: siteData.company.name,
       description: siteData.company.description || 'Professional construction services',
-      alternates: {
-        canonical: `https://${host}`,
-      },
+      ...(alternates ? { alternates } : {}),
     };
   }
 
   return {
     title: 'Construction Company',
     description: 'Professional construction services',
-    alternates: {
-      canonical: `https://${host}`,
-    },
+    ...(alternates ? { alternates } : {}),
   };
 }
 

@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { getCurrentTenant } from '@/lib/dashboard/auth';
 import { getClient } from '@/sanity/lib/client';
 
@@ -7,12 +8,22 @@ export default async function DashboardOverview() {
   const client = getClient(dataset);
 
   // Fetch summary data for the tenant
-  const [pagesCount, servicesCount, projectsCount, teamCount] = await Promise.all([
-    client.fetch('count(*[_type == "page" && clientId == $clientId])', { clientId }),
-    client.fetch('count(*[_type == "service" && clientId == $clientId])', { clientId }),
-    client.fetch('count(*[_type == "project" && clientId == $clientId])', { clientId }),
-    client.fetch('count(*[_type == "teamMember" && clientId == $clientId])', { clientId }),
-  ]);
+  let pagesCount = 0;
+  let servicesCount = 0;
+  let projectsCount = 0;
+  let teamCount = 0;
+  try {
+    const results = await Promise.all([
+      client.fetch('count(*[_type == "page" && clientId == $clientId])', { clientId }),
+      client.fetch('count(*[_type == "service" && clientId == $clientId])', { clientId }),
+      client.fetch('count(*[_type == "project" && clientId == $clientId])', { clientId }),
+      client.fetch('count(*[_type == "teamMember" && clientId == $clientId])', { clientId }),
+    ]);
+    [pagesCount, servicesCount, projectsCount, teamCount] = results as number[];
+  } catch (err) {
+    console.error('[DashboardOverview] failed fetching counts', err);
+    // keep sensible defaults
+  }
 
   const stats = [
     { label: 'Pages', value: pagesCount, href: '/dashboard/pages' },
@@ -28,14 +39,14 @@ export default async function DashboardOverview() {
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {stats.map((stat) => (
-          <a
+          <Link
             key={stat.label}
             href={stat.href}
             className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow cursor-pointer"
           >
             <p className="text-gray-600 text-sm font-medium">{stat.label}</p>
             <p className="text-4xl font-bold text-gray-900 mt-2">{stat.value}</p>
-          </a>
+          </Link>
         ))}
       </div>
 
@@ -43,24 +54,24 @@ export default async function DashboardOverview() {
       <div className="bg-white rounded-lg shadow p-6">
         <h2 className="text-xl font-bold text-gray-900 mb-4">Quick Actions</h2>
         <div className="space-y-2">
-          <a
+          <Link
             href="/dashboard/pages?action=create"
             className="block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
           >
             + Create New Page
-          </a>
-          <a
+          </Link>
+          <Link
             href="/dashboard/services?action=create"
             className="block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
           >
             + Create New Service
-          </a>
-          <a
+          </Link>
+          <Link
             href="/dashboard/projects?action=create"
             className="block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
           >
             + Create New Project
-          </a>
+          </Link>
         </div>
       </div>
     </div>

@@ -8,9 +8,13 @@ export async function POST() {
     // Ensure the caller is an authenticated dashboard user and get their tenant
     const { clientId } = await getCurrentTenant();
     const headersList = await headers();
-    const hostHeader = (headersList.get('host') || '').split(':')[0];
-    const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-    const baseUrl = `${protocol}://${hostHeader}`;
+    const rawHost = headersList.get('host') || '';
+    const defaultPort = process.env.PORT ?? '3000';
+    const host = rawHost || `localhost:${defaultPort}`; // preserve port if provided
+    const protocol =
+      headersList.get('x-forwarded-proto') ||
+      (process.env.NODE_ENV === 'development' ? 'http' : 'https');
+    const baseUrl = `${protocol}://${host}`;
 
     const secret = process.env.DASHBOARD_API_SECRET;
     if (!secret) {

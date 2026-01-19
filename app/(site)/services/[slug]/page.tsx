@@ -32,7 +32,8 @@ const getCachedService = cache((host: string, slug: string) => {
           );
           return service || null;
         }
-      } catch (_e) {
+      } catch (err) {
+        console.error(`Failed fetching service from Sanity for slug=${slug}`, err);
         // Fallback to JSON
       }
       return null;
@@ -107,9 +108,12 @@ export default async function ServiceDetail({ params }: { params: Promise<{ slug
           <section className="mt-4">
             <h2 className="text-2xl font-semibold mb-2">So gehen wir vor</h2>
             <ul className="list-disc pl-6 space-y-1">
-              {(service as any).measures.map((m: string, idx: number) => (
-                <li key={`${m.slice(0, 20)}-${idx}`}>{m}</li>
-              ))}
+              {(service as any).measures.map((m: any, idx: number) => {
+                const key =
+                  typeof m === 'string' ? `${m.slice(0, 20)}-${idx}` : (m?.id ?? `m-${idx}`);
+                const text = typeof m === 'string' ? m : String(m);
+                return <li key={key}>{text}</li>;
+              })}
             </ul>
           </section>
         )}
@@ -135,7 +139,15 @@ export default async function ServiceDetail({ params }: { params: Promise<{ slug
       {(service as any).descriptionHtml ? (
         <div
           className="prose max-w-none mb-6"
-          dangerouslySetInnerHTML={{ __html: (service as any).descriptionHtml }}
+          dangerouslySetInnerHTML={{
+            __html: ((): string => {
+              const raw = (service as any).descriptionHtml || '';
+              // Basic sanitization: remove <script> tags and inline event handlers
+              return raw
+                .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, '')
+                .replace(/ on[a-z]+=("[^"]*"|'[^']*'|[^\s>]+)/gi, '');
+            })(),
+          }}
         />
       ) : (
         (service as any).description && (
@@ -146,9 +158,12 @@ export default async function ServiceDetail({ params }: { params: Promise<{ slug
         <section className="mt-4">
           <h2 className="text-2xl font-semibold mb-2">So gehen wir vor</h2>
           <ul className="list-disc pl-6 space-y-1">
-            {(service as any).measures.map((m: string, idx: number) => (
-              <li key={`${m.slice(0, 20)}-${idx}`}>{m}</li>
-            ))}
+            {(service as any).measures.map((m: any, idx: number) => {
+              const key =
+                typeof m === 'string' ? `${m.slice(0, 20)}-${idx}` : (m?.id ?? `m-${idx}`);
+              const text = typeof m === 'string' ? m : String(m);
+              return <li key={key}>{text}</li>;
+            })}
           </ul>
         </section>
       )}

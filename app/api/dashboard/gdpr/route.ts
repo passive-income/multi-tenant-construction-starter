@@ -1,3 +1,4 @@
+import crypto from 'node:crypto';
 import { type NextRequest, NextResponse } from 'next/server';
 import { getCurrentTenant } from '@/lib/dashboard/auth';
 import { verifyDeletionToken } from '@/lib/dashboard/verifyDeletionToken';
@@ -31,20 +32,40 @@ export async function POST(request: NextRequest) {
     );
 
     if (itemsToDelete.length > 0) {
+      const tx = client.transaction();
       for (const id of itemsToDelete) {
-        await client.delete(id);
+        tx.delete(id);
       }
+      await tx.commit();
     }
 
     // Log deletion for audit trail (GDPR compliance)
+    // Extract client IP (first in X-Forwarded-For list), compute an HMAC instead of unsalted hash
+    const ipHeader =
+      request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || '';
+    const ipRaw = ipHeader.split(',')[0].trim();
+    const hmacKey = process.env.AUDIT_LOG_HMAC_KEY || process.env.IP_HASH_SALT;
+    if (!hmacKey) {
+      console.error('[GDPR] Missing HMAC key for IP hashing (AUDIT_LOG_HMAC_KEY)');
+    }
+    const ipHash =
+      hmacKey && ipRaw ? crypto.createHmac('sha256', hmacKey).update(ipRaw).digest('hex') : null;
+    let retentionDays = parseInt(process.env.AUDIT_LOG_RETENTION_DAYS ?? '30', 10);
+    if (Number.isNaN(retentionDays) || retentionDays <= 0) retentionDays = 30;
+    const retentionTimestamp = new Date(
+      Date.now() + retentionDays * 24 * 60 * 60 * 1000,
+    ).toISOString();
+
     const auditLog = await client.create({
       _type: 'auditLog',
       action: 'ACCOUNT_DELETION',
+      // store identifiers in structured fields (access-controlled) instead of free-text
       clientId,
       userId,
       timestamp: new Date().toISOString(),
-      description: `Account for tenant ${clientId} deleted by user ${userId} - GDPR Right to be Forgotten`,
-      ipAddress: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip'),
+      description: `Account deletion recorded for tenant (referential id stored)`,
+      ipHash: ipHash,
+      retentionTimestamp,
     });
 
     return NextResponse.json({

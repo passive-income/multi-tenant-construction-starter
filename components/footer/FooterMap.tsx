@@ -103,7 +103,7 @@ export function FooterMap({ clientId, address, href, className }: FooterMapProps
         target="_blank"
         rel="noreferrer noopener"
         className="block mb-2 relative mx-auto sm:mx-0"
-        style={{ display: 'block', width: '100%', maxWidth: '400px' }}
+        style={{ display: 'block', width: '100%', maxWidth: '400px', height: '200px' }}
       >
         <Image
           src={src as string}
@@ -113,7 +113,7 @@ export function FooterMap({ clientId, address, href, className }: FooterMapProps
           unoptimized
           onLoad={() => setImgLoaded(true)}
           onError={() => setImgError(true)}
-          style={{ width: '100%', height: 'auto' }}
+          style={{ width: '100%', height: '200px' }}
           className="h-full object-cover rounded shadow-md"
         />
         {(!imgLoaded || (isLoading && !generatedMapUrl)) && (

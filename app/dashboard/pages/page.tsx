@@ -44,6 +44,7 @@ export default function PagesPage() {
       });
       if (response.ok) {
         setPages(pages.filter((p) => p._id !== id));
+        setError(null);
       } else {
         setError('Failed to delete page');
       }
@@ -70,7 +71,7 @@ export default function PagesPage() {
         <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded text-red-800">{error}</div>
       )}
 
-      {pages.length === 0 ? (
+      {pages.length === 0 && !error ? (
         <div className="bg-white rounded-lg shadow p-8 text-center">
           <p className="text-gray-500 mb-4">No pages yet</p>
           <Link
@@ -106,7 +107,7 @@ export default function PagesPage() {
                     {page.title}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                    /{page.slug.current}
+                    {page.slug?.current ? `/${page.slug.current}` : ''}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                     {new Date(page._updatedAt).toLocaleDateString()}

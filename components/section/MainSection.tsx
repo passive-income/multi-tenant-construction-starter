@@ -119,7 +119,11 @@ export function MainSection({ data }: MainSectionProps) {
                       </ul>
                     )}
                     {service.description2 && (
-                      <p className="text-sm text-muted-foreground mb-4">{service.description2}</p>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        {typeof service.description2 === 'string'
+                          ? service.description2
+                          : service.description2?.text || ''}
+                      </p>
                     )}
                     {service.linkText && service.linkHref && (
                       <Button variant="outline" asChild>

@@ -15,11 +15,15 @@ export default function DataPrivacyPage() {
       if (!response.ok) {
         let msg = 'Failed to export data';
         try {
-          const errJson = await response.json();
-          msg = errJson?.error || msg;
-        } catch (_e) {
-          const txt = await response.text().catch(() => '');
-          if (txt) msg = txt;
+          const clone = response.clone();
+          const errJson = await clone.json().catch(() => null);
+          if (errJson?.error) msg = errJson.error;
+          else {
+            const txt = await response.text().catch(() => '');
+            if (txt) msg = txt;
+          }
+        } catch (err) {
+          console.error('Error reading export error response', err);
         }
         setError(msg);
         return;

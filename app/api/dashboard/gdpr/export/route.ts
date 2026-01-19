@@ -45,7 +45,15 @@ export async function GET(_request: NextRequest) {
 
     return NextResponse.json(exportData, { headers: { 'Cache-Control': 'no-store' } });
   } catch (error) {
-    console.error('[GET /api/dashboard/gdpr/export]', error);
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    console.error('[GET /api/dashboard/gdpr/export] error:', error);
+    const err: any = error;
+    if (
+      err?.status === 401 ||
+      err?.status === 403 ||
+      (err?.message && /access denied|unauthorized/i.test(err.message))
+    ) {
+      return NextResponse.json({ error: err.message || 'Unauthorized' }, { status: 401 });
+    }
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }

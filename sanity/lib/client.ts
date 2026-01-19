@@ -8,7 +8,8 @@ export const getClient = (dataset: string, useCdn = false) =>
     dataset,
     apiVersion,
     useCdn,
-    // Use SANITY_TOKEN for reads, fallback to SANITY_API_WRITE_TOKEN for writes
+    // Token selection: prefer SANITY_TOKEN if set, otherwise fall back to SANITY_API_WRITE_TOKEN.
+    // Note: this is a simple fallback; choosing separate read/write tokens requires explicit logic per operation.
     token: process.env.SANITY_TOKEN || process.env.SANITY_API_WRITE_TOKEN,
   });
 
@@ -16,6 +17,7 @@ export const client = createClient({
   projectId,
   dataset,
   apiVersion,
-  useCdn: true,
-  token: process.env.SANITY_TOKEN,
+  // Use CDN only when no authenticated token is present (public reads).
+  useCdn: !process.env.SANITY_TOKEN,
+  token: process.env.SANITY_TOKEN || process.env.SANITY_API_WRITE_TOKEN,
 });

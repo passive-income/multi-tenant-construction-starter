@@ -58,14 +58,16 @@ https://your-domain.com/api/revalidate
    
    **Include previous version**: ❌ No
    
-   **Secret**: `YOUR_WEBHOOK_SECRET_HERE` (same as `SANITY_WEBHOOK_SECRET`)
+   **Secret (required)**: `YOUR_WEBHOOK_SECRET_HERE` (set this value as `SANITY_WEBHOOK_SECRET` in your production environment). The webhook handler requires this secret and will return 401 Unauthorized if the header is missing or invalid.
 
-   **HTTP Headers** (optional, for extra security):
+   **HTTP Headers** (required): include the secret using a single header. Example (use only one):
    ```json
    {
      "sanity-webhook-secret": "YOUR_WEBHOOK_SECRET_HERE"
    }
    ```
+
+   The server accepts either `sanity-webhook-secret` or `x-sanity-webhook-secret` — send one of them, not both.
 
 5. Click **Create**
 

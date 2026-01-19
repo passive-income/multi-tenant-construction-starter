@@ -2,7 +2,8 @@ import { headers } from 'next/headers';
 import { CacheClearButton } from '@/components/dashboard/CacheClearButton';
 
 export default async function SettingsPage() {
-  const host = (await headers()).get('host') || 'Loading...';
+  const hostHeader = (await headers()).get('host');
+  const host = hostHeader ?? 'Unknown';
   return (
     <div className="p-8 max-w-2xl">
       <h1 className="text-3xl font-bold text-gray-900 mb-8">Settings</h1>

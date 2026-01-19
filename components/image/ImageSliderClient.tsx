@@ -69,9 +69,15 @@ export function ImageSliderClient({ slides, headerHeight }: ImageSliderClientPro
   React.useEffect(() => {
     if (!api) return;
     setCurrent(api.selectedScrollSnap());
-    api.on('select', () => {
+    const handleSelect = () => {
       setCurrent(api.selectedScrollSnap());
-    });
+    };
+    api.on('select', handleSelect);
+    return () => {
+      try {
+        api.off('select', handleSelect);
+      } catch {}
+    };
   }, [api]);
 
   if (!carouselMod) return null;

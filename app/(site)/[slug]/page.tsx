@@ -6,6 +6,16 @@ import { getSiteData } from '@/lib/data/streaming';
 import { getHost } from '@/lib/utils/host';
 import { getClient } from '@/sanity/lib/client';
 
+// Minimal page-level translation helper — replace with project i18n if available
+const t = (key: string) => {
+  const map: Record<string, string> = {
+    hostNotFound: 'Host not found',
+    noDataFound: 'No data found',
+    pageNotFound: 'Page not found',
+  };
+  return map[key] ?? key;
+};
+
 // Cache for 10 minutes, revalidate in background
 export const revalidate = 600;
 
@@ -33,7 +43,8 @@ const getCachedPage = cache((host: string, slug: string) => {
           );
           return { page, enabledFeatures };
         }
-      } catch (_e) {
+      } catch (err) {
+        console.error('Error loading Sanity page for slug', { host, slug, err });
         // Fallback
       }
       return null;
@@ -64,11 +75,11 @@ export default async function GenericPage({ params }: { params: Promise<{ slug: 
 
   // Fallback to JSON
   if (!host) {
-    return <div>Host not found</div>;
+    return <div>{t('hostNotFound')}</div>;
   }
   const jsonData = await getSiteData(host);
   if (!jsonData) {
-    return <div>No data found</div>;
+    return <div>{t('noDataFound')}</div>;
   }
   const pages: any[] = Array.isArray((jsonData as any)?.pages) ? (jsonData as any).pages : [];
   const jsonPage = pages.find((p: any) => p?.slug === slug);
@@ -76,7 +87,7 @@ export default async function GenericPage({ params }: { params: Promise<{ slug: 
   if (!jsonPage) {
     return (
       <main className="container py-8">
-        <h1 className="text-2xl font-bold">Seite nicht gefunden</h1>
+        <h1 className="text-2xl font-bold">{t('pageNotFound')}</h1>
       </main>
     );
   }

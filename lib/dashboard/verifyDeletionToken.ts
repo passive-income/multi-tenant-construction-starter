@@ -1,14 +1,13 @@
-export async function verifyDeletionToken(deletionToken?: string | null) {
-  // Minimal server-side verification: require a server-issued token
-  // Set ACCOUNT_DELETION_TOKEN in your environment for deletion requests
+import crypto from 'node:crypto';
+
+export function verifyDeletionToken(deletionToken?: string | null) {
+  // Use fixed-size digests to avoid leaking length info, then compare in constant time
   if (!deletionToken) return false;
   const expected = process.env.ACCOUNT_DELETION_TOKEN;
   if (!expected) return false;
-  try {
-    return deletionToken === expected;
-  } catch (_err) {
-    return false;
-  }
+  const a = crypto.createHash('sha256').update(String(deletionToken), 'utf8').digest();
+  const b = crypto.createHash('sha256').update(String(expected), 'utf8').digest();
+  return crypto.timingSafeEqual(a, b);
 }
 
 export default verifyDeletionToken;

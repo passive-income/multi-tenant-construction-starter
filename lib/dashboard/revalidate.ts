@@ -51,11 +51,18 @@ export async function publishThenRevalidate(
   publishFn: () => Promise<unknown>,
   revalidateParams: TenantParams,
 ): Promise<{ publishOk: boolean; revalidate: RevalidateResult }> {
+  let publishOk = false;
   try {
     await publishFn();
-    const result = await revalidateTenant(revalidateParams);
-    return { publishOk: true, revalidate: result };
+    publishOk = true;
   } catch (err: any) {
     return { publishOk: false, revalidate: { error: err?.message, status: 0 } };
+  }
+
+  try {
+    const result = await revalidateTenant(revalidateParams);
+    return { publishOk, revalidate: result };
+  } catch (err: any) {
+    return { publishOk, revalidate: { error: err?.message, status: 0 } };
   }
 }

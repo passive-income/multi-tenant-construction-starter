@@ -29,7 +29,8 @@ const getCachedProject = cache((host: string, slug: string) => {
           );
           return project || null;
         }
-      } catch (_e) {
+      } catch (err) {
+        console.error('Error loading Sanity project for slug', { host, slug, err });
         // Fallback
       }
       return null;

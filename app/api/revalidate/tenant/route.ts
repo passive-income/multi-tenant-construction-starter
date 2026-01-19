@@ -1,3 +1,4 @@
+import crypto from 'node:crypto';
 import { revalidateTag } from 'next/cache';
 import { type NextRequest, NextResponse } from 'next/server';
 import { getClient } from '@/sanity/lib/client';
@@ -14,7 +15,15 @@ export async function POST(request: NextRequest) {
   try {
     const secret = request.headers.get('x-dashboard-secret');
     const expected = process.env.DASHBOARD_API_SECRET;
-    if (!expected || secret !== expected) {
+    if (!expected || !secret) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+    const secretBuf = Buffer.from(secret, 'utf8');
+    const expectedBuf = Buffer.from(expected, 'utf8');
+    if (
+      secretBuf.length !== expectedBuf.length ||
+      !crypto.timingSafeEqual(secretBuf, expectedBuf)
+    ) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -63,7 +72,7 @@ export async function POST(request: NextRequest) {
     const revalidated = new Set<string>();
     for (const tag of tags) {
       try {
-        revalidateTag(tag, '');
+        await revalidateTag(tag);
         revalidated.add(tag);
       } catch (_err) {
         // continue

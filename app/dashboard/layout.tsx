@@ -15,6 +15,9 @@ export default async function DashboardLayout({ children }: { children: ReactNod
   try {
     const tenant = await getCurrentTenant();
     clientId = tenant.clientId;
+    if (!clientId) {
+      throw new Error('Tenant is missing clientId');
+    }
   } catch (e: any) {
     const msg = e?.message || '';
     // If user is simply missing tenant assignment, show Access Denied UI

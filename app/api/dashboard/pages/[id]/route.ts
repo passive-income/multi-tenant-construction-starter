@@ -29,7 +29,8 @@ export async function GET(_request: NextRequest, { params }: { params: Promise<{
     if (error.message.includes('Access denied')) {
       return NextResponse.json({ error: error.message }, { status: 403 });
     }
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    console.error('[GET /api/dashboard/pages/[id]]', error);
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
 
@@ -41,10 +42,10 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
   try {
     const { clientId } = await getCurrentTenant();
     const { id } = await params;
-    const body = await request.json();
+    const rawBody = await request.json();
     const client = getClient(dataset);
 
-    // Fetch existing page to verify ownership
+    // Fetch existing page to verify ownership early so we can compare clientId and ids
     const existingPage = await client.fetch('*[_type == "page" && _id == $id][0]', { id });
     if (!existingPage) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
@@ -52,8 +53,60 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
 
     validateTenantAccess(clientId, existingPage.clientId);
 
-    // Update page
-    const updated = await client.patch(id).set(body).commit();
+    function sanitizeRequestBody(input: any) {
+      const _allowedFields = ['pageType', 'title', 'slug', 'description', 'image', 'sections'];
+
+      const sanitized: Record<string, any> = {};
+
+      // Basic validations per field
+      if (typeof input !== 'object' || input === null) return sanitized;
+
+      if ('pageType' in input && typeof input.pageType === 'string') {
+        const v = input.pageType;
+        if (v === 'home' || v === 'standard') sanitized.pageType = v;
+      }
+
+      if ('title' in input && typeof input.title === 'string') {
+        sanitized.title = input.title;
+      }
+
+      if ('slug' in input && input.slug && typeof input.slug === 'object') {
+        const current = (input.slug.current ?? input.slug) as unknown;
+        if (typeof current === 'string') sanitized.slug = { current: current };
+      }
+
+      if (
+        'description' in input &&
+        (typeof input.description === 'string' || input.description == null)
+      ) {
+        sanitized.description = input.description;
+      }
+
+      if ('image' in input && (typeof input.image === 'object' || input.image == null)) {
+        sanitized.image = input.image;
+      }
+
+      if ('sections' in input && Array.isArray(input.sections)) {
+        sanitized.sections = input.sections;
+      }
+
+      return sanitized;
+    }
+
+    // Prevent updating protected fields via payload
+    if (rawBody && (rawBody._type || rawBody._id || rawBody.clientId || rawBody.id)) {
+      if (rawBody._id && rawBody._id !== id) {
+        return NextResponse.json({ error: 'Payload document id mismatch' }, { status: 400 });
+      }
+      if (rawBody.id && rawBody.id !== id) {
+        return NextResponse.json({ error: 'Payload document id mismatch' }, { status: 400 });
+      }
+      if (rawBody.clientId && rawBody.clientId !== existingPage.clientId) {
+        return NextResponse.json({ error: 'Cannot change clientId' }, { status: 403 });
+      }
+    }
+
+    const sanitizedBody = sanitizeRequestBody(rawBody);
 
     // Revalidate the site cache — validate host against tenant domains first
     const headersList = await headers();
@@ -73,7 +126,10 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
       return NextResponse.json({ error: 'Unauthorized host for revalidation' }, { status: 403 });
     }
 
-    revalidateTag(`site-${host}`, 'default');
+    // Update page (only after host is authorized)
+    const updated = await client.patch(id).set(sanitizedBody).commit();
+
+    revalidateTag(`site-${host}`);
 
     return NextResponse.json({ success: true, data: updated });
   } catch (error: any) {
@@ -106,9 +162,6 @@ export async function DELETE(
 
     validateTenantAccess(clientId, existingPage.clientId);
 
-    // Delete page
-    await client.delete(id);
-
     // Revalidate the site cache — validate host against tenant domains first
     const headersList = await headers();
     const rawHost = headersList.get('x-forwarded-host') || headersList.get('host') || '';
@@ -127,7 +180,10 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized host for revalidation' }, { status: 403 });
     }
 
-    revalidateTag(`site-${host}`, 'default');
+    // Delete page (only after host is authorized)
+    await client.delete(id);
+
+    revalidateTag(`site-${host}`);
 
     return NextResponse.json({ success: true });
   } catch (error: any) {
